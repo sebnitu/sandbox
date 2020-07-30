@@ -14,16 +14,30 @@
       <div class="container spacing">
         <h1>Learning Vue.js</h1>
         <p>{{ text }}</p>
+        <p>
+          <button @click="changeText" class="button">Change</button>
+          <button @click="changeBack" class="button">Return</button>
+        </p>
       </div>
     </div>
 
   </div>
+  <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
+    const defaultText = 'Hello, World!';
     new Vue({
       el: '#app',
       data: {
-        text: 'Hello, World!'
+        text: defaultText
+      },
+      methods: {
+        changeText() {
+          this.text = 'Nice to meet you!';
+        },
+        changeBack() {
+          this.text = defaultText;
+        }
       }
     });
   </script>
