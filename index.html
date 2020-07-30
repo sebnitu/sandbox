@@ -18,6 +18,13 @@
           <button @click="changeText" class="button">Change</button>
           <button @click="changeBack" class="button">Return</button>
         </p>
+        <hr class="sep margin-vert-xl">
+        <p>
+          <input class="input" type="text" v-on:input="cssClass = $event.target.value">
+        </p>
+        <p v-bind:class="cssClass" class="padding border radius">
+          Class: <code class="code">{{ cssClass }}</code>
+        </p>
       </div>
     </div>
 
@@ -29,7 +36,8 @@
     new Vue({
       el: '#app',
       data: {
-        text: defaultText
+        text: defaultText,
+        cssClass: 'background-shade'
       },
       methods: {
         changeText() {
