@@ -8,17 +8,22 @@
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.min.css">
 </head>
 <body>
-
   <div id="app">
-    <p>{{ title }}</p>
-  </div>
 
+    <div class="section">
+      <div class="container spacing">
+        <h1>Learning Vue.js</h1>
+        <p>{{ text }}</p>
+      </div>
+    </div>
+
+  </div>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
     new Vue({
       el: '#app',
       data: {
-        title: 'Hello, World!'
+        text: 'Hello, World!'
       }
     });
   </script>
