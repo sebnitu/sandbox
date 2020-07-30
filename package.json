@@ -1,0 +1,23 @@
+{
+  "name": "sandbox",
+  "version": "0.1.0",
+  "description": "A place to learn and test new things.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'Error: no test specified'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebnitu/sandbox.git"
+  },
+  "author": {
+    "name" : "Sebastian Nitu",
+    "email" : "me@sebnitu.com",
+    "url" : "https://sebnitu.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebnitu/sandbox/issues"
+  },
+  "homepage": "https://github.com/sebnitu/sandbox#readme"
+}
