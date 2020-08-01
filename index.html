@@ -15,15 +15,27 @@
         <h1>Learning Vue.js</h1>
         <p>A place for me to learn Vue.js</p>
         <hr class="sep margin-vert-xl">
-        <button @click="increment" class="button">Increment</button>
+        <button @click="show = !show" class="button">Toggle</button>
+        <div v-if="show" class="notice notice_type_info">
+          <p>1st notice...</p>
+        </div>
+        <div v-else class="notice notice_type_success">
+          <p>2nd notice...</p>
+        </div>
+        <div v-show="show" class="notice notice_type_caution">
+          <p>3rd notice...</p>
+        </div>
+        <hr class="sep">
         <table class="table table_style_bordered" style="width: auto;">
           <tr>
-            <th>Counter:</th>
-            <th>Clicks:</th>
+            <th>#</th>
+            <th>First</th>
+            <th>Last</th>
           </tr>
-          <tr>
-            <td>{{ counter }}</td>
-            <td>{{ clicks }}</td>
+          <tr v-for="person in persons">
+            <td>{{ person.id }}</td>
+            <td>{{ person.first }}</td>
+            <td>{{ person.last }}</td>
           </tr>
         </table>
       </div>
@@ -36,18 +48,13 @@
     new Vue({
       el: '#app',
       data: {
-        // counter: 0,
-        clicks: 0
-      },
-      methods: {
-        increment() {
-          this.clicks++;
-        }
-      },
-      computed: {
-        counter() {
-          return this.clicks * 2;
-        }
+        show: true,
+        persons: [
+          { first: 'Noam', last: 'Chomsky', id: 101 },
+          { first: 'Emma', last: 'Goldman', id: 102 },
+          { first: 'Howard', last: 'Zinn', id: 103 },
+          { first: 'Peirre', last: 'Proudhon', id: 104 },
+        ]
       }
     });
   </script>
