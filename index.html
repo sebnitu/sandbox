@@ -13,18 +13,19 @@
     <div class="section">
       <div class="container spacing">
         <h1>Learning Vue.js</h1>
-        <p>{{ text }}</p>
-        <p>
-          <button @click="changeText" class="button">Change</button>
-          <button @click="changeBack" class="button">Return</button>
-        </p>
+        <p>A place for me to learn Vue.js</p>
         <hr class="sep margin-vert-xl">
-        <p>
-          <input class="input" type="text" v-on:input="cssClass = $event.target.value">
-        </p>
-        <p v-bind:class="cssClass" class="padding border radius">
-          Class: <code class="code">{{ cssClass }}</code>
-        </p>
+        <button @click="increment" class="button">Increment</button>
+        <table class="table table_style_bordered" style="width: auto;">
+          <tr>
+            <th>Counter:</th>
+            <th>Clicks:</th>
+          </tr>
+          <tr>
+            <td>{{ counter }}</td>
+            <td>{{ clicks }}</td>
+          </tr>
+        </table>
       </div>
     </div>
 
@@ -32,19 +33,20 @@
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
-    const defaultText = 'Hello, World!';
     new Vue({
       el: '#app',
       data: {
-        text: defaultText,
-        cssClass: 'background-shade'
+        // counter: 0,
+        clicks: 0
       },
       methods: {
-        changeText() {
-          this.text = 'Nice to meet you!';
-        },
-        changeBack() {
-          this.text = defaultText;
+        increment() {
+          this.clicks++;
+        }
+      },
+      computed: {
+        counter() {
+          return this.clicks * 2;
         }
       }
     });
