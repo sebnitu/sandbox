@@ -35,8 +35,8 @@
   <div id="app">
     <div class="section">
       <div class="container spacing">
-        <p>{{ title | uppercase | lowercase }}</p>
-        <p>{{ message | uppercase }}</p>
+        <p>{{ title }}</p>
+        <vb-user></vb-user>
       </div>
     </div>
   </div>
@@ -44,25 +44,31 @@
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
-    Vue.filter('uppercase', function (value) {
-      return value.toUpperCase();
+    Vue.component('vb-user', {
+      data: function () {
+        return {
+          users: [{
+            name: 'Sebastian'
+          }, {
+            name: 'Noam'
+          }, {
+            name: 'Howard'
+          }]
+        };
+      },
+      template: `
+        <div class="spacing">
+          <div v-for="user in users" class="padding border radius">
+            <p>Name: {{ user.name }}</p>
+          </div>
+        </div>
+      `
     });
 
     new Vue({
       el: '#app',
       data: {
-        title: 'hello world!',
-        message: 'This is an example of filters...'
-      },
-      computed: {
-        theTitle: function () {
-          return this.title.toUpperCase();
-        }
-      },
-      filters: {
-        lowercase: function (value) {
-          return value.toLowerCase();
-        }
+        title: 'Hello, World!'
       }
     });
   </script>
