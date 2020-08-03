@@ -36,7 +36,6 @@
     <div class="section">
       <div class="container spacing">
         <p>{{ title }}</p>
-        <vb-user></vb-user>
       </div>
     </div>
   </div>
@@ -44,27 +43,6 @@
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
-    Vue.component('vb-user', {
-      data: function () {
-        return {
-          users: [{
-            name: 'Sebastian'
-          }, {
-            name: 'Noam'
-          }, {
-            name: 'Howard'
-          }]
-        };
-      },
-      template: `
-        <div class="spacing">
-          <div v-for="user in users" class="padding border radius">
-            <p>Name: {{ user.name }}</p>
-          </div>
-        </div>
-      `
-    });
-
     new Vue({
       el: '#app',
       data: {
