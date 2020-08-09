@@ -50,3 +50,14 @@ console.log(cow);
 
 lion.speak();
 cow.speak();
+
+console.log('cow: ' + cow.constructor);
+
+// Tree
+
+function Tree(name) {
+  this.name = name
+}
+
+let theTree = new Tree('Redwood')
+console.log('theTree.constructor is ' + theTree.constructor)
