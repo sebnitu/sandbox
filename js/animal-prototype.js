@@ -1,6 +1,8 @@
 function Animal(name, energy) {
-  this.name = name;
-  this.energy = energy;
+  animal = Object.create(Animal.prototype);
+  animal.name = name;
+  animal.energy = energy;
+  return animal;
 }
 
 // A prototype is a property on a function that points to an object
@@ -22,8 +24,8 @@ Animal.prototype.play = function (length) {
 
 // Test...
 
-const shadow = new Animal('Shadow', 16);
-const rhino = new Animal('Rhino', 16);
+const shadow = Animal('Shadow', 16);
+const rhino = Animal('Rhino', 16);
 
 shadow.play(8);
 rhino.eat(8);
