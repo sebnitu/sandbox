@@ -31,7 +31,7 @@
 }
 
 #overlay-loading {
-
+  display: none;
 }
 
 #overlay-close-button {
