@@ -1,7 +1,7 @@
 /* stylelint-disable */
 
 :root {
-  --overlay-transition-duration: 0.5s;
+  --overlay-transition-duration: 0.4s;
 }
 
 #overlay-wrapper {
