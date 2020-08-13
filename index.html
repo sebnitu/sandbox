@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sandbox</title>
+  <title>iframe app</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com//dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.min.css">
 </head>
@@ -11,8 +11,8 @@
 
   <header class="section background-shade">
     <div class="container spacing">
-      <h1 class="text-size-lg">Sandbox</h1>
-      <p>A place to learn and test new things.</p>
+      <h1 class="text-size-lg">iframe App</h1>
+      <p>Putting together a protoye for an iframe app implementation.</p>
       <div>
         <ol class="breadcrumb">
           <li class="breadcrumb__item">
@@ -23,8 +23,8 @@
           </li>
           <li class="breadcrumb__item">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/master">
-              <span>master</span>
+            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/iframe-app-prototype">
+              <span>iframe-app-prototype</span>
             </a>
           </li>
         </ol>
@@ -32,9 +32,34 @@
     </div>
   </header>
 
+  <div class="section">
+    <div class="container spacing">
+      <div id="overlay-button"></div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
+    
   <script>
-    console.log(vrembem);
+    (function (window, document, tag, src, obj, app, ref) {
+      window['OverlayObject'] = obj;
+
+      window[obj] = window[obj] || function () {
+        (window[obj].q = window[obj].q || []).push(arguments)
+      }, window[obj].l = 1 * new Date();
+
+      ref = document.getElementsByTagName(tag)[0];
+      app = document.createElement(tag);
+      app.async = 1;
+      app.src = src;
+      ref.parentNode.insertBefore(app, ref);
+    })(window, document, 'script', './lib/scripts.js', 'overlay');
+
+    overlay('init', {
+      option_1: 1,
+      option_2: 2
+    });
+    overlay('open');
   </script>
 </body>
 </html>
