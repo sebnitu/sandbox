@@ -1,10 +1,10 @@
 {
   "name": "@sebnitu/sandbox",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A place to learn and test new things.",
   "main": "index.html",
   "scripts": {
-    "test": "echo 'Error: no test specified'"
+    "publish:patch": "npm version patch -m 'chore(release): bump to v%s' && npm publish"
   },
   "repository": {
     "type": "git",
