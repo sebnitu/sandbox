@@ -1,6 +1,6 @@
 {
   "name": "@sebnitu/sandbox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A place to learn and test new things.",
   "main": "index.html",
   "scripts": {
