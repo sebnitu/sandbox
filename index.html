@@ -34,7 +34,11 @@
 
   <div class="section">
     <div class="container spacing">
+      <p>Default button location</p>
       <div id="overlay-button"></div>
+      <hr class="sep">
+      <p>Custom button location</p>
+      <div id="custom-button"></div>
     </div>
   </div>
 
@@ -42,7 +46,7 @@
     
   <script>
     (function (window, document, tag, src, obj, app, ref) {
-      window['OverlayObject'] = obj;
+      window['overlayKey'] = obj;
 
       window[obj] = window[obj] || function () {
         (window[obj].q = window[obj].q || []).push(arguments)
@@ -55,9 +59,7 @@
       ref.parentNode.insertBefore(app, ref);
     })(window, document, 'script', './lib/scripts.js', 'overlay');
 
-    overlay('iframesrc', '...');
-    overlay('open');
-    overlay('close');
+    overlay('target', '#overlay-button');
   </script>
 </body>
 </html>
