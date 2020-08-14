@@ -1,5 +1,5 @@
 {
-  "name": "sandbox",
+  "name": "@sebnitu/sandbox",
   "version": "0.1.0",
   "description": "A place to learn and test new things.",
   "main": "index.js",
@@ -11,9 +11,9 @@
     "url": "git+https://github.com/sebnitu/sandbox.git"
   },
   "author": {
-    "name" : "Sebastian Nitu",
-    "email" : "me@sebnitu.com",
-    "url" : "https://sebnitu.com"
+    "name": "Sebastian Nitu",
+    "email": "me@sebnitu.com",
+    "url": "https://sebnitu.com"
   },
   "license": "MIT",
   "bugs": {
