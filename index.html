@@ -59,33 +59,65 @@
 
             <h2>The Legend of Zelda: Ocarina of Time</h2>
 
-            <p class="color-success" v-if="inventory >= 10">
-              {{ inventory }} In stock
-            </p>
-            <p class="color-caution" v-else-if="inventory > 0 && inventory < 10">
-              Only {{ inventory }} left stock
-            </p>
-            <p class="color-danger" v-else>
-              Out of stock
-            </p>
-
             <ul class="list">
               <li v-for="detail in details">{{ detail }}</li>
             </ul>
 
-            <div v-if="onSale" class="notice notice_type_success">
-              <p>This item is on sale!</p>
+            <div class="spacing-sm">
+              <label class="text-bold">Controller Options</label>
+              <div>
+                <div class="level level_gap_sm">
+                  <div 
+                    v-for="controller in controllers"
+                    v-bind:style="[box.styleObject, controller.styleObject]"
+                    v-on:click=""></div>
+                </div>
+              </div>
             </div>
+
+            <hr class="sep" />
+            
+            <p v-bind:class="{ 
+              'color-success': inventory >= 10,
+              'color-caution': inventory > 0 && inventory < 10,
+              'color-danger': !inventory,
+            }">
+              <span v-if="inventory >= 10">
+                {{ inventory }} In stock
+              </span>
+              <span v-else-if="inventory > 0 && inventory < 10">
+                Only {{ inventory }} left stock
+              </span>
+              <span v-else>
+                Out of stock
+              </span>
+            </p>
 
             <div>
               <div class="level">
                 <div>
                   <input class="input" type="number" value="1" v-model="addNumber" style="width: 80px;">
                 </div>
-                <button v-on:click="addToCart" class="button button_color_primary">
+                <button 
+                  class="button button_color_primary"
+                  v-on:click="addToCart" 
+                  v-bind:disabled="inventory < 1">
                   Add to Cart
                 </button>
               </div>
+            </div>
+
+            <div class="notice" v-bind:class="[onSale ? onSaleClass : '']">
+              <div class="notice__body">
+                <p v-if="onSale">😄 This item is on sale!</p>
+                <p v-else>😒 This item is not on sale.</p>
+              </div>
+              <button
+                class="button"
+                v-on:click="toggleSale">
+                <span v-if="onSale">Off</span>
+                <span v-else>On</span>
+              </button>
             </div>
 
           </div>
@@ -93,6 +125,7 @@
           <div class="grid__item span-3">
             <div class="padding border radius spacing">
               <p>Cart: {{ cart }}</p>
+              <hr class="sep" />
               <div>
                 <div class="level flex-justify-between">
                   <button class="link" v-on:click="removeFromCart">
@@ -122,10 +155,34 @@
         img: './img/zelda-oot.jpg',
         inventory: 200,
         onSale: false,
+        onSaleClass: 'notice_type_success',
         details: [
           'Only for Nintendo 64',
           'Rumble pack included',
           'Navi will be your companion'
+        ],
+        box: {
+          styleObject: {
+            width: '32px',
+            height: '32px'
+          }
+        },
+        controllers: [
+          {
+            styleObject: {
+              backgroundColor: 'black',
+            }
+          },
+          {
+            styleObject: {
+              backgroundColor: 'gray'
+            }
+          },
+          {
+            styleObject: {
+              backgroundColor: 'gold'
+            }
+          }
         ],
         variants: [
           {
@@ -144,14 +201,20 @@
       },
       methods: {
         addToCart() {
-          this.cart += parseInt(this.addNumber);
+          const result = this.inventory - parseInt(this.addNumber);
+          if (result >= 0) {
+            this.inventory = result;
+            this.cart += parseInt(this.addNumber);
+          }
         },
         removeFromCart() {
           if (this.cart > 0) {
+            this.inventory += 1;
             this.cart -= 1;
           }
         },
         clearCart() {
+          this.inventory += this.cart;
           this.cart = 0;
         },
         changeVersion(event) {
@@ -159,6 +222,9 @@
             return obj.variantId == event.target.value;
           });
           this.img = result.variantImage;
+        },
+        toggleSale() {
+          this.onSale = (this.onSale) ? false : true;
         }
       }
     });
