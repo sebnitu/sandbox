@@ -35,14 +35,133 @@
     </header>
 
     <div class="section">
-      <div class="container spacing">
-        <p>...</p>
+      <div class="container">
+
+        <div class="grid">
+          <div class="grid__item span-3">
+            <img class="display-block radius" v-bind:src="img" alt="" />
+            <p class="margin-top-sm">
+              <a class="link" v-bind:href="img">Download cover art</a>
+            </p>
+          </div>
+          <div class="grid__item span-5 spacing">
+            <label>
+              <div class="text-bold margin-bottom-sm">Version</div>
+              <select class="input input_type_select" v-on:change="changeVersion($event)">
+                <option 
+                  v-for="variant in variants" 
+                  v-bind:key="variant.variantId" 
+                  v-bind:value="variant.variantId">
+                  {{ variant.variantTitle }}
+                </option>
+              </select>
+            </label>
+
+            <h2>The Legend of Zelda: Ocarina of Time</h2>
+
+            <p class="color-success" v-if="inventory >= 10">
+              {{ inventory }} In stock
+            </p>
+            <p class="color-caution" v-else-if="inventory > 0 && inventory < 10">
+              Only {{ inventory }} left stock
+            </p>
+            <p class="color-danger" v-else>
+              Out of stock
+            </p>
+
+            <ul class="list">
+              <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+
+            <div v-if="onSale" class="notice notice_type_success">
+              <p>This item is on sale!</p>
+            </div>
+
+            <div>
+              <div class="level">
+                <div>
+                  <input class="input" type="number" value="1" v-model="addNumber" style="width: 80px;">
+                </div>
+                <button v-on:click="addToCart" class="button button_color_primary">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <div class="grid__item border-right"></div>
+          <div class="grid__item span-3">
+            <div class="padding border radius spacing">
+              <p>Cart: {{ cart }}</p>
+              <div>
+                <div class="level flex-justify-between">
+                  <button class="link" v-on:click="removeFromCart">
+                    Remove item
+                  </button>
+                  <button class="link" v-on:click="clearCart">
+                    Clear cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="./main.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        title: 'Learning Vue.js',
+        description: 'A place for me to learn and play with Vue.',
+        img: './img/zelda-oot.jpg',
+        inventory: 200,
+        onSale: false,
+        details: [
+          'Only for Nintendo 64',
+          'Rumble pack included',
+          'Navi will be your companion'
+        ],
+        variants: [
+          {
+            variantId: 1,
+            variantTitle: 'Ocarina of Time',
+            variantImage: './img/zelda-oot.jpg'
+          },
+          {
+            variantId: 2,
+            variantTitle: 'Majora\'s Mask',
+            variantImage: './img/zelda-mm.jpg'
+          }
+        ],
+        addNumber: 1,
+        cart: 0
+      },
+      methods: {
+        addToCart() {
+          this.cart += parseInt(this.addNumber);
+        },
+        removeFromCart() {
+          if (this.cart > 0) {
+            this.cart -= 1;
+          }
+        },
+        clearCart() {
+          this.cart = 0;
+        },
+        changeVersion(event) {
+          const result = this.variants.find(obj => {
+            return obj.variantId == event.target.value;
+          });
+          this.img = result.variantImage;
+        }
+      }
+    });
+  </script>
 </body>
 </html>
