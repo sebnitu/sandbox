@@ -13,8 +13,7 @@
     <header class="section background-shade">
       <div class="container spacing">
         <h1 class="text-size-lg">Learning Vue.js</h1>
-        <p v-if="description">{{ description }}</p>
-        <p></p>
+        <p>A place for me to learn and play with Vue.</p>
         <div>
           <ol class="breadcrumb">
             <li class="breadcrumb__item">
@@ -36,8 +35,22 @@
 
     <div class="section">
       <div class="container">
-
         <div class="grid">
+
+          <div class="grid__item span-12">
+            <div class="notice" v-bind:class="[onSale ? onSaleClass : '']">
+              <div class="notice__body">
+                <p>{{ onSaleText }}</p>
+              </div>
+              <button
+                class="button"
+                v-on:click="toggleSale">
+                <span v-if="onSale">Off</span>
+                <span v-else>On</span>
+              </button>
+            </div>
+          </div>
+
           <div class="grid__item span-3">
             <img class="display-block radius" v-bind:src="img" alt="" />
             <p class="margin-top-sm">
@@ -46,18 +59,17 @@
           </div>
           <div class="grid__item span-5 spacing">
             <label>
-              <div class="text-bold margin-bottom-sm">Version</div>
-              <select class="input input_type_select" v-on:change="changeVersion($event)">
+              <div class="text-bold margin-bottom-sm">Variant</div>
+              <select class="input input_type_select" name="variant" v-on:change="changeVariant($event)">
                 <option 
-                  v-for="variant in variants" 
-                  v-bind:key="variant.variantId" 
-                  v-bind:value="variant.variantId">
-                  {{ variant.variantTitle }}
+                  v-for="(variant, index) in variants" 
+                  v-bind:value="index">
+                  {{ variant.title }}
                 </option>
               </select>
             </label>
 
-            <h2>The Legend of Zelda: Ocarina of Time</h2>
+            <h2>{{ title }}</h2>
 
             <ul class="list">
               <li v-for="detail in details">{{ detail }}</li>
@@ -105,20 +117,7 @@
                   Add to Cart
                 </button>
               </div>
-            </div>
-
-            <div class="notice" v-bind:class="[onSale ? onSaleClass : '']">
-              <div class="notice__body">
-                <p v-if="onSale">😄 This item is on sale!</p>
-                <p v-else>😒 This item is not on sale.</p>
-              </div>
-              <button
-                class="button"
-                v-on:click="toggleSale">
-                <span v-if="onSale">Off</span>
-                <span v-else>On</span>
-              </button>
-            </div>
+            </div>            
 
           </div>
           <div class="grid__item border-right"></div>
@@ -150,17 +149,9 @@
     const app = new Vue({
       el: '#app',
       data: {
-        title: 'Learning Vue.js',
-        description: 'A place for me to learn and play with Vue.',
-        img: './img/zelda-oot.jpg',
-        inventory: 200,
-        onSale: false,
+        product: 'The Legend of Zelda',
+        selectedVariant: 0,
         onSaleClass: 'notice_type_success',
-        details: [
-          'Only for Nintendo 64',
-          'Rumble pack included',
-          'Navi will be your companion'
-        ],
         box: {
           styleObject: {
             width: '32px',
@@ -186,45 +177,83 @@
         ],
         variants: [
           {
-            variantId: 1,
-            variantTitle: 'Ocarina of Time',
-            variantImage: './img/zelda-oot.jpg'
+            id: 1001,
+            title: 'Ocarina of Time',
+            img: './img/zelda-oot.jpg',
+            inventory: 100,
+            onSale: false,
+            details: [
+              'Only for Nintendo 64',
+              'Rumble pack included',
+              'Navi will be your companion'
+            ]
           },
           {
-            variantId: 2,
-            variantTitle: 'Majora\'s Mask',
-            variantImage: './img/zelda-mm.jpg'
+            id: 1002,
+            title: 'Majora\'s Mask',
+            img: './img/zelda-mm.jpg',
+            inventory: 200,
+            onSale: true,
+            details: [
+              'Only for Nintendo 64',
+              'Expansion pack required',
+              'Search for your companion, Navi'
+            ]
           }
         ],
         addNumber: 1,
         cart: 0
       },
+      computed: {
+        title() {
+          return this.product + ": " + this.variants[this.selectedVariant].title;
+        },
+        img() {
+          return this.variants[this.selectedVariant].img;
+        },
+        inventory() {
+          return this.variants[this.selectedVariant].inventory;
+        },
+        details() {
+          return this.variants[this.selectedVariant].details;
+        },
+        onSale() {
+          return this.variants[this.selectedVariant].onSale;
+        },
+        onSaleText() {
+          let result;
+          if (this.onSale) {
+            result = `😄 ${this.title} is on sale!`;
+          } else {
+            result = `😒 ${this.title} is not on sale.`;
+          }
+          return result;
+        }
+      },
       methods: {
         addToCart() {
-          const result = this.inventory - parseInt(this.addNumber);
+          const result = this.variants[this.selectedVariant].inventory - parseInt(this.addNumber);
           if (result >= 0) {
-            this.inventory = result;
+            this.variants[this.selectedVariant].inventory = result;
             this.cart += parseInt(this.addNumber);
           }
         },
         removeFromCart() {
           if (this.cart > 0) {
-            this.inventory += 1;
+            this.variants[this.selectedVariant].inventory += 1;
             this.cart -= 1;
           }
         },
         clearCart() {
-          this.inventory += this.cart;
+          this.variants[this.selectedVariant].inventory += this.cart;
           this.cart = 0;
         },
-        changeVersion(event) {
-          const result = this.variants.find(obj => {
-            return obj.variantId == event.target.value;
-          });
-          this.img = result.variantImage;
+        changeVariant(event) {
+          this.selectedVariant = event.target.value;
         },
         toggleSale() {
-          this.onSale = (this.onSale) ? false : true;
+          this.variants[this.selectedVariant].onSale =
+            (this.variants[this.selectedVariant].onSale) ? false : true;
         }
       }
     });
