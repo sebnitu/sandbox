@@ -34,110 +34,116 @@
     </header>
 
     <div class="section">
-      <div class="container">
-        <div class="grid">
+      <div class="container spacing-xl">
+        <div>
+          <div class="grid">
 
-          <div class="grid__item span-12">
-            <div class="notice" v-bind:class="[onSale ? onSaleClass : '']">
-              <div class="notice__body">
-                <p>{{ onSaleText }}</p>
-              </div>
-              <button
-                class="button"
-                v-on:click="toggleSale">
-                <span v-if="onSale">Off</span>
-                <span v-else>On</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="grid__item span-3">
-            <img class="display-block radius" v-bind:src="img" alt="" />
-            <p class="margin-top-sm">
-              <a class="link" v-bind:href="img">Download cover art</a>
-            </p>
-          </div>
-          <div class="grid__item span-5 spacing">
-            <label>
-              <div class="text-bold margin-bottom-sm">Variant</div>
-              <select class="input input_type_select" name="variant" v-on:change="changeVariant($event)">
-                <option 
-                  v-for="(variant, index) in variants" 
-                  v-bind:value="index">
-                  {{ variant.title }}
-                </option>
-              </select>
-            </label>
-
-            <h2>{{ title }}</h2>
-
-            <ul class="list">
-              <li v-for="detail in details">{{ detail }}</li>
-            </ul>
-
-            <div class="spacing-sm">
-              <label class="text-bold">Controller Options</label>
-              <div>
-                <div class="level level_gap_sm">
-                  <div 
-                    v-for="controller in controllers"
-                    v-bind:style="[box.styleObject, controller.styleObject]"
-                    v-on:click=""></div>
+            <div class="grid__item span-12">
+              <div class="notice" v-bind:class="[onSale ? onSaleClass : '']">
+                <div class="notice__body">
+                  <p>{{ onSaleText }}</p>
                 </div>
-              </div>
-            </div>
-
-            <hr class="sep" />
-            
-            <p v-bind:class="{ 
-              'color-success': inventory >= 10,
-              'color-caution': inventory > 0 && inventory < 10,
-              'color-danger': !inventory,
-            }">
-              <span v-if="inventory >= 10">
-                {{ inventory }} In stock
-              </span>
-              <span v-else-if="inventory > 0 && inventory < 10">
-                Only {{ inventory }} left stock
-              </span>
-              <span v-else>
-                Out of stock
-              </span>
-            </p>
-
-            <div>
-              <div class="level">
-                <div>
-                  <input class="input" type="number" value="1" v-model="addNumber" style="width: 80px;">
-                </div>
-                <button 
-                  class="button button_color_primary"
-                  v-on:click="addToCart" 
-                  v-bind:disabled="inventory < 1">
-                  Add to Cart
+                <button
+                  class="button"
+                  v-on:click="toggleSale">
+                  <span v-if="onSale">Off</span>
+                  <span v-else>On</span>
                 </button>
               </div>
-            </div>            
+            </div>
 
-          </div>
-          <div class="grid__item border-right"></div>
-          <div class="grid__item span-3">
-            <div class="padding border radius spacing">
-              <p>Cart: {{ cart }}</p>
+            <div class="grid__item span-3">
+              <img class="display-block radius" v-bind:src="img" alt="" />
+              <p class="margin-top-sm">
+                <a class="link" v-bind:href="img">Download cover art</a>
+              </p>
+            </div>
+            <div class="grid__item span-5 spacing">
+              <label>
+                <div class="text-bold margin-bottom-sm">Variant</div>
+                <select class="input input_type_select" name="variant" v-on:change="changeVariant($event)">
+                  <option 
+                    v-for="(variant, index) in variants" 
+                    v-bind:value="index">
+                    {{ variant.title }}
+                  </option>
+                </select>
+              </label>
+
+              <h2>{{ title }}</h2>
+
+              <ul class="list">
+                <li v-for="detail in details">{{ detail }}</li>
+              </ul>
+
+              <div class="spacing-sm">
+                <label class="text-bold">Controller Options</label>
+                <div>
+                  <div class="level level_gap_sm">
+                    <div 
+                      v-for="controller in controllers"
+                      v-bind:style="[box.styleObject, controller.styleObject]"
+                      v-on:click=""></div>
+                  </div>
+                </div>
+              </div>
+
               <hr class="sep" />
+              
+              <p v-bind:class="{ 
+                'color-success': inventory >= 10,
+                'color-caution': inventory > 0 && inventory < 10,
+                'color-danger': !inventory,
+              }">
+                <span v-if="inventory >= 10">
+                  {{ inventory }} In stock
+                </span>
+                <span v-else-if="inventory > 0 && inventory < 10">
+                  Only {{ inventory }} left stock
+                </span>
+                <span v-else>
+                  Out of stock
+                </span>
+              </p>
+
               <div>
-                <div class="level flex-justify-between">
-                  <button class="link" v-on:click="removeFromCart">
-                    Remove item
+                <div class="level">
+                  <div>
+                    <input class="input" type="number" value="1" v-model="addNumber" style="width: 80px;">
+                  </div>
+                  <button 
+                    class="button button_color_primary"
+                    v-on:click="addToCart" 
+                    v-bind:disabled="inventory < 1">
+                    Add to Cart
                   </button>
-                  <button class="link" v-on:click="clearCart">
-                    Clear cart
-                  </button>
+                </div>
+              </div>            
+
+            </div>
+            <div class="grid__item border-right"></div>
+            <div class="grid__item span-3">
+              <div class="padding border radius spacing">
+                <p>Cart: {{ cart }}</p>
+                <hr class="sep" />
+                <div>
+                  <div class="level flex-justify-between">
+                    <button class="link" v-on:click="removeFromCart">
+                      Remove item
+                    </button>
+                    <button class="link" v-on:click="clearCart">
+                      Clear cart
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <Notice type="info" message="This is my message..."></Notice>
+        <Notice type="caution" message="Wait, what?"></Notice>
+        <Notice type="danger" message="Oh no!"></Notice>
 
       </div>
     </div>
@@ -146,6 +152,29 @@
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
+
+    Vue.component('Notice', {
+      props: {
+        message: String,
+        type: String
+      },
+      data() {
+        return {
+
+        }
+      },
+      computed: {
+        noticeType() {
+          return `notice_type_${this.type}`;
+        }
+      },
+      template: `
+        <div class="notice" v-bind:class="noticeType">
+          {{ message }}
+        </div>
+      `
+    });
+
     const app = new Vue({
       el: '#app',
       data: {
