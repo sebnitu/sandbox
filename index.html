@@ -6,6 +6,11 @@
   <title>Learning Vue</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com//dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.min.css">
+  <style>
+    .list-style-none {
+      list-style: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -38,11 +43,11 @@
         <div>
           <div class="grid">
             <div class="grid__item span-8">
-              <product v-bind:premium="premium"></product>
+              <product v-bind:premium="premium" @add-to-cart="addToCart"></product>
             </div>
             <div class="grid__item span-1 border-right"></div>
             <div class="grid__item span-3">
-              <cart></cart>
+              <cart :cart="cart" @remove-from-cart="removeFromCart" @clear-cart="clearCart"></cart>
             </div>
           </div>
         </div>
@@ -72,26 +77,24 @@
     });
 
     Vue.component('cart', {
-      data() {
-        return {
-          cart: 0
+      props: {
+        cart: {
+          type: Array,
+          required: true
         }
       },
       methods: {
         removeFromCart() {
-          if (this.cart > 0) {
-            this.variants[this.selectedVariant].inventory += 1;
-            this.cart -= 1;
-          }
+          const lastItem = this.cart[this.cart.length - 1];
+          this.$emit('remove-from-cart', lastItem);
         },
         clearCart() {
-          this.variants[this.selectedVariant].inventory += this.cart;
-          this.cart = 0;
+          this.$emit('clear-cart');
         }
       },
       template: `
       <div class="padding border radius spacing">
-        <p>Cart: {{ cart }}</p>
+        <p>Cart: {{ cart.length }}</p>
         <hr class="sep" />
         <div>
           <div class="level flex-justify-between">
@@ -107,6 +110,151 @@
       `
     });
 
+    Vue.component('radio', {
+      props: ['label', 'name', 'value'],
+      methods: {
+        onChange(value) {
+          this.$emit('change', value);
+        }
+      },
+      template: `
+      <label>
+        <span class="radio">
+          <input type="radio" class="radio__native" 
+            :value="value" 
+            :name="name" 
+            v-on:change="onChange($event.target.value)"
+          >
+          <span class="radio__background">
+            <span class="radio__circle">
+              <span class="radio__dot"></span>
+            </span>
+          </span>
+        </span>
+        {{ label }}
+      </label>
+      `
+    });
+
+    Vue.component('product-review', {
+      props: {
+        reviews: Array
+      },
+      template: `
+      <div class="spacing">
+        <h2 class="text-size-lg">Reviews</h2>
+        <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul v-else class="list-style-none spacing">
+          <li v-for="review in reviews" class="background-primary-lighter padding border radius spacing-sm">
+            <div class="display-flex flex-justify-between flex-align-center">
+              <h3>Name: {{ review.name }}</h3>
+              <p>Rating: {{ review.rating }}/5</p>
+            </div>
+            <p>They said: "{{ review.comment }}"</p>
+            <p>Would I recommend this product? {{ review.recommend }}</p>
+          </li>
+        </ul>
+      </div>
+      `
+    });
+
+    Vue.component('product-review-form', {
+      data() {
+        return {
+          name: null,
+          rating: null,
+          comment: null,
+          recommend: null,
+          errors: []
+        }
+      },
+      methods: {
+        updateRating(value) {
+          this.rating = value;
+        },
+        updateRecommend(value) {
+          this.recommend = value;
+        },
+        onSubmit() {
+          this.errors = [];
+          if (this.name && this.rating && this.comment && this.recommend) {
+            const productReview = {
+              name: this.name,
+              rating: this.rating,
+              comment: this.comment,
+              recommend: this.recommend
+            }
+            this.$emit('add-review', productReview);
+            this.name = null;
+            this.rating = null;
+            this.comment = null;
+            this.recommend = null;
+            document.querySelectorAll('input[name="rating"], input[name="recommend"]').forEach((el) => {
+              el.checked = false;
+            });
+          } else {
+            if (!this.name) this.errors.push('Name is required.');
+            if (!this.rating) this.errors.push('Rating is required.');
+            if (!this.comment) this.errors.push('Comment is required.');
+            if (!this.recommend) this.errors.push('Recommend question is required.');
+          }
+        }
+      },
+      template: `
+      <form class="spacing" @submit.prevent="onSubmit">
+        <h2 class="text-size-lg">Add Review</h2>
+
+        <div v-if="errors.length" class="notice notice_type_danger">
+          <div class="notice__body">
+            <p>Review could not be submitted due to the following error(s):</p>
+            <ul class="list">
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <label class="display-block spacing-sm">
+          <span>Name</span>
+          <input class="input" v-model="name" />
+        </label>
+
+        <div class="spacing-sm">
+          <label>Rating</label>
+          <div>
+            <div class="level level_gap_lg">
+              <radio label="1" value="1" name="rating" @change="updateRating"></radio>
+              <radio label="2" value="2" name="rating" @change="updateRating"></radio>
+              <radio label="3" value="3" name="rating" @change="updateRating"></radio>
+              <radio label="4" value="4" name="rating" @change="updateRating"></radio>
+              <radio label="5" value="5" name="rating" @change="updateRating"></radio>
+            </div>
+          </div>
+        </div>
+
+        <label class="display-block spacing-sm">
+          <span>Comment</span>
+          <textarea class="input input_type_textarea" v-model="comment" rows="3"></textarea>
+        </label>
+
+        <div class="spacing-sm">
+          <label>Would you recommend this product?</label>
+          <div>
+            <div class="level level_gap_lg">
+              <radio label="Yes" value="👍" name="recommend" @change="updateRecommend"></radio>
+              <radio label="No" value="👎" name="recommend" @change="updateRecommend"></radio>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button class="button button_color_secondary">
+            Submit Review
+          </button>  
+        </div>
+      </form>
+      `
+    });
+
     Vue.component('product-details', {
       props: {
         details: {
@@ -115,9 +263,12 @@
         }
       },
       template: `
-      <ul class="list">
-        <li v-for="detail in details">{{ detail }}</li>
-      </ul>
+      <div class="spacing-sm">
+        <h3>Product Details</h3>
+        <ul class="list">
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+      </div>
       `
     });
 
@@ -183,7 +334,7 @@
             }
           ],
           addNumber: 1,
-          cart: 0
+          reviews: []
         }
       },
       computed: {
@@ -220,7 +371,7 @@
           const result = this.variants[this.selectedVariant].inventory - parseInt(this.addNumber);
           if (result >= 0) {
             this.variants[this.selectedVariant].inventory = result;
-            this.cart += parseInt(this.addNumber);
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].id, parseInt(this.addNumber));
           }
         },
         changeVariant(event) {
@@ -229,6 +380,9 @@
         toggleSale() {
           this.variants[this.selectedVariant].onSale =
             (this.variants[this.selectedVariant].onSale) ? false : true;
+        },
+        addReview(review) {
+          this.reviews.push(review);
         }
       },
       template: `
@@ -253,7 +407,12 @@
           </p>
         </div>
         <div class="grid__item span-8 spacing">
-          <label>
+
+          <h2 class="text-size-lg">{{ title }}</h2>
+          
+          <hr class="sep" />
+
+          <label class="display-block">
             <div class="text-bold margin-bottom-sm">Variant</div>
             <select class="input input_type_select" name="variant" v-on:change="changeVariant($event)">
               <option 
@@ -264,15 +423,14 @@
             </select>
           </label>
 
-          <h2>{{ title }}</h2>
-
           <product-details :details="details"></product-details>
 
           <div class="spacing-sm">
-            <label class="text-bold">Controller Options</label>
+            <h3>Controller Options</h3>
             <div>
               <div class="level level_gap_sm">
-                <div 
+                <div
+                  class="radius" 
                   v-for="controller in controllers"
                   v-bind:style="[box.styleObject, controller.styleObject]"
                   v-on:click=""></div>
@@ -312,7 +470,19 @@
                 Add to Cart
               </button>
             </div>
-          </div>            
+          </div>
+
+          <hr class="sep" />
+
+          <div>
+            <product-review :reviews="reviews"></product-review>
+          </div>
+
+          <hr class="sep" />
+
+          <div>
+            <product-review-form @add-review="addReview"></product-review-form>
+          </div>
 
         </div>
       </div>
@@ -322,7 +492,30 @@
     const app = new Vue({
       el: '#app',
       data: {
-        premium: true
+        premium: true,
+        cart: []
+      },
+      methods: {
+        addToCart(id, amount) {
+          for (let i = 0; i < amount; i++) {
+            this.cart.push(id);
+          }
+        },
+        removeFromCart(id) {
+          if (this.cart.length) {
+            const item = this.cart.findIndex((el) => {
+              return el == id
+            });
+            if (item >= 0) {
+              this.cart.splice(item, 1);
+            }
+            console.log(id); // Put this back into product inventory?
+          }
+        },
+        clearCart() {
+          console.log(this.cart); // Put these all back into product inventory?
+          this.cart = [];
+        }
       }
     });
   </script>
