@@ -43,10 +43,11 @@
         <div>
           <div class="grid">
             <div class="grid__item span-8">
-              <product v-bind:premium="premium" @add-to-cart="addToCart"></product>
+              <product v-bind:user="user" @add-to-cart="addToCart"></product>
             </div>
             <div class="grid__item span-1 border-right"></div>
-            <div class="grid__item span-3">
+            <div class="grid__item span-3 spacing">
+              <user v-bind:user="user" v-on:sign-in="signIn" v-on:sign-out="signOut"></user>
               <cart :cart="cart" @remove-from-cart="removeFromCart" @clear-cart="clearCart"></cart>
             </div>
           </div>
@@ -58,6 +59,8 @@
   <script src="https://unpkg.com/vrembem/dist/scripts.min.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script>
+
+    const eventBus = new Vue();
 
     Vue.component('notice', {
       props: {
@@ -72,6 +75,41 @@
       template: `
       <div class="notice" v-bind:class="noticeType">
         {{ message }}
+      </div>
+      `
+    });
+
+    Vue.component('user', {
+      props: {
+        user: Object
+      },
+      computed: {
+        message() {
+          return (this.user.status) ?
+            'Welcome!' :
+            'You\'re not logged in...';
+        }
+      },
+      methods: {
+        signIn() {
+          this.$emit('sign-in');
+        },
+        signOut() {
+          this.$emit('sign-out');
+        }
+      },
+      template: `
+      <div class="padding border radius spacing">
+        <p>{{ message }}</p>
+        <hr class="sep" />
+        <div>
+          <button class="link" v-if="user.status" v-on:click="signOut">
+            Sign Out
+          </button>
+          <button class="link" v-else v-on:click="signIn">
+            Sign In
+          </button>
+        </div>
       </div>
       `
     });
@@ -136,6 +174,59 @@
       `
     });
 
+    Vue.component('product-tabs', {
+      props: {
+        reviews: Array,
+        user: Object
+      },
+      data() {
+        return {
+          tabs: [
+            'Reviews',
+            'Add Review',
+            'Shipping'
+          ],
+          active: 'Reviews'
+        }
+      },
+      computed: {
+        shipping() {
+          return (this.user.status) ? 'Free!' : '$2.99';
+        }
+      },
+      methods: {
+        isActive(tab) {
+          return (tab == this.active) ? 'is-active' : '';
+        },
+        changeActive(event) {
+          this.active = event.target.closest('.menu__link').getAttribute('data-tab');
+        }
+      },
+      template: `
+      <div class="border radius">
+        <ul class="menu menu_theme_tabs radius-top-left radius-top-right">
+          <li class="menu__item" v-for="(tab, index) in tabs" :key="index">
+            <button class="menu__link" :class="isActive(tab)" :data-tab="tab" v-on:click="changeActive">
+              {{ tab }}
+              <span v-if="tab == 'Reviews'">({{ reviews.length }})</span>
+            </button>
+          </li>
+        </ul>
+        <div class="padding">
+          <div v-show="active == 'Reviews'">
+            <product-review :reviews="reviews"></product-review>
+          </div>
+          <div v-show="active == 'Add Review'">
+            <product-review-form></product-review-form>
+          </div>
+          <div v-show="active == 'Shipping'">
+            <p> Shipping: {{ shipping }}</p>
+          </div>
+        </div>
+      </div>
+      `
+    });
+
     Vue.component('product-review', {
       props: {
         reviews: Array
@@ -184,7 +275,7 @@
               comment: this.comment,
               recommend: this.recommend
             }
-            this.$emit('add-review', productReview);
+            eventBus.$emit('add-review', productReview);
             this.name = null;
             this.rating = null;
             this.comment = null;
@@ -274,10 +365,7 @@
 
     Vue.component('product', {
       props: {
-        premium: {
-          type: Boolean,
-          required: true
-        }
+        user: Object
       },
       data() {
         return {
@@ -361,9 +449,6 @@
             result = `😒 ${this.title} is not on sale.`;
           }
           return result;
-        },
-        shipping() {
-          return (this.premium) ? 'Free!' : '$2.99';
         }
       },
       methods: {
@@ -380,9 +465,6 @@
         toggleSale() {
           this.variants[this.selectedVariant].onSale =
             (this.variants[this.selectedVariant].onSale) ? false : true;
-        },
-        addReview(review) {
-          this.reviews.push(review);
         }
       },
       template: `
@@ -438,8 +520,6 @@
             </div>
           </div>
 
-          <p> Shipping: {{ shipping }}</p>
-
           <hr class="sep" />
           
           <p v-bind:class="{ 
@@ -471,29 +551,28 @@
               </button>
             </div>
           </div>
-
-          <hr class="sep" />
-
-          <div>
-            <product-review :reviews="reviews"></product-review>
-          </div>
-
-          <hr class="sep" />
-
-          <div>
-            <product-review-form @add-review="addReview"></product-review-form>
+          
+          <div class="margin-top-xl">
+            <product-tabs :reviews="reviews" :user="user"></product-tabs>  
           </div>
 
         </div>
       </div>
-      `
+      `,
+      mounted() {
+        eventBus.$on('add-review', (review) => {
+          this.reviews.push(review);
+        })
+      }
     });
 
     const app = new Vue({
       el: '#app',
       data: {
-        premium: true,
-        cart: []
+        cart: [],
+        user: {
+          status: false
+        }
       },
       methods: {
         addToCart(id, amount) {
@@ -515,6 +594,12 @@
         clearCart() {
           console.log(this.cart); // Put these all back into product inventory?
           this.cart = [];
+        },
+        signIn() {
+          this.user.status = true;
+        },
+        signOut() {
+          this.user.status = false;
         }
       }
     });
