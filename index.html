@@ -64,17 +64,21 @@
 
     Vue.component('notice', {
       props: {
-        message: String,
-        type: String
+        modifier: {
+          type: String,
+          required: true
+        }
       },
       computed: {
         noticeType() {
-          return `notice_type_${this.type}`;
+          return `notice_type_${this.modifier}`;
         }
       },
       template: `
-      <div class="notice" v-bind:class="noticeType">
-        {{ message }}
+      <div class="notice" :class="noticeType">
+        <div class="notice__body">
+          <slot></slot>
+        </div>
       </div>
       `
     });
@@ -183,15 +187,9 @@
         return {
           tabs: [
             'Reviews',
-            'Add Review',
-            'Shipping'
+            'Add Review'
           ],
           active: 'Reviews'
-        }
-      },
-      computed: {
-        shipping() {
-          return (this.user.status) ? 'Free!' : '$2.99';
         }
       },
       methods: {
@@ -200,6 +198,9 @@
         },
         changeActive(event) {
           this.active = event.target.closest('.menu__link').getAttribute('data-tab');
+        },
+        switchTabs(tab) {
+          this.active = tab;
         }
       },
       template: `
@@ -217,10 +218,11 @@
             <product-review :reviews="reviews"></product-review>
           </div>
           <div v-show="active == 'Add Review'">
-            <product-review-form></product-review-form>
-          </div>
-          <div v-show="active == 'Shipping'">
-            <p> Shipping: {{ shipping }}</p>
+            <product-review-form v-if="user.status" @review-added="switchTabs('Reviews')"></product-review-form>
+            <div v-else class="spacing">
+              <h2 class="text-size-lg">Add Review</h2>
+              <p>You must be logged in to post a review.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -283,6 +285,7 @@
             document.querySelectorAll('input[name="rating"], input[name="recommend"]').forEach((el) => {
               el.checked = false;
             });
+            this.$emit('review-added');
           } else {
             if (!this.name) this.errors.push('Name is required.');
             if (!this.rating) this.errors.push('Rating is required.');
@@ -371,7 +374,6 @@
         return {
           product: 'The Legend of Zelda',
           selectedVariant: 0,
-          onSaleClass: 'notice_type_success',
           box: {
             styleObject: {
               width: '32px',
@@ -449,6 +451,12 @@
             result = `😒 ${this.title} is not on sale.`;
           }
           return result;
+        },
+        onSaleClass() {
+          return (this.onSale) ? 'info' : 'caution';
+        },
+        shipping() {
+          return (this.user.status) ? 'Free!' : '$2.99';
         }
       },
       methods: {
@@ -469,31 +477,26 @@
       },
       template: `
       <div class="grid">
-        <div class="grid__item span-12">
-          <div class="notice" v-bind:class="[onSale ? onSaleClass : '']">
-            <div class="notice__body">
-              <p>{{ onSaleText }}</p>
-            </div>
-            <button
-              class="button"
-              v-on:click="toggleSale">
-              <span v-if="onSale">Off</span>
-              <span v-else>On</span>
-            </button>
-          </div>
-        </div>
         <div class="grid__item span-4 spacing">
           <img class="display-block radius" v-bind:src="img" alt="" />
           <p>
             <a class="link" v-bind:href="img">Download cover art</a>
           </p>
+          <div class="spacing-sm">
+            <h3>Controller Options</h3>
+            <div>
+              <div class="level level_gap_sm">
+                <div
+                  class="radius" 
+                  v-for="controller in controllers"
+                  v-bind:style="[box.styleObject, controller.styleObject]"></div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="grid__item span-8 spacing">
-
           <h2 class="text-size-lg">{{ title }}</h2>
-          
           <hr class="sep" />
-
           <label class="display-block">
             <div class="text-bold margin-bottom-sm">Variant</div>
             <select class="input input_type_select" name="variant" v-on:change="changeVariant($event)">
@@ -504,45 +507,42 @@
               </option>
             </select>
           </label>
-
           <product-details :details="details"></product-details>
-
-          <div class="spacing-sm">
-            <h3>Controller Options</h3>
-            <div>
-              <div class="level level_gap_sm">
-                <div
-                  class="radius" 
-                  v-for="controller in controllers"
-                  v-bind:style="[box.styleObject, controller.styleObject]"
-                  v-on:click=""></div>
-              </div>
+          <p> Shipping: {{ shipping }}</p>
+          <notice :modifier="onSaleClass">
+            <div class="display-flex flex-justify-between flex-align-center">
+              <p>{{ onSaleText }}</p>
+              <button
+                class="link"
+                v-if="user.status"
+                v-on:click="toggleSale">
+                <span v-if="onSale">Off</span>
+                <span v-else>On</span>
+              </button>
             </div>
-          </div>
-
+          </notice>
+        </div>
+        <div class="grid__item span-12 spacing">
           <hr class="sep" />
-          
-          <p v-bind:class="{ 
-            'color-success': inventory >= 10,
-            'color-caution': inventory > 0 && inventory < 10,
-            'color-danger': !inventory,
-          }">
-            <span v-if="inventory >= 10">
-              {{ inventory }} In stock
-            </span>
-            <span v-else-if="inventory > 0 && inventory < 10">
-              Only {{ inventory }} left stock
-            </span>
-            <span v-else>
-              Out of stock
-            </span>
-          </p>
-
-          <div>
+          <div class="flex flex-justify-between flex-align-center">
+            <p :class="{ 
+              'color-success': inventory >= 10,
+              'color-caution': inventory > 0 && inventory < 10,
+              'color-danger': !inventory,
+            }">
+              <strong>Inventory:</strong>
+              <span v-if="inventory >= 10">
+                {{ inventory }} In stock
+              </span>
+              <span v-else-if="inventory > 0 && inventory < 10">
+                Only {{ inventory }} left stock
+              </span>
+              <span v-else>
+                Out of stock
+              </span>
+            </p>
             <div class="level">
-              <div>
-                <input class="input" type="number" value="1" v-model="addNumber" style="width: 80px;">
-              </div>
+              <input class="input" type="number" value="1" v-model="addNumber" style="width: 80px;">
               <button 
                 class="button button_color_primary"
                 v-on:click="addToCart" 
@@ -551,11 +551,9 @@
               </button>
             </div>
           </div>
-          
           <div class="margin-top-xl">
             <product-tabs :reviews="reviews" :user="user"></product-tabs>  
           </div>
-
         </div>
       </div>
       `,
