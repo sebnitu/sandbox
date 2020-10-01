@@ -11,8 +11,8 @@
 
   <header class="section background-shade">
     <div class="container gap-y-sm">
-      <h1 class="text-size-lg">Sandbox</h1>
-      <p>A place to learn and test new things.</p>
+      <h1 class="text-size-lg">Forms</h1>
+      <p>A place to learn and test HTML forms.</p>
       <div class="margin-top-lg">
         <ol class="breadcrumb">
           <li class="breadcrumb__item">
@@ -32,9 +32,86 @@
     </div>
   </header>
 
+  <main role="main" class="section">
+    <form>
+      <div class="container gap-y">
+
+        <div>
+          <label>
+            <div class="margin-bottom-sm">First name</div>
+            <input name="example[name][first]" value="" type="text" class="input" style="max-width: 300px">
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <div class="margin-bottom-sm">Last name</div>
+            <input name="example[name][last]" value="" type="text" class="input" style="max-width: 300px">
+          </label>
+        </div>
+
+        <div class="gap-y-xs">
+          <div>
+            <div class="level">
+              <span class="checkbox">
+                <input id="example_1" name="example[checkbox][]" value="1" type="checkbox" class="checkbox__native">
+                <span class="checkbox__background">
+                  <span class="checkbox__box">
+                    <span class="checkbox__icon"></span>
+                  </span>
+                </span>
+              </span>
+              <label for="example_1">Example 1</label>
+            </div>
+          </div>
+
+          <div>
+            <div class="level">
+              <span class="checkbox">
+                <input id="example_2" name="example[checkbox][]" value="2" type="checkbox" class="checkbox__native">
+                <span class="checkbox__background">
+                  <span class="checkbox__box">
+                    <span class="checkbox__icon"></span>
+                  </span>
+                </span>
+              </span>
+              <label for="example_2">Example 2</label>
+            </div>
+          </div>
+
+          <div>
+            <div class="level">
+              <span class="checkbox">
+                <input id="example_3" name="example[checkbox][]" value="3" type="checkbox" class="checkbox__native">
+                <span class="checkbox__background">
+                  <span class="checkbox__box">
+                    <span class="checkbox__icon"></span>
+                  </span>
+                </span>
+              </span>
+              <label for="example_3">Example 3</label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="button button_color_primary">Submit</button>
+        </div>
+
+      </div>
+    </form>
+  </main>
+
   <script src="https://unpkg.com/vrembem"></script>
   <script>
-    console.log(vrembem);
+    document.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      for (const entry of data) {
+        console.log(entry);
+      }
+      console.log(data.getAll('example[checkbox][]'));
+    });
   </script>
 </body>
 </html>
