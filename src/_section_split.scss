@@ -5,31 +5,33 @@ $max-width: 67rem * 0.5;
   display: flex;
   flex-direction: row;
   padding: 0;
+  background-color: hotpink;
 
-  .section__item-first,
-  .section__item-last {
-    position: relative;
-    flex-grow: 1;
-    padding: $padding;
-  }
+  .section__column {
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
 
-  .section__item-first {
-    background-color: pink;
-
-    .section__container {
-      margin-right: 0;
-    }
-  }
-
-  .section__item-last {
-    background-color: aquamarine;
-
-    .section__container {
-      margin-left: 0;
+    > * {
+      flex-basis: 100%;
     }
   }
 
   .section__container {
     max-width: $max-width;
+  }
+
+  .section__column:first-child,
+  .section__column:last-child {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .section__column:first-child .section__container {
+    margin-right: 0;
+  }
+
+  .section__column:last-child .section__container {
+    margin-left: 0;
   }
 }
