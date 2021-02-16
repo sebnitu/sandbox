@@ -6,11 +6,12 @@
   <title>Sandbox</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com/dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
+  <link rel="stylesheet" href="/dist/styles.css">
 </head>
 <body>
 
   <header class="section background-shade">
-    <div class="container gap-y-sm">
+    <div class="section__container gap-y-sm">
       <h1 class="text-size-lg">Sandbox</h1>
       <p>A place to learn and test new things.</p>
       <div class="margin-top-lg">
@@ -23,14 +24,27 @@
           </li>
           <li class="breadcrumb__item">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/master">
-              <span>master</span>
+            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/section-split">
+              <span>section-split</span>
             </a>
           </li>
         </ol>
       </div>
     </div>
   </header>
+
+  <section class="section section_split">
+    <div class="section__item-first">
+      <div class="section__container">
+        <p>One</p>
+      </div>
+    </div>
+    <div class="section__item-last">
+      <div class="section__container">
+        <p>Two</p>
+      </div>
+    </div>
+  </section>
 
   <script src="https://unpkg.com/vrembem"></script>
   <script>

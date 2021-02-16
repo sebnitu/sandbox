@@ -1,0 +1,28 @@
+.section_split {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+.section_split .section__item-first,
+.section_split .section__item-last {
+  position: relative;
+  flex-grow: 1;
+  padding: 3em 1.5em;
+}
+.section_split .section__item-first {
+  background-color: pink;
+}
+.section_split .section__item-first .section__container {
+  margin-right: 0;
+}
+.section_split .section__item-last {
+  background-color: aquamarine;
+}
+.section_split .section__item-last .section__container {
+  margin-left: 0;
+}
+.section_split .section__container {
+  max-width: 33.5rem;
+}
+
+/*# sourceMappingURL=styles.css.map */
