@@ -1,4 +1,4 @@
-$padding: 3em 1.5em;
+$padding: 1.5em;
 $max-width: 67rem * 0.5;
 
 .section_split {
@@ -8,6 +8,7 @@ $max-width: 67rem * 0.5;
   background-color: hotpink;
 
   .section__column {
+    position: relative;
     display: flex;
     flex-basis: 50%;
     flex-direction: column;
@@ -15,6 +16,11 @@ $max-width: 67rem * 0.5;
     > * {
       flex-basis: 100%;
     }
+  }
+
+  .section__unit {
+    position: relative;
+    padding: $padding;
   }
 
   .section__container {

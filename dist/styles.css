@@ -5,12 +5,17 @@
   background-color: hotpink;
 }
 .section_split .section__column {
+  position: relative;
   display: flex;
   flex-basis: 50%;
   flex-direction: column;
 }
 .section_split .section__column > * {
   flex-basis: 100%;
+}
+.section_split .section__unit {
+  position: relative;
+  padding: 1.5em;
 }
 .section_split .section__container {
   max-width: 33.5rem;
