@@ -13,7 +13,7 @@
 .section_split .section__column > * {
   flex-basis: 100%;
 }
-.section_split .section__unit {
+.section_split .section__block {
   position: relative;
   padding: 1.5em;
 }
