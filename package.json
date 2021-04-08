@@ -4,20 +4,25 @@
   "description": "A place to learn and test new things.",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'Error: no test specified'"
+    "styles": "sass src/index.scss dist/styles.css",
+    "watch": "nodemon -e scss -x 'npm run styles'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebnitu/sandbox.git"
   },
   "author": {
-    "name" : "Sebastian Nitu",
-    "email" : "me@sebnitu.com",
-    "url" : "https://sebnitu.com"
+    "name": "Sebastian Nitu",
+    "email": "me@sebnitu.com",
+    "url": "https://sebnitu.com"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sebnitu/sandbox/issues"
   },
-  "homepage": "https://github.com/sebnitu/sandbox#readme"
+  "homepage": "https://github.com/sebnitu/sandbox#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "sass": "^1.32.8"
+  }
 }

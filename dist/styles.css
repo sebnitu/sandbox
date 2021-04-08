@@ -1,0 +1,22 @@
+.select-dropdown {
+  position: absolute;
+  z-index: 20;
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.select-dropdown__option {
+  padding: 0.5em 1.5em;
+  cursor: pointer;
+}
+.select-dropdown__option:hover, .select-dropdown__option:focus {
+  background-color: teal;
+  color: #fff;
+}
+
+/*# sourceMappingURL=styles.css.map */
