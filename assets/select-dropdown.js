@@ -7,13 +7,13 @@ selectDropdowns.forEach((el) => {
       // 1. Open dropdown
       openDropdown(el);
       // 2. Start listening for keyboard routing
-      input.addEventListener('keydown', keyRouting.bind(null, el));
+      input.addEventListener('keydown', keyRouting.bind(null, el), false);
     }, false);
     input.addEventListener('blur', (event) => {
       // 1. Close dropdown
       closeDropdown(el);
       // 2. Remove keyboard routing
-      input.removeEventListener('keydown', keyRouting.bind(null, el));
+      input.removeEventListener('keydown', keyRouting.bind(null, el), false);
     });
   }
 });
@@ -39,8 +39,10 @@ const keyRouting = (el, event) => {
       return;
 
     case 'Tab':
-      closeDropdown(el);
-      event.preventDefault();
+      if (isOpened(el)) {
+        closeDropdown(el);
+        event.preventDefault();
+      }
       return;
 
     case 'Escape':
@@ -59,4 +61,12 @@ const openDropdown = (el) => {
 
 const closeDropdown = (el) => {
   el.classList.remove('is-opened');
+}
+
+const isOpened = (el) => {
+  return el.classList.contains('is-opened');
+}
+
+const isClosed = (el) => {
+  return !el.classList.contains('is-opened');
 }
