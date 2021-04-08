@@ -6,7 +6,7 @@
   <title>Sandbox</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com/dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
-  <link rel="stylesheet" href="/dist/styles.css">
+  <link rel="stylesheet" href="/assets/select-dropdown.css">
 </head>
 <body>
 
@@ -38,6 +38,7 @@
       <div class="grid">
         <form class="grid__item gap-y">
           <label class="font-weight-bold">Native select dropdown:</label>
+          <input class="input" type="text" />
           <select class="input input_type_select">
             <option>Option 1</option>
             <option>Option 2</option>
@@ -59,15 +60,27 @@
           <label class="font-weight-bold">Custom select dropdown:</label>
           
           <div style="position: relative;">
-            <input autocomplete="off" class="input input_type_select" name="year_make_model_request[category]" type="text">
+            <input autocomplete="off" class="input input_type_select" type="text">
             <ul class="select-dropdown">
-              <li class="select-dropdown__option">Motorcycles (includes ATVS)</li>
-              <li class="select-dropdown__option">Side Cars (Motorcycle)</li>
-              <li class="select-dropdown__option">Snowmobiles</li>
-              <li class="select-dropdown__option">Trailers (Motorcycle)</li>
-              <li class="select-dropdown__option">Personal Watercraft</li>
+              <li class="select-dropdown__option">Option 1</li>
+              <li class="select-dropdown__option">Option 2</li>
+              <li class="select-dropdown__option">Option 3</li>
+              <li class="select-dropdown__option">Option 4</li>
+              <li class="select-dropdown__option">Option 5</li>
             </ul>
           </div>
+
+          <!-- Missing input example
+          <div style="position: relative;">
+            <ul class="select-dropdown">
+              <li class="select-dropdown__option">Option 1</li>
+              <li class="select-dropdown__option">Option 2</li>
+              <li class="select-dropdown__option">Option 3</li>
+              <li class="select-dropdown__option">Option 4</li>
+              <li class="select-dropdown__option">Option 5</li>
+            </ul>
+          </div>
+          -->
 
           <button class="button button_color_primary" type="submit">Submit</button>
         </form>
@@ -77,8 +90,9 @@
   </section>
 
   <script src="https://unpkg.com/vrembem"></script>
+  <script src="/assets/select-dropdown.js"></script>
   <script>
-    console.log(vrembem);
+    // ...
   </script>
 </body>
 </html>

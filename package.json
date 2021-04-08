@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "description": "A place to learn and test new things.",
   "main": "index.js",
-  "scripts": {
-    "styles": "sass src/index.scss dist/styles.css",
-    "watch": "nodemon -e scss -x 'npm run styles'"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebnitu/sandbox.git"
@@ -22,8 +18,6 @@
   },
   "homepage": "https://github.com/sebnitu/sandbox#readme",
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "sass": "^1.32.8",
     "stylelint": "^13.12.0",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-order": "^4.1.0",
