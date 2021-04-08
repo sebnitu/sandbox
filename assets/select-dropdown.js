@@ -1,26 +1,4 @@
-const selectDropdowns = document.querySelectorAll('.select-dropdown');
-
-selectDropdowns.forEach((el) => {
-  const input = el.previousElementSibling;
-  if (input && input.tagName === 'INPUT') {
-    input.addEventListener('focus', (event) => {
-      // 1. Open dropdown
-      openDropdown(el);
-      // 2. Start listening for keyboard routing
-      input.addEventListener('keydown', keyRouting.bind(null, el), false);
-    }, false);
-    input.addEventListener('blur', (event) => {
-      // 1. Close dropdown
-      closeDropdown(el);
-      // 2. Remove keyboard routing
-      input.removeEventListener('keydown', keyRouting.bind(null, el), false);
-    });
-  }
-});
-
 const keyRouting = (el, event) => {
-  console.log(event.key);
-  console.log(el);
   switch (event.key) {
     case 'Enter':
       event.preventDefault();
@@ -31,10 +9,6 @@ const keyRouting = (el, event) => {
       return;
 
     case 'ArrowDown':
-      openDropdown(el);
-      return;
-
-    case 'Space':
       openDropdown(el);
       return;
 
@@ -70,3 +44,24 @@ const isOpened = (el) => {
 const isClosed = (el) => {
   return !el.classList.contains('is-opened');
 }
+
+const selectDropdowns = document.querySelectorAll('.select-dropdown');
+
+selectDropdowns.forEach((el) => {
+  const input = el.previousElementSibling;
+  if (input && input.tagName === 'INPUT') {
+    input.addEventListener('focus', () => {
+      // 1. Open dropdown
+      openDropdown(el);
+      // 2. Start listening for keyboard routing
+      // input.addEventListener('keydown', keyRouting.bind(null, el), false);
+    });
+    input.addEventListener('blur', () => {
+      // 1. Close dropdown
+      closeDropdown(el);
+      // 2. Remove keyboard routing
+      // input.removeEventListener('keydown', keyRouting.bind(null, el), false);
+    });
+    input.addEventListener('keydown', keyRouting.bind(null, el));
+  }
+});
