@@ -13,6 +13,9 @@ const init = (options) => {
   selectDropdowns.forEach((el) => {
     const input = el.previousElementSibling;
     if (input && input.tagName === 'INPUT') {
+      input.addEventListener('input', () => {
+        matchInput(el);
+      })
       input.addEventListener('focus', () => {
         openDropdown(el);
       });
@@ -61,7 +64,9 @@ const keyRouting = (el, event) => {
 const openDropdown = (el) => {
   const options = el.querySelectorAll(settings.selectorOption);
   if (options.length) {
-    // matchInput(el);
+    if (isClosed(el)) {
+      matchInput(el);
+    }
     el.classList.add(settings.stateOpened);
   }
 }
@@ -122,9 +127,15 @@ const matchInput = (el) => {
     current.forEach((el) => {
       el.classList.remove(settings.stateSelected);
     });
-    console.log('Empty:', value);
   } else {
-    console.log('Value:', value);
+    const options = el.querySelectorAll(settings.selectorOption);
+    options.forEach((item) => {
+      if (value === item.innerText.trim()) {
+        item.classList.add(settings.stateSelected);
+      } else {
+        item.classList.remove(settings.stateSelected);
+      }
+    });
   }
 }
 
