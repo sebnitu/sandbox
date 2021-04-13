@@ -52,11 +52,9 @@ const closeDropdown = (el) => {
 
 const selectItem = (el, dir) => {
   if (isClosed(el)) { return; }
-  // Check that list isnt empty
   const options = el.querySelectorAll(settings.selectorOption);
   if (!options.length) { return; }
 
-  // Check if item is already selected
   const current = el.querySelector(`.${settings.stateSelected}`);
   if (current) {
     if (dir === 'prev') {
