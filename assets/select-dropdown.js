@@ -9,7 +9,7 @@ const defaults = {
 let settings = {};
 
 const matchInput = (el) => {
-  const input = el.previousElementSibling;
+  const input = el.parentElement.querySelector(settings.selectorInput);
   const value = input.value.trim();
   if (value === '') {
     const current = el.querySelectorAll(`.${settings.stateSelected}`);
@@ -80,7 +80,7 @@ const selectItem = (el, dir) => {
 const returnSelected = (el) => {
   const current = el.querySelector(`.${settings.stateSelected}`);
   if (current) {
-    const input = el.previousElementSibling;
+    const input = el.parentElement.querySelector(settings.selectorInput);
     input.value = current.innerText;
     closeDropdown(el);
   }
@@ -124,9 +124,7 @@ const init = (options) => {
   settings = { ...defaults, ...options };
   const selectDropdowns = document.querySelectorAll(settings.selectorDropdown);
   selectDropdowns.forEach((el) => {
-    const input = el.parentElement.querySelector(
-      settings.selectorInput
-    );
+    const input = el.parentElement.querySelector(settings.selectorInput);
     if (input && input.tagName === 'INPUT') {
       input.addEventListener('input', () => {
         matchInput(el);
