@@ -1,4 +1,5 @@
 const defaults = {
+  selectorInput: 'input',
   selectorDropdown: '.select-dropdown',
   selectorOption: '.select-dropdown__option',
   stateSelected: 'is-selected',
@@ -123,7 +124,9 @@ const init = (options) => {
   settings = { ...defaults, ...options };
   const selectDropdowns = document.querySelectorAll(settings.selectorDropdown);
   selectDropdowns.forEach((el) => {
-    const input = el.previousElementSibling;
+    const input = el.parentElement.querySelector(
+      settings.selectorInput
+    );
     if (input && input.tagName === 'INPUT') {
       input.addEventListener('input', () => {
         matchInput(el);
