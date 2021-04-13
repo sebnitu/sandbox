@@ -24,6 +24,10 @@
 
 .select-dropdown__option:hover,
 .select-dropdown__option:focus {
+  background-color: #efefef;
+}
+
+.select-dropdown__option.is-selected {
   background-color: teal;
   color: #fff;
 }
