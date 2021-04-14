@@ -80,7 +80,6 @@ const returnSelected = (el) => {
   if (current) {
     const input = el.parentElement.querySelector(settings.selectorInput);
     input.value = current.innerText;
-    closeDropdown(el);
   }
 };
 
@@ -88,6 +87,7 @@ const keyRouting = (el, event) => {
   switch (event.key) {
     case 'Enter':
       returnSelected(el);
+      closeDropdown(el);
       event.preventDefault();
       return;
 
@@ -103,6 +103,7 @@ const keyRouting = (el, event) => {
 
     case 'Tab':
       if (isOpened(el)) {
+        returnSelected(el);
         closeDropdown(el);
         event.preventDefault();
       }
