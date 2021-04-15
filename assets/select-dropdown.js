@@ -1,4 +1,5 @@
 const defaults = {
+  anchorPadding: 10,
   selectorInput: 'input',
   selectorDropdown: '.select-dropdown',
   selectorOption: '.select-dropdown__option',
@@ -7,6 +8,34 @@ const defaults = {
 };
 
 let settings = {};
+
+const anchorPositionStart = (el, anchor) => {
+  return anchor.offsetTop - (settings.anchorPadding);
+};
+
+const anchorPositionEnd = (el, anchor) => {
+  return anchor.offsetTop - (el.offsetHeight - (
+    anchor.offsetHeight + settings.anchorPadding
+  ));
+};
+
+const anchorPositionNearest = (el, anchor) => {
+  const posTop = anchorPositionStart(el, anchor);
+  const posBot = anchorPositionEnd(el, anchor);
+  if (el.scrollTop > posTop) { return posTop; }
+  if (el.scrollTop < posBot) { return posBot; }
+  return false;
+};
+
+const scrollIntoView = (el) => {
+  const anchor = el.querySelector(`.${settings.stateSelected}`);
+  if (!anchor) { return; }
+  const position = anchorPositionNearest(el, anchor);
+  if (!position) { return; }
+  el.scroll({
+    top: anchorPositionNearest(el, anchor)
+  });
+};
 
 const matchInput = (el) => {
   const input = el.parentElement.querySelector(settings.selectorInput);
@@ -21,6 +50,7 @@ const matchInput = (el) => {
     options.forEach((item) => {
       if (value === item.innerText.trim()) {
         item.classList.add(settings.stateSelected);
+        scrollIntoView(el);
       } else {
         item.classList.remove(settings.stateSelected);
       }
@@ -43,6 +73,7 @@ const openDropdown = (el) => {
       matchInput(el);
     }
     el.classList.add(settings.stateOpened);
+    scrollIntoView(el);
   }
 };
 
@@ -57,18 +88,13 @@ const selectItem = (el, dir) => {
 
   const current = el.querySelector(`.${settings.stateSelected}`);
   if (current) {
-    if (dir === 'prev') {
-      const prev = current.previousElementSibling;
-      if (prev) {
-        current.classList.remove(settings.stateSelected);
-        prev.classList.add(settings.stateSelected);
-      }
-    } else if (dir === 'next') {
-      const next = current.nextElementSibling;
-      if (next) {
-        current.classList.remove(settings.stateSelected);
-        next.classList.add(settings.stateSelected);
-      }
+    const option = (dir === 'prev') ?
+      current.previousElementSibling :
+      current.nextElementSibling;
+    if (option) {
+      current.classList.remove(settings.stateSelected);
+      option.classList.add(settings.stateSelected);
+      scrollIntoView(option.closest(settings.selectorDropdown));
     }
   } else {
     el.querySelector(`${settings.selectorOption}:first-child`).classList.add(settings.stateSelected);
