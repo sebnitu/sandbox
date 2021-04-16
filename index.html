@@ -85,7 +85,7 @@
           
           <input class="input" type="text" />
           
-          <div style="position: relative;">
+          <div class="custom-select-dropdown" style="position: relative;">
             <input autocomplete="off" class="input input_type_select" type="text">
             <ul class="select-dropdown">
               <li class="select-dropdown__option">Option 1</li>
@@ -101,7 +101,7 @@
             </ul>
           </div>
 
-          <div style="position: relative;">
+          <div class="custom-select-dropdown" style="position: relative;">
             <input autocomplete="off" class="input input_type_select" type="text">
             <ul class="select-dropdown">
               <li class="select-dropdown__option">Option 1</li>
@@ -117,7 +117,7 @@
             </ul>
           </div>
 
-          <div style="position: relative;">
+          <div class="custom-select-dropdown" style="position: relative;">
             <input autocomplete="off" class="input input_type_select" type="text">
             <ul class="select-dropdown">
               <li class="select-dropdown__option">Option 1</li>
@@ -141,9 +141,14 @@
   </section>
 
   <script src="https://unpkg.com/vrembem"></script>
-  <script src="/assets/select-dropdown.js"></script>
-  <script>
-    // ...
+  <script type="module">
+    import { selectDropdown } from './assets/select-dropdown.js';
+    const dropdown = selectDropdown();
+    dropdown.clickOptionSetup();
+    const all = document.querySelectorAll('.custom-select-dropdown');
+    all.forEach((el) => {
+      dropdown.register(el);
+    });
   </script>
 </body>
 </html>

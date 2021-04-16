@@ -1,168 +1,237 @@
-const defaults = {
-  anchorPadding: 10,
-  selectorInput: 'input',
-  selectorDropdown: '.select-dropdown',
-  selectorOption: '.select-dropdown__option',
-  stateSelected: 'is-selected',
-  stateOpened: 'is-opened'
-};
+export const selectDropdown = (options) => {
 
-let settings = {};
+  const api = {};
 
-const anchorPositionStart = (el, anchor) => {
-  return anchor.offsetTop - (settings.anchorPadding);
-};
+  api.defaults = {
+    anchorPadding: 10,
+    clickOptionSetup: false,
+    selectorInput: '.input',
+    selectorDropdown: '.select-dropdown',
+    selectorOption: '.select-dropdown__option',
+    stateSelected: 'is-selected',
+    stateOpened: 'is-opened'
+  };
+  api.settings = { ...api.defaults, ...options };
 
-const anchorPositionEnd = (el, anchor) => {
-  return anchor.offsetTop - (el.offsetHeight - (
-    anchor.offsetHeight + settings.anchorPadding
-  ));
-};
+  const getInput = (dropdown) => {
+    return dropdown.parentElement.querySelector(api.settings.selectorInput);
+  };
 
-const anchorPositionNearest = (el, anchor) => {
-  const posTop = anchorPositionStart(el, anchor);
-  const posBot = anchorPositionEnd(el, anchor);
-  if (el.scrollTop > posTop) { return posTop; }
-  if (el.scrollTop < posBot) { return posBot; }
-  return false;
-};
+  const getOptions = (dropdown) => {
+    return dropdown.querySelectorAll(api.settings.selectorOption);
+  };
 
-const scrollIntoView = (el) => {
-  const anchor = el.querySelector(`.${settings.stateSelected}`);
-  if (!anchor) { return; }
-  const position = anchorPositionNearest(el, anchor);
-  if (!position) { return; }
-  el.scroll({
-    top: anchorPositionNearest(el, anchor)
-  });
-};
+  const getSelectedOption = (dropdown) => {
+    return dropdown.querySelector(`.${api.settings.stateSelected}`);
+  };
 
-const matchInput = (el) => {
-  const input = el.parentElement.querySelector(settings.selectorInput);
-  const value = input.value.trim();
-  if (value === '') {
-    const current = el.querySelectorAll(`.${settings.stateSelected}`);
-    current.forEach((el) => {
-      el.classList.remove(settings.stateSelected);
+  const anchorPositionStart = (anchor) => {
+    return anchor.offsetTop - (api.settings.anchorPadding);
+  };
+
+  const anchorPositionEnd = (el, anchor) => {
+    return anchor.offsetTop - (el.offsetHeight - (
+      anchor.offsetHeight + api.settings.anchorPadding
+    ));
+  };
+
+  const anchorPositionNearest = (el, anchor) => {
+    const posTop = anchorPositionStart(anchor);
+    const posBot = anchorPositionEnd(el, anchor);
+    if (el.scrollTop > posTop) { return posTop; }
+    if (el.scrollTop < posBot) { return posBot; }
+    return false;
+  };
+
+  const scrollIntoView = (el) => {
+    const anchor = getSelectedOption(el);
+    if (!anchor) { return; }
+    const position = anchorPositionNearest(el, anchor);
+    if (!position) { return; }
+    el.scroll({
+      top: anchorPositionNearest(el, anchor)
     });
-  } else {
-    const options = el.querySelectorAll(settings.selectorOption);
-    options.forEach((item) => {
-      if (value === item.innerText.trim()) {
-        item.classList.add(settings.stateSelected);
-        scrollIntoView(el);
-      } else {
-        item.classList.remove(settings.stateSelected);
+  };
+
+  const matchInput = (dropdown) => {
+    const input = getInput(dropdown);
+    const value = input.value.trim();
+    if (value === '') {
+      const selected = getSelectedOption(dropdown);
+      if (selected) {
+        selected.classList.remove(api.settings.stateSelected);
       }
-    });
-  }
-};
-
-const isOpened = (el) => {
-  return el.classList.contains(settings.stateOpened);
-};
-
-const isClosed = (el) => {
-  return !el.classList.contains(settings.stateOpened);
-};
-
-const openDropdown = (el) => {
-  const options = el.querySelectorAll(settings.selectorOption);
-  if (options.length) {
-    if (isClosed(el)) {
-      matchInput(el);
+    } else {
+      const options = dropdown.querySelectorAll(api.settings.selectorOption);
+      options.forEach((option) => {
+        if (value === option.innerText.trim()) {
+          option.classList.add(api.settings.stateSelected);
+          scrollIntoView(dropdown);
+        } else {
+          option.classList.remove(api.settings.stateSelected);
+        }
+      });
     }
-    el.classList.add(settings.stateOpened);
-    scrollIntoView(el);
-  }
-};
+  };
 
-const closeDropdown = (el) => {
-  el.classList.remove(settings.stateOpened);
-};
+  const isOpened = (dropdown) => {
+    return dropdown.classList.contains(api.settings.stateOpened);
+  };
 
-const selectItem = (el, dir) => {
-  if (isClosed(el)) { return; }
-  const options = el.querySelectorAll(settings.selectorOption);
-  if (!options.length) { return; }
+  const isClosed = (dropdown) => {
+    return !dropdown.classList.contains(api.settings.stateOpened);
+  };
 
-  const current = el.querySelector(`.${settings.stateSelected}`);
-  if (current) {
-    const option = (dir === 'prev') ?
-      current.previousElementSibling :
-      current.nextElementSibling;
-    if (option) {
-      current.classList.remove(settings.stateSelected);
-      option.classList.add(settings.stateSelected);
-      scrollIntoView(option.closest(settings.selectorDropdown));
+  const openDropdown = (dropdown) => {
+    if (isClosed(dropdown)) {
+      matchInput(dropdown);
     }
-  } else {
-    el.querySelector(`${settings.selectorOption}:first-child`).classList.add(settings.stateSelected);
-  }
-};
+    dropdown.classList.add(api.settings.stateOpened);
+    scrollIntoView(dropdown);
+    dropdown.dispatchEvent(new CustomEvent('select-dropdown:opened', {
+      detail: { input: getInput(dropdown) },
+      bubbles: true
+    }));
+  };
 
-const returnSelected = (el) => {
-  const current = el.querySelector(`.${settings.stateSelected}`);
-  if (current) {
-    const input = el.parentElement.querySelector(settings.selectorInput);
-    input.value = current.innerText;
-  }
-};
+  const closeDropdown = (dropdown) => {
+    dropdown.classList.remove(api.settings.stateOpened);
+  };
 
-const keyRouting = (el, event) => {
-  switch (event.key) {
-    case 'Enter':
-      returnSelected(el);
-      closeDropdown(el);
-      event.preventDefault();
-      return;
+  const navigateOptions = (dropdown, dir) => {
+    if (isClosed(dropdown)) { return; }
+    const options = getOptions(dropdown);
+    if (!options.length) { return; }
+    const selected = getSelectedOption(dropdown);
+    if (selected) {
+      const option = (dir === 'prev') ?
+        selected.previousElementSibling :
+        selected.nextElementSibling;
+      if (option) {
+        selected.classList.remove(api.settings.stateSelected);
+        option.classList.add(api.settings.stateSelected);
+        scrollIntoView(option.closest(api.settings.selectorDropdown));
+      }
+    } else {
+      const firstOption = dropdown.querySelector(
+        `${api.settings.selectorOption}:first-child`
+      );
+      firstOption.classList.add(api.settings.stateSelected);
+    }
+  };
 
-    case 'ArrowUp':
-      selectItem(el, 'prev');
-      openDropdown(el);
-      return;
+  const returnSelected = (dropdown) => {
+    if (isClosed(dropdown)) { return; }
+    const selected = getSelectedOption(dropdown);
+    const input = getInput(dropdown);
+    if (selected) {
+      input.value = selected.innerText.trim();
+      dropdown.dispatchEvent(new CustomEvent('select-dropdown:valid-selection', {
+        detail: { input: input },
+        bubbles: true
+      }));
+    }
+  };
 
-    case 'ArrowDown':
-      selectItem(el, 'next');
-      openDropdown(el);
-      return;
+  const clickOption = (option) => {
+    const dropdown = option.closest(api.settings.selectorDropdown);
+    const selected = getSelectedOption(dropdown);
+    if (selected) {
+      selected.classList.remove(api.settings.stateSelected);
+    }
+    option.classList.add(api.settings.stateSelected);
+    returnSelected(dropdown);
+  };
 
-    case 'Tab':
-      if (isOpened(el)) {
-        returnSelected(el);
-        closeDropdown(el);
+  const keyRouting = (dropdown, event) => {
+    switch (event.key) {
+      case 'Enter':
+        returnSelected(dropdown);
+        closeDropdown(dropdown);
         event.preventDefault();
-      }
-      return;
+        return;
 
-    case 'Escape':
-      closeDropdown(el);
-      event.preventDefault();
-      return;
+      case 'ArrowUp':
+        navigateOptions(dropdown, 'prev');
+        openDropdown(dropdown);
+        return;
 
-    default:
-      return;
-  }
-};
+      case 'ArrowDown':
+        navigateOptions(dropdown, 'next');
+        openDropdown(dropdown);
+        return;
 
-const init = (options) => {
-  settings = { ...defaults, ...options };
-  const selectDropdowns = document.querySelectorAll(settings.selectorDropdown);
-  selectDropdowns.forEach((el) => {
-    const input = el.parentElement.querySelector(settings.selectorInput);
+      case 'Tab':
+        if (isOpened(dropdown)) {
+          returnSelected(dropdown);
+          closeDropdown(dropdown);
+          event.preventDefault();
+        }
+        return;
+
+      case 'Escape':
+        closeDropdown(dropdown);
+        event.preventDefault();
+        return;
+
+      default:
+        return;
+    }
+  };
+
+  api.maybeOpenDropdown = (el) => {
+    const dropdown = el.querySelector(api.settings.selectorDropdown);
+    const input = getInput(dropdown);
+    if (document.activeElement === input) {
+      openDropdown(dropdown);
+    }
+  };
+
+  api.maybeCloseDropdown = (el) => {
+    const dropdown = el.querySelector(api.settings.selectorDropdown);
+    const options = getOptions(dropdown);
+    if (!options.length) {
+      closeDropdown(dropdown);
+    }
+  };
+
+  api.clickOptionSetup = (options) => {
+    api.settings = { ...api.defaults, ...api.settings, ...options };
+    if (!api.settings.clickOptionSetup) {
+      api.settings.clickOptionSetup = true;
+      document.addEventListener('click', (event) => {
+        const option = event.target.closest(api.settings.selectorOption);
+        if (option) {
+          clickOption(option);
+        }
+      });
+    }
+  };
+
+  api.register = (el, options) => {
+    api.settings = { ...api.defaults, ...api.settings, ...options };
+    const dropdown = el.querySelector(api.settings.selectorDropdown);
+    const input = getInput(dropdown);
     if (input && input.tagName === 'INPUT') {
+      input.addEventListener('click', () => {
+        openDropdown(dropdown);
+      });
       input.addEventListener('input', () => {
-        matchInput(el);
+        matchInput(dropdown);
       });
       input.addEventListener('focus', () => {
-        openDropdown(el);
+        openDropdown(dropdown);
       });
-      input.addEventListener('blur', () => {
-        closeDropdown(el);
+      input.addEventListener('blur', (event) => {
+        setTimeout(() => {
+          if (document.activeElement != event.target) {
+            closeDropdown(dropdown);
+          }
+        }, 200);
       });
-      input.addEventListener('keydown', keyRouting.bind(null, el));
+      input.addEventListener('keydown', keyRouting.bind(null, dropdown));
     }
-  });
-};
+  };
 
-init();
+  return api;
+};
