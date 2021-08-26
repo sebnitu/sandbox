@@ -6,6 +6,8 @@
   <title>Sandbox</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com/dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
+  <link rel="stylesheet" href="/assets/multi-select.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
@@ -32,9 +34,53 @@
     </div>
   </header>
 
+  <label id="label">Pick your poultry:</label>
+
+  <div class="wrapper" role="region" aria-label="options filter with selected options">
+    <button class="trigger" aria-controls="filter-popup" aria-expanded="false" aria-labelledby="label value">
+      <span class="value" id="value">Choose at least one</span>
+      <span class="fas fa-caret-down" aria-hidden="true"></span>
+    </button>
+
+    <div id="filter-popup" class="popup" role="region" aria-label="option filter">
+      <div class="sr-only">The following text field filters the results that follow as you type. Use Tab to access the results.</div>
+
+      <div class="text-field">
+        <input type="text" aria-label="Search" placeholder="Search ..." autocomplete="off">
+      </div>
+
+      <div class="results-count sr-only" aria-live="assertive"></div>
+
+      <ul class="results">
+        <li>
+          <label for="result-0">Brahma</label>
+          <input type="checkbox" id="result-0" value="brahma">
+        </li>
+        <li>
+          <label for="result-1">Bantam</label>
+          <input type="checkbox" id="result-1" value="bantam">
+        </li>
+        <li>
+          <label for="result-2">Cochin</label>
+          <input type="checkbox" id="result-2" value="cochin">
+        </li>
+        <li>
+          <label for="result-3">Jersey Giant</label>
+          <input type="checkbox" id="result-3" value="jersey-giant">
+        </li>
+        <li>
+          <label for="result-4">Orpington</label>
+          <input type="checkbox" id="result-4" value="orpington">
+        </li>
+      </ul>
+    </div>
+    
+    <div class="selected-tags" role="region" aria-label="Selected options"></div>
+  </div>
+
   <script src="https://unpkg.com/vrembem"></script>
-  <script>
-    console.log(vrembem);
+  <script type="module">
+    import './assets/multi-select.js';
   </script>
 </body>
 </html>
