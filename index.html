@@ -35,50 +35,44 @@
   </header>
 
   <section class="section">
-    <div class="section__container">
+    <div class="section__container gap-y-xl">
 
-      <label>Pick your poultry:</label>
-      
-      <div class="wrapper margin-top-sm" role="region" aria-label="Options filter with selected options">
-        <button class="trigger" aria-controls="filter-popup" aria-expanded="false" aria-labelledby="label value">
-          <span class="value" id="value">Choose at least one</span>
-          <span class="fas fa-caret-down" aria-hidden="true"></span>
-        </button>
-
-        <div id="filter-popup" class="popup" role="region" aria-label="option filter">
-          <div class="sr-only">The following text field filters the results that follow as you type. Use Tab to access the results.</div>
-
-          <div class="text-field">
-            <input type="text" aria-label="Search" placeholder="Search..." autocomplete="off">
+      <div class="gap-y-sm">
+        <label>Pick your poultry:</label>
+        <div class="wrapper" role="region" aria-label="Options filter with selected options">
+          <button data-popover-trigger class="button" aria-controls="filter-popover" aria-expanded="false" aria-labelledby="label value">
+            <span class="value" id="value">Choose at least one</span>
+            <span class="fas fa-caret-down" aria-hidden="true"></span>
+          </button>
+          <div data-popover id="filter-popover" class="popover" role="region" aria-label="option filter">
+            <div class="sr-only">The following text field filters the results that follow as you type. Use Tab to access the results.</div>
+            <input class="input input_filter" type="text" aria-label="Search" placeholder="Search..." autocomplete="off">
+            <div class="results-count sr-only" aria-live="assertive"></div>
+            <ul class="results">
+              <li>
+                <label for="result-0">Brahma</label>
+                <input type="checkbox" id="result-0" value="brahma">
+              </li>
+              <li>
+                <label for="result-1">Bantam</label>
+                <input type="checkbox" id="result-1" value="bantam">
+              </li>
+              <li>
+                <label for="result-2">Cochin</label>
+                <input type="checkbox" id="result-2" value="cochin">
+              </li>
+              <li>
+                <label for="result-3">Jersey Giant</label>
+                <input type="checkbox" id="result-3" value="jersey-giant">
+              </li>
+              <li>
+                <label for="result-4">Orpington</label>
+                <input type="checkbox" id="result-4" value="orpington">
+              </li>
+            </ul>
           </div>
-
-          <div class="results-count sr-only" aria-live="assertive"></div>
-
-          <ul class="results">
-            <li>
-              <label for="result-0">Brahma</label>
-              <input type="checkbox" id="result-0" value="brahma">
-            </li>
-            <li>
-              <label for="result-1">Bantam</label>
-              <input type="checkbox" id="result-1" value="bantam">
-            </li>
-            <li>
-              <label for="result-2">Cochin</label>
-              <input type="checkbox" id="result-2" value="cochin">
-            </li>
-            <li>
-              <label for="result-3">Jersey Giant</label>
-              <input type="checkbox" id="result-3" value="jersey-giant">
-            </li>
-            <li>
-              <label for="result-4">Orpington</label>
-              <input type="checkbox" id="result-4" value="orpington">
-            </li>
-          </ul>
+          <div class="selected-tags" role="region" aria-label="Selected options"></div>
         </div>
-        
-        <div class="selected-tags" role="region" aria-label="Selected options"></div>
       </div>
 
     </div>
@@ -86,7 +80,20 @@
 
   <script src="https://unpkg.com/vrembem"></script>
   <script type="module">
-    import './assets/multi-select.js';
+    import { filter } from './assets/multi-select.js';
+
+    const popover = new vrembem.Popover({ autoInit: true });
+
+    // Get the filter inputs
+    const filterInputs = document.querySelectorAll('.input_filter');
+
+    // Loop through inputs and apply filter method
+    filterInputs.forEach((input) => {
+      // Get the list
+      const list = input.querySelectorAll('.results');
+      // Pass the input and list to the filter function
+      filter(input, list);
+    });
   </script>
 </body>
 </html>
