@@ -11,13 +11,16 @@
     "url": "git+https://github.com/sebnitu/sandbox.git"
   },
   "author": {
-    "name" : "Sebastian Nitu",
-    "email" : "me@sebnitu.com",
-    "url" : "https://sebnitu.com"
+    "name": "Sebastian Nitu",
+    "email": "me@sebnitu.com",
+    "url": "https://sebnitu.com"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sebnitu/sandbox/issues"
   },
-  "homepage": "https://github.com/sebnitu/sandbox#readme"
+  "homepage": "https://github.com/sebnitu/sandbox#readme",
+  "dependencies": {
+    "inputmask": "^5.0.6"
+  }
 }
