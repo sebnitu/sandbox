@@ -39,55 +39,55 @@
           <p>Phone</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="phone" type="tel" value="" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000" />
+          <input class="input" data-input-mask="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000" />
         </div>
         <div class="grid__item span-3">
           <p>Phone w/ Extension</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="phone-ext" type="tel" value="" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000 x0000" />
+          <input class="input" data-input-mask="phone-ext" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000 x0000" />
         </div>
         <div class="grid__item span-3">
           <p>Mileage</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="mileage" type="text" value="" inputmode="numeric" pattern="[0-9]*" />
+          <input class="input" data-input-mask="mileage" type="text" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Date</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="date" type="text" value="" inputmode="numeric" pattern="[0-9]*" placeholder="MM-DD-YYYY" />
+          <input class="input" data-input-mask="date" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="MM-DD-YYYY" />
         </div>
         <div class="grid__item span-3">
           <p>SSN</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="ssn" type="text" value="" inputmode="numeric" pattern="[0-9]*" placeholder="000-00-0000" />
+          <input class="input" data-input-mask="ssn" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="000-00-0000" />
         </div>
         <div class="grid__item span-3">
           <p>Money</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="money" type="text" inputmode="numeric" pattern="[0-9]*" value="" />
+          <input class="input" data-input-mask="money" type="text" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Money w/ Cents</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="money-cents" type="text" inputmode="numeric" pattern="[0-9]*" value="" />
+          <input class="input" data-input-mask="money-cents" type="text" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Percentage</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="percent" type="number" min="0" max="100" value="" />
+          <input class="input" data-input-mask="percent" type="number" min="0" max="100" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Time</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="time" type="text" value="" placeholder="HH:MM" />
+          <input class="input" data-input-mask="time" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="HH:MM" />
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@
         max: 100,
         scale: 2,
         padFractionalZeros: true,
-        radix: '.',
+        radix: '.'
       },
       "money": {
         mask: Number,
@@ -133,7 +133,7 @@
         thousandsSeparator: ',',
         scale: 2,
         padFractionalZeros: true,
-        radix: '.',
+        radix: '.'
       },
       "date": {
         mask: "MM-DD-YYYY",
@@ -170,11 +170,11 @@
           }
         }
       }
-    }
+    };
 
     const els = document.querySelectorAll("[data-input-mask]");
     els.forEach((el) => {
-      const key = el.getAttribute('data-input-mask');
+      const key = el.getAttribute("data-input-mask");
       IMask(el, masks[key]);
     });
   </script>
