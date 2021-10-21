@@ -34,16 +34,149 @@
 
   <div class="section">
     <div class="section__container gap-y-sm">
-      <input class="input" data-input-mask type="text" value="" />
+      <div class="grid flex-align-center">
+        <div class="grid__item span-3">
+          <p>Phone</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="phone" type="tel" value="" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Phone w/ Extension</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="phone-ext" type="tel" value="" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000 x0000" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Mileage</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="mileage" type="text" value="" inputmode="numeric" pattern="[0-9]*" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Date</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="date" type="text" value="" inputmode="numeric" pattern="[0-9]*" placeholder="MM-DD-YYYY" />
+        </div>
+        <div class="grid__item span-3">
+          <p>SSN</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="ssn" type="text" value="" inputmode="numeric" pattern="[0-9]*" placeholder="000-00-0000" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Money</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="money" type="text" inputmode="numeric" pattern="[0-9]*" value="" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Money w/ Cents</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="money-cents" type="text" inputmode="numeric" pattern="[0-9]*" value="" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Percentage</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="percent" type="number" min="0" max="100" value="" />
+        </div>
+        <div class="grid__item span-3">
+          <p>Time</p>
+        </div>
+        <div class="grid__item span-9">
+          <input class="input" data-input-mask="time" type="text" value="" placeholder="HH:MM" />
+        </div>
+      </div>
     </div>
   </div>
 
   <script src="https://unpkg.com/vrembem"></script>
-  <script src="/node_modules/inputmask/dist/inputmask.js"></script>
+  <script src="https://unpkg.com/imask"></script>
   <script>
-    const im = new Inputmask("99-9999999");
-    im.mask("[data-input-mask]");
-    console.log(im);
+    const masks = {
+      "phone": {
+        mask: "(000) 000-0000"
+      },
+      "phone-ext": {
+        mask: "(000) 000-0000 [x0000]"
+      },
+      "ssn": {
+        mask: "000-00-0000"
+      },
+      "mileage": {
+        mask: Number,
+        min: 0,
+        max: 9999999,
+        thousandsSeparator: ','
+      },
+      "percent": {
+        mask: Number,
+        min: 0,
+        max: 100,
+        scale: 2,
+        padFractionalZeros: true,
+        radix: '.',
+      },
+      "money": {
+        mask: Number,
+        min: 0,
+        max: 999999,
+        thousandsSeparator: ','
+      },
+      "money-cents": {
+        mask: Number,
+        min: 0,
+        max: 999999.99,
+        thousandsSeparator: ',',
+        scale: 2,
+        padFractionalZeros: true,
+        radix: '.',
+      },
+      "date": {
+        mask: "MM-DD-YYYY",
+        blocks: {
+          MM: {
+            mask: IMask.MaskedRange,
+            from: 1,
+            to: 12
+          },
+          DD: {
+            mask: IMask.MaskedRange,
+            from: 1,
+            to: 31
+          },
+          YYYY: {
+            mask: IMask.MaskedRange,
+            from: 0,
+            to: 9999
+          }
+        }
+      },
+      "time": {
+        mask: "HH:MM",
+        blocks: {
+          HH: {
+            mask: IMask.MaskedRange,
+            from: 1,
+            to: 12
+          },
+          MM: {
+            mask: IMask.MaskedRange,
+            from: 0,
+            to: 59
+          }
+        }
+      }
+    }
+
+    const els = document.querySelectorAll("[data-input-mask]");
+    els.forEach((el) => {
+      const key = el.getAttribute('data-input-mask');
+      IMask(el, masks[key]);
+    });
   </script>
 </body>
 </html>

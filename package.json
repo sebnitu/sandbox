@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/sebnitu/sandbox/issues"
   },
-  "homepage": "https://github.com/sebnitu/sandbox#readme",
-  "dependencies": {
-    "inputmask": "^5.0.6"
-  }
+  "homepage": "https://github.com/sebnitu/sandbox#readme"
 }
