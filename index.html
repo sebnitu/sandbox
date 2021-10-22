@@ -23,7 +23,7 @@
           </li>
           <li class="breadcrumb__item">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/learning-input-mask">
+            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/learning-inputmask">
               <span>learning-input-mask</span>
             </a>
           </li>
@@ -39,55 +39,55 @@
           <p>Phone</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000" />
+          <input class="input" data-inputmask="phone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000" />
         </div>
         <div class="grid__item span-3">
           <p>Phone w/ Extension</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="phone-ext" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000 x0000" />
+          <input class="input" data-inputmask="phone-ext" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="(000) 000-0000 x0000" />
         </div>
         <div class="grid__item span-3">
           <p>Mileage</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="mileage" type="text" inputmode="numeric" pattern="[0-9]*" />
+          <input class="input" data-inputmask="mileage" type="text" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Date</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="date" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="MM-DD-YYYY" />
+          <input class="input" data-inputmask="date" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="MM-DD-YYYY" />
         </div>
         <div class="grid__item span-3">
           <p>SSN</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="ssn" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="000-00-0000" />
+          <input class="input" data-inputmask="ssn" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="000-00-0000" />
         </div>
         <div class="grid__item span-3">
           <p>Money</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="money" type="text" inputmode="numeric" pattern="[0-9]*" />
+          <input class="input" data-inputmask="money" type="text" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Money w/ Cents</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="money-cents" type="text" inputmode="numeric" pattern="[0-9]*" />
+          <input class="input" data-inputmask="money-cents" type="text" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Percentage</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="percent" type="number" min="0" max="100" inputmode="numeric" pattern="[0-9]*" />
+          <input class="input" data-inputmask="percent" type="number" min="0" max="100" inputmode="numeric" pattern="[0-9]*" />
         </div>
         <div class="grid__item span-3">
           <p>Time</p>
         </div>
         <div class="grid__item span-9">
-          <input class="input" data-input-mask="time" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="HH:MM" />
+          <input class="input" data-inputmask="time" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="HH:MM" />
         </div>
       </div>
     </div>
@@ -171,9 +171,9 @@
       }
     };
 
-    const els = document.querySelectorAll("[data-input-mask]");
+    const els = document.querySelectorAll("[data-inputmask]");
     els.forEach((el) => {
-      const key = el.getAttribute("data-input-mask");
+      const key = el.getAttribute("data-inputmask");
       IMask(el, masks[key]);
     });
   </script>
