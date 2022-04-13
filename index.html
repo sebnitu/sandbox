@@ -6,23 +6,85 @@
   <title>Sandbox</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com/dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
+  <style>
+
+    /**
+     * Default color scheme and dark preference.
+     */
+
+    :root {
+      color-scheme: light;
+      --background: #fff;
+      --background-header: #f5f5f5;
+      --border-color: rgba(0,0,0, 0.1);
+      --font-color: #111;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --background: #222;
+        --background-header: #111;
+        --border-color: rgba(255,255,255, 0.1);
+        --font-color: #fff;
+      }
+    }
+
+    /**
+     * Theme class overrides.
+     */
+
+    .theme-dark {
+      color-scheme: dark;
+      --background: #222;
+      --background-header: #111;
+      --border-color: rgba(255,255,255, 0.1);
+      --font-color: #fff;
+    }
+
+    .theme-light {
+      color-scheme: light;
+      --background: #fff;
+      --background-header: #f5f5f5;
+      --border-color: rgba(0,0,0, 0.1);
+      --font-color: #111;
+    }
+
+    /**
+     * Apply CSS variables.
+     */
+
+    body {
+      background: var(--background);
+      color: var(--font-color);
+    }
+
+    header {
+      background: var(--background-header);
+    }
+
+    .sep {
+      border-color: var(--border-color);
+    }
+
+  </style>
 </head>
 <body>
 
-  <header class="section background-shade">
+  <header class="section">
     <div class="section__container gap-y-sm">
       <h1 class="text-size-lg">Sandbox</h1>
       <p>A place to learn and test new things.</p>
       <div class="margin-top-lg">
         <ol class="breadcrumb">
           <li class="breadcrumb__item">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox">
               <span>sandbox</span>
             </a>
           </li>
           <li class="breadcrumb__item">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
             <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/prototype-dark-mode">
               <span>prototype-dark-mode</span>
             </a>
@@ -32,9 +94,109 @@
     </div>
   </header>
 
+  <main class="section">
+    <div class="section__container gap-y-xl">
+      
+      <div class="grid grid_stack_md">
+        <div class="grid__item">
+          <div class="type gap-y">
+            <p>This prototype is to demonstrate the implementation of a dark-mode feature. This feature handles a few things in the following ways:</p>
+
+            <ol>
+              <li>Setup of light and dark mode styles using CSS variables (custom properties).</li>
+              <li>Applies the OS default preference and setup an event listener for when that changes.</li>
+              <li>Provide users a method to override their OS default by explicitly setting light or dark modes.</li>
+              <li>Save a users selection in local storage and apply this state on initial page load.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="grid__item">
+          <div class="border radius padding gap-y">
+            <form id="user-preference" class="gap-y-sm">
+              <label for="theme-preference" class="display-block">Theme Preference:</label>
+              <select id="theme-preference" class="input input_type_select" name="theme">
+                <option value="default" selected>Default</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </form>
+            <hr class="sep">
+            <p>OS default: <code id="current-mode" class="code">...</code></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
   <script src="https://unpkg.com/vrembem"></script>
   <script>
-    console.log(vrembem);
+
+    /**
+     * Theme switching functionality.
+     */
+
+    // Setup local storage proxy.
+    const store = vrembem.core.localStore('profile');
+
+    // Get the form element.
+    const form = document.querySelector('#user-preference');
+
+    // If a local store theme preference exists...
+    if (store.theme) {
+      // Update the form element to the stored value.
+      form.querySelector(`select[name="theme"]`).value = store.theme;
+    }
+
+    // Initial theme handler run.
+    handleThemePreference(form);
+
+    // Run theme handler whenever form inputs change.
+    form.addEventListener('change', (event) => {
+      handleThemePreference(form);
+    });
+
+    // Handle theme preference.
+    function handleThemePreference(form) {
+      // Get the theme value from the form data.
+      const value = new FormData(form).get('theme');
+
+      // If a theme value is set...
+      if (value) {
+        // Remove existing theme classes.
+        document.body.classList.remove('theme-light', 'theme-dark');
+
+        // If the value isnt default, add the selected theme class.
+        if (value != 'default') {
+          document.body.classList.add('theme-' + value);
+        }
+
+        // Save our preference to the local storage proxy.
+        store.theme = value;
+      }
+    }
+
+    /**
+     * Display OS scheme preference.
+     */
+
+    // Get the current mode element.
+    const el = document.querySelector('#current-mode');
+
+    // Setup the media query list.
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Initial run of color scheme handler.
+    handleColorScheme(mql);
+
+    // Setup event listener.
+    mql.addEventListener('change', handleColorScheme);
+
+    // Handle color scheme match check.
+    function handleColorScheme(event) {
+      el.innerText = event.matches ? "dark" : "light";
+    }
+    
   </script>
 </body>
 </html>
