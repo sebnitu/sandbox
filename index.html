@@ -13,20 +13,20 @@
      */
 
     :root {
-      color-scheme: light;
-      --background: #fff;
-      --background-header: #f5f5f5;
-      --border-color: rgba(0,0,0, 0.1);
-      --font-color: #111;
+      --default-color-scheme: light;
+      --default-background: white;
+      --default-color: black;
+      --default-btn-background: darkslateblue;
+      --default-btn-color: white;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        color-scheme: dark;
-        --background: #222;
-        --background-header: #111;
-        --border-color: rgba(255,255,255, 0.1);
-        --font-color: #fff;
+        --default-color-scheme: dark;
+        --default-background: #222;
+        --default-color: white;
+        --default-btn-background: plum;
+        --default-btn-color: black;
       }
     }
 
@@ -34,20 +34,33 @@
      * Theme class overrides.
      */
 
-    .theme-dark {
-      color-scheme: dark;
-      --background: #222;
-      --background-header: #111;
-      --border-color: rgba(255,255,255, 0.1);
-      --font-color: #fff;
+    .theme-default {
+      --color-scheme: initial;
+      --background: initial;
+      --color: initial;
+      --btn-background: initial;
+      --btn-color: initial;
     }
 
     .theme-light {
-      color-scheme: light;
-      --background: #fff;
-      --background-header: #f5f5f5;
-      --border-color: rgba(0,0,0, 0.1);
-      --font-color: #111;
+      --color-scheme: light;
+      --background: white;
+      --color: black;
+      --btn-background: darkslateblue;
+      --btn-color: white;
+    }
+
+    .theme-dark {
+      --color-scheme: dark;
+      --background: #222;
+      --color: white;
+      --btn-background: plum;
+      --btn-color: black;
+    }
+
+    .theme-accent {
+      --background: aquamarine;
+      --color: black;
     }
 
     /**
@@ -55,79 +68,195 @@
      */
 
     body {
-      background: var(--background);
-      color: var(--font-color);
+      color-scheme: var(--color-scheme, var(--default-color-scheme));
+      background: var(--background, var(--default-background));
+      color: var(--color, var(--default-color));
     }
 
-    header {
-      background: var(--background-header);
+    .panel {
+      color-scheme: var(--color-scheme, var(--default-color-scheme));
+      background: var(--background, var(--default-background));
+      color: var(--color, var(--default-color));
     }
 
-    .sep {
-      border-color: var(--border-color);
+    .btn {
+      background: var(--btn-background, var(--default-btn-background));
+      color: var(--btn-color, var(--default-btn-color));
+    }
+
+    .topbar {
+      background: var(--background, var(--default-background));
+      color: var(--color, var(--default-color));
+    }
+
+    /**
+     * Layout styles
+     */
+
+    .topbar {
+      padding: 1em;
+    }
+
+    .page {
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .group {
+      flex-grow: 1;
+      width: 100%;
+      display: flex;
+    }
+
+    .panel {
+      flex: 1 1 100%;
+      padding: 4em;
+    }
+
+    .btn {
+      padding: 0.5em 1.5em;
     }
 
   </style>
 </head>
 <body>
 
-  <header class="section">
-    <div class="section__container gap-y-sm">
-      <h1 class="text-size-lg">Sandbox</h1>
-      <p>A place to learn and test new things.</p>
-      <div class="margin-top-lg">
-        <ol class="breadcrumb">
-          <li class="breadcrumb__item">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox">
-              <span>sandbox</span>
-            </a>
-          </li>
-          <li class="breadcrumb__item">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-            <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/prototype-dark-mode">
-              <span>prototype-dark-mode</span>
-            </a>
-          </li>
-        </ol>
+  <div class="page">
+    <div class="topbar theme-accent">
+      <div class="level flex-gap-x-xl">
+        <form id="user-preference">
+          <select id="theme-preference" class="input input_type_select" name="theme">
+            <option value="default" selected>Default</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </form>
+        <p>OS default: <code id="current-mode" class="code">...</code></p>
       </div>
     </div>
-  </header>
 
-  <main class="section">
-    <div class="section__container gap-y-xl">
-      
-      <div class="grid grid_stack_md">
-        <div class="grid__item">
-          <div class="type gap-y">
-            <p>This prototype is to demonstrate the implementation of a dark-mode feature. This feature handles a few things in the following ways:</p>
+    <div class="group">
+      <div class="panel gap-y">
+        <p>Panel 1</p>
+        <p>
+          <button class="btn">Button</button>
+        </p>
+        <p class="gap-x">
+          <input type="text">
+          <input type="checkbox">
+          <span>
+            <input type="radio" name="radio">
+            <input type="radio" name="radio">
+          </span>
+        </p>
+      </div>
+      <div class="panel gap-y theme-dark">
+        <p>Panel 2</p>
+        <p>
+          <button class="btn">Button</button>
+        </p>
+        <p class="gap-x">
+          <input type="text">
+          <input type="checkbox">
+          <span>
+            <input type="radio" name="radio">
+            <input type="radio" name="radio">
+          </span>
+        </p>
+      </div>
+    </div>
+    
+    <div class="group theme-dark">
+      <div class="panel gap-y">
+        <p>Panel 3</p>
+        <p>
+          <button class="btn">Button</button>
+        </p>
+        <p class="gap-x">
+          <input type="text">
+          <input type="checkbox">
+          <span>
+            <input type="radio" name="radio">
+            <input type="radio" name="radio">
+          </span>
+        </p>
+      </div>
+      <div class="panel gap-y theme-default">
+        <p>Panel 4</p>
+        <p>
+          <button class="btn">Button</button>
+        </p>
+        <p class="gap-x">
+          <input type="text">
+          <input type="checkbox">
+          <span>
+            <input type="radio" name="radio">
+            <input type="radio" name="radio">
+          </span>
+        </p>
+      </div>
+    </div>
 
-            <ol>
-              <li>Setup of light and dark mode styles using CSS variables (custom properties).</li>
-              <li>Applies the OS default preference and setup an event listener for when that changes.</li>
-              <li>Provide users a method to override their OS default by explicitly setting light or dark modes.</li>
-              <li>Save a users selection in local storage and apply this state on initial page load.</li>
-            </ol>
-          </div>
-        </div>
-        <div class="grid__item">
-          <div class="border radius padding gap-y">
-            <form id="user-preference" class="gap-y-sm">
-              <label for="theme-preference" class="display-block">Theme Preference:</label>
-              <select id="theme-preference" class="input input_type_select" name="theme">
-                <option value="default" selected>Default</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-              </select>
-            </form>
-            <hr class="sep">
-            <p>OS default: <code id="current-mode" class="code">...</code></p>
-          </div>
+    <div class="group theme-default">
+      <div class="panel gap-y theme-light">
+        <p>Panel 5</p>
+        <p>
+          <button class="btn">Button</button>
+        </p>
+        <p class="gap-x">
+          <input type="text">
+          <input type="checkbox">
+          <span>
+            <input type="radio" name="radio">
+            <input type="radio" name="radio">
+          </span>
+        </p>
+        <div class="panel gap-y theme-default">
+          <p>Panel 6</p>
+          <p>
+            <button class="btn">Button</button>
+          </p>
+          <p class="gap-x">
+            <input type="text">
+            <input type="checkbox">
+            <span>
+              <input type="radio" name="radio">
+              <input type="radio" name="radio">
+            </span>
+          </p>
         </div>
       </div>
-
+      <div class="panel gap-y theme-dark">
+        <p>Panel 7</p>
+        <p>
+          <button class="btn">Button</button>
+        </p>
+        <p class="gap-x">
+          <input type="text">
+          <input type="checkbox">
+          <span>
+            <input type="radio" name="radio">
+            <input type="radio" name="radio">
+          </span>
+        </p>
+        <div class="panel gap-y theme-default">
+          <p>Panel 8</p>
+          <p>
+            <button class="btn">Button</button>
+          </p>
+          <p class="gap-x">
+            <input type="text">
+            <input type="checkbox">
+            <span>
+              <input type="radio" name="radio">
+              <input type="radio" name="radio">
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
-  </main>
+  </div>
 
   <script src="https://unpkg.com/vrembem"></script>
   <script>
@@ -164,11 +293,11 @@
       // If a theme value is set...
       if (value) {
         // Remove existing theme classes.
-        document.body.classList.remove('theme-light', 'theme-dark');
+        document.documentElement.classList.remove('theme-light', 'theme-dark');
 
         // If the value isnt default, add the selected theme class.
         if (value != 'default') {
-          document.body.classList.add('theme-' + value);
+          document.documentElement.classList.add('theme-' + value);
         }
 
         // Save our preference to the local storage proxy.
@@ -196,7 +325,7 @@
     function handleColorScheme(event) {
       el.innerText = event.matches ? "dark" : "light";
     }
-    
+
   </script>
 </body>
 </html>
