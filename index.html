@@ -14,19 +14,19 @@
 
     :root {
       --default-color-scheme: light;
-      --default-background: white;
       --default-color: black;
-      --default-btn-background: darkslateblue;
-      --default-btn-color: white;
+      --default-background: white;
+      --default-background-depth-1: #F5F7F8;
+      --default-background-depth-2: #ECEFF1;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
         --default-color-scheme: dark;
-        --default-background: #222;
         --default-color: white;
-        --default-btn-background: plum;
-        --default-btn-color: black;
+        --default-background: #263238;
+        --default-background-depth-1: #172227;
+        --default-background-depth-2: #141D22;
       }
     }
 
@@ -36,26 +36,26 @@
 
     .theme-default {
       --color-scheme: initial;
-      --background: initial;
       --color: initial;
-      --btn-background: initial;
-      --btn-color: initial;
+      --background: initial;
+      --background-depth-1: initial;
+      --background-depth-2: initial;
     }
 
     .theme-light {
       --color-scheme: light;
-      --background: white;
       --color: black;
-      --btn-background: darkslateblue;
-      --btn-color: white;
+      --background: white;
+      --background-depth-1: #F5F7F8;
+      --background-depth-2: #ECEFF1;
     }
 
     .theme-dark {
       --color-scheme: dark;
-      --background: #222;
       --color: white;
-      --btn-background: plum;
-      --btn-color: black;
+      --background: #263238;
+      --background-depth-1: #172227;
+      --background-depth-2: #141D22;
     }
 
     /**
@@ -68,254 +68,143 @@
       color: var(--color, var(--default-color));
     }
 
-    .panel {
-      color-scheme: var(--color-scheme, var(--default-color-scheme));
-      background: var(--background, var(--default-background));
-      color: var(--color, var(--default-color));
-    }
-
-    .btn {
-      background: var(--btn-background, var(--default-btn-background));
-      color: var(--btn-color, var(--default-btn-color));
-    }
-
     /**
-     * Layout styles
+     * Drawer styles
      */
 
-    .topbar {
-      padding: 1em;
-      background: aquamarine;
-      color: black;
+    .drawer.drawer_inline.is-opening:not(.drawer_modal) ~ .drawer-main,
+    .drawer.drawer_inline.is-opened:not(.drawer_modal) ~ .drawer-main {
+      margin-left: 0;
     }
 
-    .page {
-      display: flex;
-      height: 100vh;
-      flex-direction: column;
+    .drawer_inline.is-opened:not(.drawer_modal) {
+      position: relative;
+      flex: 1 1 0;
+      width: auto;
     }
 
-    .group {
-      flex-grow: 1;
+    .drawer_inline:not(.drawer_modal) .drawer__dialog {
       width: 100%;
-      display: flex;
     }
 
-    .panel {
-      flex: 1 1 100%;
-      padding: 4em;
+    .drawer-main {
+      flex: 1 1 0;
     }
 
-    .btn {
-      padding: 0.5em 1.5em;
+    #drawer-pz-occupations .drawer__dialog,
+    #drawer-pz-occupations .dialog__header,
+    #drawer-pz-occupations .dialog__body,
+    #drawer-pz-occupations .dialog__footer {
+      background: var(--background-depth-2, var(--default-background-depth-2));
+    }
+
+    #drawer-pz-traits .drawer__dialog,
+    #drawer-pz-traits .dialog__header,
+    #drawer-pz-traits .dialog__body,
+    #drawer-pz-traits .dialog__footer {
+      background: var(--background-depth-1, var(--default-background-depth-1));
     }
 
   </style>
 </head>
 <body>
 
-  <div class="page">
-    <div class="topbar">
-      <div class="level flex-gap-x-xl">
-        <form id="user-preference">
-          <select id="theme-preference" class="input input_type_select" name="theme">
-            <option value="default" selected>Default</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        </form>
-        <p>OS default: <code id="current-mode" class="code">...</code></p>
+  <div class="drawer-frame">
+
+    <aside id="drawer-pz-occupations" class="drawer drawer_inline is-opened" data-drawer-breakpoint="md">
+      <div class="drawer__dialog">
+        <div class="dialog__header">
+          <h2 id="dialog-title">Occupations drawer...</h2>
+        </div>
+        <div class="dialog__body">
+          <p id="dialog-description">...</p>
+        </div>
+        <div class="dialog__footer">
+          ...
+        </div>
+      </div>
+    </aside>
+
+    <aside id="drawer-pz-traits" class="drawer drawer_inline is-opened" data-drawer-breakpoint="lg">
+      <div class="drawer__dialog">
+        <div class="dialog__header">
+          <h2 id="dialog-title">Traits drawer...</h2>
+        </div>
+        <div class="dialog__body">
+          <p id="dialog-description">...</p>
+        </div>
+        <div class="dialog__footer">
+          ...
+        </div>
+      </div>
+    </aside>
+
+    <div class="drawer-main">
+      <div class="padding gap-y">
+        <p>This is the main content area...</p>
+        <p><button class="link" data-drawer-toggle="drawer-pz-occupations">Add occupations</button></p>
+        <p><button class="link" data-drawer-toggle="drawer-pz-traits">Add traits</button></p>
       </div>
     </div>
 
-    <div class="group">
-      <div class="panel gap-y">
-        <p>Panel 1</p>
-        <p>
-          <button class="btn">Button</button>
-        </p>
-        <p class="gap-x">
-          <input type="text">
-          <input type="checkbox">
-          <span>
-            <input type="radio" name="radio">
-            <input type="radio" name="radio">
-          </span>
-        </p>
-      </div>
-      <div class="panel gap-y theme-dark">
-        <p>Panel 2</p>
-        <p>
-          <button class="btn">Button</button>
-        </p>
-        <p class="gap-x">
-          <input type="text">
-          <input type="checkbox">
-          <span>
-            <input type="radio" name="radio">
-            <input type="radio" name="radio">
-          </span>
-        </p>
-      </div>
-    </div>
-    
-    <div class="group theme-dark">
-      <div class="panel gap-y">
-        <p>Panel 3</p>
-        <p>
-          <button class="btn">Button</button>
-        </p>
-        <p class="gap-x">
-          <input type="text">
-          <input type="checkbox">
-          <span>
-            <input type="radio" name="radio">
-            <input type="radio" name="radio">
-          </span>
-        </p>
-      </div>
-      <div class="panel gap-y theme-default">
-        <p>Panel 4</p>
-        <p>
-          <button class="btn">Button</button>
-        </p>
-        <p class="gap-x">
-          <input type="text">
-          <input type="checkbox">
-          <span>
-            <input type="radio" name="radio">
-            <input type="radio" name="radio">
-          </span>
-        </p>
-      </div>
-    </div>
-
-    <div class="group theme-default">
-      <div class="panel gap-y theme-light">
-        <p>Panel 5</p>
-        <p>
-          <button class="btn">Button</button>
-        </p>
-        <p class="gap-x">
-          <input type="text">
-          <input type="checkbox">
-          <span>
-            <input type="radio" name="radio">
-            <input type="radio" name="radio">
-          </span>
-        </p>
-        <div class="panel gap-y theme-default">
-          <p>Panel 6</p>
-          <p>
-            <button class="btn">Button</button>
-          </p>
-          <p class="gap-x">
-            <input type="text">
-            <input type="checkbox">
-            <span>
-              <input type="radio" name="radio">
-              <input type="radio" name="radio">
-            </span>
-          </p>
-        </div>
-      </div>
-      <div class="panel gap-y theme-dark">
-        <p>Panel 7</p>
-        <p>
-          <button class="btn">Button</button>
-        </p>
-        <p class="gap-x">
-          <input type="text">
-          <input type="checkbox">
-          <span>
-            <input type="radio" name="radio">
-            <input type="radio" name="radio">
-          </span>
-        </p>
-        <div class="panel gap-y theme-default">
-          <p>Panel 8</p>
-          <p>
-            <button class="btn">Button</button>
-          </p>
-          <p class="gap-x">
-            <input type="text">
-            <input type="checkbox">
-            <span>
-              <input type="radio" name="radio">
-              <input type="radio" name="radio">
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
+
 
   <script src="https://unpkg.com/vrembem"></script>
   <script>
+    /**
+     * Drawer script setup
+     */
+
+    const drawer = new vrembem.Drawer();
+
+    drawer.init().then((result) => {
+      console.log('VB:Drawer => ', result);
+    });
 
     /**
      * Theme switching functionality.
      */
 
-    // Setup local storage proxy.
-    const store = vrembem.core.localStore('profile');
-
     // Get the form element.
     const form = document.querySelector('#user-preference');
+    if (form) {
+      // Setup local storage proxy.
+      const store = vrembem.core.localStore('profile');
 
-    // If a local store theme preference exists...
-    if (store.theme) {
-      // Update the form element to the stored value.
-      form.querySelector(`select[name="theme"]`).value = store.theme;
-    }
-
-    // Initial theme handler run.
-    handleThemePreference(form);
-
-    // Run theme handler whenever form inputs change.
-    form.addEventListener('change', (event) => {
-      handleThemePreference(form);
-    });
-
-    // Handle theme preference.
-    function handleThemePreference(form) {
-      // Get the theme value from the form data.
-      const value = new FormData(form).get('theme');
-
-      // If a theme value is set...
-      if (value) {
-        // Remove existing theme classes.
-        document.documentElement.classList.remove('theme-light', 'theme-dark');
-
-        // If the value isnt default, add the selected theme class.
-        if (value != 'default') {
-          document.documentElement.classList.add('theme-' + value);
-        }
-
-        // Save our preference to the local storage proxy.
-        store.theme = value;
+      // If a local store theme preference exists...
+      if (store.theme) {
+        // Update the form element to the stored value.
+        form.querySelector(`select[name="theme"]`).value = store.theme;
       }
-    }
 
-    /**
-     * Display OS scheme preference.
-     */
+      // Initial theme handler run.
+      handleThemePreference(form);
 
-    // Get the current mode element.
-    const el = document.querySelector('#current-mode');
+      // Run theme handler whenever form inputs change.
+      form.addEventListener('change', (event) => {
+        handleThemePreference(form);
+      });
 
-    // Setup the media query list.
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+      // Handle theme preference.
+      function handleThemePreference(form) {
+        // Get the theme value from the form data.
+        const value = new FormData(form).get('theme');
 
-    // Initial run of color scheme handler.
-    handleColorScheme(mql);
+        // If a theme value is set...
+        if (value) {
+          // Remove existing theme classes.
+          document.documentElement.classList.remove('theme-light', 'theme-dark');
 
-    // Setup event listener.
-    mql.addEventListener('change', handleColorScheme);
+          // If the value isnt default, add the selected theme class.
+          if (value != 'default') {
+            document.documentElement.classList.add('theme-' + value);
+          }
 
-    // Handle color scheme match check.
-    function handleColorScheme(event) {
-      el.innerText = event.matches ? "dark" : "light";
+          // Save our preference to the local storage proxy.
+          store.theme = value;
+        }
+      }
     }
 
   </script>
