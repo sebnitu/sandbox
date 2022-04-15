@@ -58,11 +58,6 @@
       --btn-color: black;
     }
 
-    .theme-accent {
-      --background: aquamarine;
-      --color: black;
-    }
-
     /**
      * Apply CSS variables.
      */
@@ -84,17 +79,14 @@
       color: var(--btn-color, var(--default-btn-color));
     }
 
-    .topbar {
-      background: var(--background, var(--default-background));
-      color: var(--color, var(--default-color));
-    }
-
     /**
      * Layout styles
      */
 
     .topbar {
       padding: 1em;
+      background: aquamarine;
+      color: black;
     }
 
     .page {
@@ -123,7 +115,7 @@
 <body>
 
   <div class="page">
-    <div class="topbar theme-accent">
+    <div class="topbar">
       <div class="level flex-gap-x-xl">
         <form id="user-preference">
           <select id="theme-preference" class="input input_type_select" name="theme">
