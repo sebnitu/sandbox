@@ -12,35 +12,27 @@
      * Default color scheme and dark preference.
      */
 
-    :root {
-      --default-color-scheme: light;
-      --default-background: white;
-      --default-color: black;
-      --default-btn-background: darkslateblue;
-      --default-btn-color: white;
+    :root, .theme-root {
+      --color-scheme: light;
+      --background: white;
+      --color: black;
+      --btn-background: darkslateblue;
+      --btn-color: white;
     }
 
     @media (prefers-color-scheme: dark) {
-      :root {
-        --default-color-scheme: dark;
-        --default-background: #222;
-        --default-color: white;
-        --default-btn-background: plum;
-        --default-btn-color: black;
+      :root, .theme-root {
+        --color-scheme: dark;
+        --background: #222;
+        --color: white;
+        --btn-background: plum;
+        --btn-color: black;
       }
     }
 
     /**
      * Theme class overrides.
      */
-
-    .theme-default {
-      --color-scheme: initial;
-      --background: initial;
-      --color: initial;
-      --btn-background: initial;
-      --btn-color: initial;
-    }
 
     .theme-light {
       --color-scheme: light;
@@ -63,20 +55,20 @@
      */
 
     body {
-      color-scheme: var(--color-scheme, var(--default-color-scheme));
-      background: var(--background, var(--default-background));
-      color: var(--color, var(--default-color));
+      color-scheme: var(--color-scheme);
+      background: var(--background);
+      color: var(--color);
     }
 
     .panel {
-      color-scheme: var(--color-scheme, var(--default-color-scheme));
-      background: var(--background, var(--default-background));
-      color: var(--color, var(--default-color));
+      color-scheme: var(--color-scheme);
+      background: var(--background);
+      color: var(--color);
     }
 
     .btn {
-      background: var(--btn-background, var(--default-btn-background));
-      color: var(--btn-color, var(--default-btn-color));
+      background: var(--btn-background);
+      color: var(--btn-color);
     }
 
     /**
@@ -130,7 +122,7 @@
 
     <div class="group">
       <div class="panel gap-y">
-        <p>Panel 1</p>
+        <p>No theme</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -144,7 +136,7 @@
         </p>
       </div>
       <div class="panel gap-y theme-dark">
-        <p>Panel 2</p>
+        <p>theme-dark</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -161,7 +153,7 @@
     
     <div class="group theme-dark">
       <div class="panel gap-y">
-        <p>Panel 3</p>
+        <p>theme-dark</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -174,8 +166,8 @@
           </span>
         </p>
       </div>
-      <div class="panel gap-y theme-default">
-        <p>Panel 4</p>
+      <div class="panel gap-y theme-root">
+        <p>theme-root</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -190,9 +182,9 @@
       </div>
     </div>
 
-    <div class="group theme-default">
+    <div class="group theme-root">
       <div class="panel gap-y theme-light">
-        <p>Panel 5</p>
+        <p>theme-light</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -204,8 +196,8 @@
             <input type="radio" name="radio">
           </span>
         </p>
-        <div class="panel gap-y theme-default">
-          <p>Panel 6</p>
+        <div class="panel gap-y theme-root">
+          <p>theme-root</p>
           <p>
             <button class="btn">Button</button>
           </p>
@@ -220,7 +212,7 @@
         </div>
       </div>
       <div class="panel gap-y theme-dark">
-        <p>Panel 7</p>
+        <p>theme-dark</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -232,8 +224,8 @@
             <input type="radio" name="radio">
           </span>
         </p>
-        <div class="panel gap-y theme-default">
-          <p>Panel 8</p>
+        <div class="panel gap-y theme-root">
+          <p>theme-root</p>
           <p>
             <button class="btn">Button</button>
           </p>
@@ -287,7 +279,7 @@
         // Remove existing theme classes.
         document.documentElement.classList.remove('theme-light', 'theme-dark');
 
-        // If the value isnt default, add the selected theme class.
+        // If the value isn't default, add the selected theme class.
         if (value != 'default') {
           document.documentElement.classList.add('theme-' + value);
         }
