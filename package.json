@@ -4,20 +4,26 @@
   "description": "A place to learn and test new things.",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'Error: no test specified'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebnitu/sandbox.git"
   },
   "author": {
-    "name" : "Sebastian Nitu",
-    "email" : "me@sebnitu.com",
-    "url" : "https://sebnitu.com"
+    "name": "Sebastian Nitu",
+    "email": "me@sebnitu.com",
+    "url": "https://sebnitu.com"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sebnitu/sandbox/issues"
   },
-  "homepage": "https://github.com/sebnitu/sandbox#readme"
+  "homepage": "https://github.com/sebnitu/sandbox#readme",
+  "devDependencies": {
+    "vite": "^4.1.2",
+    "vrembem-vite-test": "^0.0.1"
+  }
 }
