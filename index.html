@@ -103,6 +103,17 @@
     }
 
   </style>
+
+  <script src="https://unpkg.com/vrembem"></script>
+  <script>
+    // Setup local storage proxy.
+    const store = vrembem.core.localStore('profile');
+
+    // Set the body class.
+    if (store.get('theme') != 'default') {
+      document.documentElement.classList.add('theme-' + store.get('theme'));
+    }
+  </script>
 </head>
 <body>
 
@@ -135,8 +146,8 @@
           </span>
         </p>
       </div>
-      <div class="panel gap-y theme-dark">
-        <p>theme-dark</p>
+      <div class="panel gap-y theme-root">
+        <p>theme-root</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -166,8 +177,8 @@
           </span>
         </p>
       </div>
-      <div class="panel gap-y theme-root">
-        <p>theme-root</p>
+      <div class="panel gap-y theme-light">
+        <p>theme-light</p>
         <p>
           <button class="btn">Button</button>
         </p>
@@ -197,7 +208,7 @@
           </span>
         </p>
         <div class="panel gap-y theme-root">
-          <p>theme-root</p>
+          <p>nested theme-root</p>
           <p>
             <button class="btn">Button</button>
           </p>
@@ -225,7 +236,7 @@
           </span>
         </p>
         <div class="panel gap-y theme-root">
-          <p>theme-root</p>
+          <p>nested theme-root</p>
           <p>
             <button class="btn">Button</button>
           </p>
@@ -242,23 +253,18 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/vrembem"></script>
   <script>
-
     /**
      * Theme switching functionality.
      */
-
-    // Setup local storage proxy.
-    const store = vrembem.core.localStore('profile');
 
     // Get the form element.
     const form = document.querySelector('#user-preference');
 
     // If a local store theme preference exists...
-    if (store.theme) {
+    if (store.get('theme')) {
       // Update the form element to the stored value.
-      form.querySelector(`select[name="theme"]`).value = store.theme;
+      form.querySelector(`select[name="theme"]`).value = store.get('theme');
     }
 
     // Initial theme handler run.
@@ -285,7 +291,7 @@
         }
 
         // Save our preference to the local storage proxy.
-        store.theme = value;
+        store.set('theme', value);
       }
     }
 
