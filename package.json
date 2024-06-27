@@ -5,22 +5,23 @@
   "main": "index.js",
   "scripts": {
     "serve": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebnitu/sandbox.git"
   },
+  "bugs": {
+    "url": "https://github.com/sebnitu/sandbox/issues"
+  },
+  "homepage": "https://github.com/sebnitu/sandbox#readme",
+  "license": "MIT",
   "author": {
     "name": "Sebastian Nitu",
     "email": "me@sebnitu.com",
     "url": "https://sebnitu.com"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sebnitu/sandbox/issues"
-  },
-  "homepage": "https://github.com/sebnitu/sandbox#readme",
   "devDependencies": {
     "vite": "^5.3.1"
   }
