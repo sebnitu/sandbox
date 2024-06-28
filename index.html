@@ -6,7 +6,7 @@
   <title>Sandbox</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com/dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
-  <link rel="stylesheet" href="/assets/multi-select.css">
+  <link rel="stylesheet" href="/src/multi-select.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -40,11 +40,11 @@
       <div class="gap-y-sm">
         <label>Pick your favorite numbers:</label>
         <div class="multi-select gap-y" role="region" aria-label="Options filter with selected options">
-          <button data-popover-trigger class="button multi-select__button" aria-controls="filter-popover" aria-label="Options filter toggle">
+          <button class="button multi-select__button" aria-controls="filter-popover-1" aria-label="Options filter toggle">
             <span class="multi-select__button-text">Choose at least one</span>
             <span class="fas fa-caret-down" aria-hidden="true"></span>
           </button>
-          <div data-popover class="popover filter" role="region" aria-label="Option filter">
+          <div id="filter-popover-1" class="popover filter" role="region" aria-label="Option filter">
             <div class="sr-only">The following text field filters the results that follow as you type. Use Tab to access the results.</div>
             <input class="input filter__input" type="text" aria-label="Search" placeholder="Search..." autocomplete="off">
             <div class="filter__status sr-only" aria-live="assertive"></div>
@@ -100,11 +100,11 @@
       <div class="gap-y-sm">
         <label>Pick your favorite numbers:</label>
         <div class="multi-select gap-y" role="region" aria-label="Options filter with selected options">
-          <button data-popover-trigger class="button multi-select__button" aria-controls="filter-popover" aria-label="Options filter toggle">
+          <button class="button multi-select__button" aria-controls="filter-popover-2" aria-label="Options filter toggle">
             <span class="multi-select__button-text">Choose at least one</span>
             <span class="fas fa-caret-down" aria-hidden="true"></span>
           </button>
-          <div data-popover class="popover filter" role="region" aria-label="Option filter">
+          <div id="filter-popover-2" class="popover filter" role="region" aria-label="Option filter">
             <div class="sr-only">The following text field filters the results that follow as you type. Use Tab to access the results.</div>
             <input class="input filter__input" type="text" aria-label="Search" placeholder="Search..." autocomplete="off">
             <div class="filter__status sr-only" aria-live="assertive"></div>
@@ -162,8 +162,8 @@
 
   <script src="https://unpkg.com/vrembem"></script>
   <script type="module">
-    import { multiSelect } from './assets/multi-select.js';
-    import { filter } from './assets/filter.js';
+    import { multiSelect } from './src/multi-select.js';
+    import { filter } from './src/filter.js';
 
     const popover = new vrembem.Popover({ autoInit: true });
 
