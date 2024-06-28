@@ -6,7 +6,7 @@
   <title>Sandbox</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://sebnitu.com/dist/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
-  <link rel="stylesheet" href="/assets/select-dropdown.css">
+  <link rel="stylesheet" href="/src/select-dropdown.css">
 </head>
 <body>
 
@@ -142,7 +142,7 @@
 
   <script src="https://unpkg.com/vrembem"></script>
   <script type="module">
-    import { selectDropdown } from './assets/select-dropdown.js';
+    import { selectDropdown } from './src/select-dropdown.js';
     const dropdown = selectDropdown();
     dropdown.clickOptionSetup();
     const all = document.querySelectorAll('.custom-select-dropdown');
