@@ -2,6 +2,11 @@ const list = document.querySelector(".sortable");
 const items = document.querySelectorAll(".sortable__item");
 
 items.forEach((item) => {
+
+  /**
+   * Click events
+   */
+
   item.addEventListener("click", () => {
     if (item.classList.contains("is-clicked")) return;
     item.classList.add("is-clicked");
@@ -9,6 +14,10 @@ items.forEach((item) => {
       item.classList.remove("is-clicked");
     }, 1000);
   });
+
+  /**
+   *  Drag events
+   */
 
   item.addEventListener(("dragstart"), () => {
     list.classList.add("event-dragging");
@@ -46,8 +55,42 @@ items.forEach((item) => {
     // Swap the two elements in the dom.
     swap(dragging, item);
   });
+
+  /**
+   * Touch events
+   */
+
+  item.addEventListener("touchstart", () => {
+    console.log("touchstart");
+    list.classList.add("event-dragging");
+    item.classList.add("is-dragging");
+  });
+
+  item.addEventListener("touchend", () => {
+    console.log("touchend");
+    list.classList.remove("event-dragging");
+    item.classList.remove("is-dragging");
+  });
+
+  item.addEventListener("touchcancel", () => {
+    console.log("touchcancel");
+    list.classList.remove("event-dragging");
+    item.classList.remove("is-dragging");
+  });
+
+  item.addEventListener("touchmove", () => {
+    console.log("touchmove");
+    list.classList.add("event-dragging");
+    item.classList.add("is-dragging");
+  });
+
 });
 
+/**
+ * Swaps the position of two elements in the DOM.
+ * @param {HTMLElement} node1 
+ * @param {HTMLElement} node2 
+ */
 function swap(node1, node2) {
   // Create marker element and insert it where node1 is.
   const temp = document.createElement("div");
