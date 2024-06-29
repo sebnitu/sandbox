@@ -17,6 +17,14 @@ items.forEach((item) => {
     handle.addEventListener("mouseup", () => {
       item.setAttribute("draggable", "false");
     });
+
+    handle.addEventListener("focus", () => {
+      item.setAttribute("draggable", "true");
+    });
+  
+    handle.addEventListener("blur", () => {
+      item.setAttribute("draggable", "false");
+    });
   }
 
   /**
