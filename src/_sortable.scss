@@ -24,16 +24,24 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  inset: 0 0 0 auto;
+  inset: 1px 1px 1px auto;
   width: 3rem;
-  background-color: pink;
+  border-left: 1px solid rgb(0 0 0 / 10%);
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
   cursor: grab;
+
+  &:hover {
+    background-color: rgb(0 0 0 / 5%);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .sortable__content {
-  padding: 1em;
+  padding: 1rem calc(1rem + 3rem) 1rem 1rem;
   border: 1px solid rgb(0 0 0 / 10%);
   background-color: white;
   border-radius: 0.25rem;
