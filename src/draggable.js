@@ -1,5 +1,6 @@
 const list = document.querySelector(".sortable");
 const items = document.querySelectorAll(".sortable__item");
+const duration = 150;
 let dragging = null;
 let reqSave = false;
 
@@ -66,16 +67,16 @@ items.forEach((item) => {
     // Compare the top position of dragging to the center location of item.
     if (dragging.getBoundingClientRect().top > item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2) {
       item.before(dragging);
+      animateShiftUp(dragging, fromRect, toRect);
+      animateShiftDown(item, toRect, fromRect);
     } else {
       item.after(dragging);
+      animateShiftUp(item, toRect, fromRect);
+      animateShiftDown(dragging, fromRect, toRect);
     }
 
     // Set our save tracker to true.
     reqSave = true;
-
-    // Animate the items
-    animateSortable(dragging, fromRect, toRect, 150);
-    animateSortable(item, toRect, fromRect, 150);
   });
 
   item.addEventListener(("dragover"), (event) => {
@@ -104,14 +105,22 @@ items.forEach((item) => {
    */
 });
 
-function animateSortable(target, fromRect, toRect, duration) {
+function animateShiftUp(...args) {
+  animateShift(...args);
+}
+
+function animateShiftDown(...args) {
+  animateShift(...args, "-");
+}
+
+function animateShift(target, fromRect, toRect, direction = "") {
   const maxX = target.offsetWidth + parseInt(getComputedStyle(target.parentElement).gap);
   const maxY = target.offsetHeight + parseInt(getComputedStyle(target.parentElement).gap);
-  let translateX = limit(fromRect.left - toRect.left, maxX);
-  let translateY = limit(fromRect.top - toRect.top, maxY);
+  let translateX = limit(Math.abs(fromRect.left - toRect.left), maxX);
+  let translateY = limit(Math.abs(fromRect.top - toRect.top), maxY);
 
   const transformAnimation = [
-    { transform: `translate3D(${translateX}px, ${translateY}px, 0)` },
+    { transform: `translate3D(${direction}${translateX}px, ${direction}${translateY}px, 0)` },
     { transform: "translate3d(0, 0, 0)" },
   ];
 
@@ -119,9 +128,5 @@ function animateSortable(target, fromRect, toRect, duration) {
 }
 
 function limit(value, max) {
-  if (value > 0) {
-    return (value > max) ? max : value;
-  } else {
-    return (value < (max * -1)) ? max : value;
-  }
+  return (value > max) ? max : value;
 }
