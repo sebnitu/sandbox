@@ -98,34 +98,34 @@ items.forEach((item) => {
    * Touch events
    */
   
-  handle.addEventListener("touchstart", () => {
-    console.log("touchstart");
-    item.setAttribute("draggable", "true");
-    list.classList.add("event-dragging");
-    item.classList.add("is-dragging");
-    dragging = item;
-  });
+  // handle.addEventListener("touchstart", () => {
+  //   console.log("touchstart");
+  //   item.setAttribute("draggable", "true");
+  //   list.classList.add("event-dragging");
+  //   item.classList.add("is-dragging");
+  //   dragging = item;
+  // });
 
-  handle.addEventListener("touchend", (event) => {
-    console.log("touchend", event, event.clientX, event.clientY);
-    item.setAttribute("draggable", "false");
-    list.classList.remove("event-dragging");
-    item.classList.remove("is-dragging");
-    dragging = null;
-    if (reqSave) {
-      console.log("Save order");
-      reqSave = false;
-    }
-  });
+  // handle.addEventListener("touchend", (event) => {
+  //   console.log("touchend", event, event.clientX, event.clientY);
+  //   item.setAttribute("draggable", "false");
+  //   list.classList.remove("event-dragging");
+  //   item.classList.remove("is-dragging");
+  //   dragging = null;
+  //   if (reqSave) {
+  //     console.log("Save order");
+  //     reqSave = false;
+  //   }
+  // });
 
-  handle.addEventListener("touchmove", (event) => {
-    event.preventDefault();
-    console.log("touchmove");
-  });
+  // handle.addEventListener("touchmove", (event) => {
+  //   event.preventDefault();
+  //   console.log("touchmove");
+  // });
 
-  handle.addEventListener("touchcancel", () => {
-    console.log("touchcancel");
-  });
+  // handle.addEventListener("touchcancel", () => {
+  //   console.log("touchcancel");
+  // });
 });
 
 function animateShiftUp(...args) {
@@ -139,8 +139,8 @@ function animateShiftDown(...args) {
 function animateShift(target, fromRect, toRect, direction = "") {
   const maxX = target.offsetWidth + parseInt(getComputedStyle(target.parentElement).gap);
   const maxY = target.offsetHeight + parseInt(getComputedStyle(target.parentElement).gap);
-  let translateX = limit(Math.abs(fromRect.left - toRect.left), maxX);
-  let translateY = limit(Math.abs(fromRect.top - toRect.top), maxY);
+  let translateX = limit((fromRect.left - toRect.left), maxX);
+  let translateY = limit((fromRect.top - toRect.top), maxY);
 
   const transformAnimation = [
     { transform: `translate3D(${direction}${translateX}px, ${direction}${translateY}px, 0)` },
@@ -151,5 +151,6 @@ function animateShift(target, fromRect, toRect, direction = "") {
 }
 
 function limit(value, max) {
+  value = Math.abs(value);
   return (value > max) ? max : value;
 }
