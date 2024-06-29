@@ -36,11 +36,16 @@ items.forEach((item) => {
     dragging = null;
   });
 
-  item.addEventListener(("dragenter"), (event) => {
+  item.addEventListener(("dragenter"), () => {
+    // Don't do anything if it's the thing being dragged.
+    if (item === dragging) return;
+    
     // Compare the top position of dragging to the center location of item.
     if (dragging.getBoundingClientRect().top > item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2) {
+      console.log("Shift items up...");
       item.before(dragging);
     } else {
+      console.log("Shift items down...");
       item.after(dragging);
     }
   });
