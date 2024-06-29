@@ -1,15 +1,11 @@
-import { sortNodes } from "./sortNodes";
-import { swapNodes } from "./swapNodes";
-
 const list = document.querySelector(".sortable");
 const items = document.querySelectorAll(".sortable__item");
+let dragging = null;
 
 items.forEach((item) => {
 
-  /**
-   * Click events
-   */
-
+  // Click event
+  // Used to test that click are not being blocked.
   item.addEventListener("click", () => {
     if (item.classList.contains("is-clicked")) return;
     item.classList.add("is-clicked");
@@ -18,26 +14,35 @@ items.forEach((item) => {
     }, 1000);
   });
 
-  /**
-   *  Drag events
-   */
+  // TODO: Catch the "canceled" drop event
+  // Drag events
+  // HTMLElement: drag
+  // HTMLElement: dragend
+  // HTMLElement: dragenter
+  // HTMLElement: dragleave
+  // HTMLElement: dragover
+  // HTMLElement: dragstart
+  // HTMLElement: drop
 
   item.addEventListener(("dragstart"), () => {
     list.classList.add("event-dragging");
     item.classList.add("is-dragging");
+    dragging = item;
   });
 
   item.addEventListener(("dragend"), () => {
     list.classList.remove("event-dragging");
     item.classList.remove("is-dragging");
+    dragging = null;
   });
 
   item.addEventListener(("dragenter"), (event) => {
-    item.classList.add("is-dragover");
-  });
-
-  item.addEventListener(("dragleave"), (event) => {
-    item.classList.remove("is-dragover");
+    // Compare the top position of dragging to the center location of item.
+    if (dragging.getBoundingClientRect().top > item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2) {
+      item.before(dragging);
+    } else {
+      item.after(dragging);
+    }
   });
 
   item.addEventListener(("dragover"), (event) => {
@@ -49,42 +54,15 @@ items.forEach((item) => {
     // Prevent default action (open as link for some elements).
     event.preventDefault();
 
-    // Get the element being dragged.
-    const dragging = list.querySelector(".is-dragging");
-
-    // Remove all active dragover class.
-    item.classList.remove("is-dragover");
-
-    // Swap the two elements in the dom.
-    swapNodes(dragging, item);
+    // Do action to save order of items here.
+    console.log("Save order");
   });
 
-  /**
-   * Touch events
-   */
-
-  item.addEventListener("touchstart", () => {
-    console.log("touchstart");
-    list.classList.add("event-dragging");
-    item.classList.add("is-dragging");
-  });
-
-  item.addEventListener("touchend", () => {
-    console.log("touchend");
-    list.classList.remove("event-dragging");
-    item.classList.remove("is-dragging");
-  });
-
-  item.addEventListener("touchcancel", () => {
-    console.log("touchcancel");
-    list.classList.remove("event-dragging");
-    item.classList.remove("is-dragging");
-  });
-
-  item.addEventListener("touchmove", () => {
-    console.log("touchmove");
-    list.classList.add("event-dragging");
-    item.classList.add("is-dragging");
-  });
+  // TODO: Add support for touch events
+  // Touch events
+  // Element: touchcancel
+  // Element: touchend
+  // Element: touchmove
+  // Element: touchstart
 
 });
