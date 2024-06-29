@@ -1,11 +1,15 @@
 const list = document.querySelector(".sortable");
 const items = document.querySelectorAll(".sortable__item");
 let dragging = null;
+let reqSave = false;
 
 items.forEach((item) => {
 
-  // Click event
-  // Used to test that click are not being blocked.
+  /**
+   * Click events
+   * Used to test that click are not being blocked.
+   */
+
   item.addEventListener("click", () => {
     if (item.classList.contains("is-clicked")) return;
     item.classList.add("is-clicked");
@@ -14,15 +18,9 @@ items.forEach((item) => {
     }, 1000);
   });
 
-  // TODO: Catch the "canceled" drop event
-  // Drag events
-  // HTMLElement: drag
-  // HTMLElement: dragend
-  // HTMLElement: dragenter
-  // HTMLElement: dragleave
-  // HTMLElement: dragover
-  // HTMLElement: dragstart
-  // HTMLElement: drop
+  /**
+   * Drag events
+   */
 
   item.addEventListener(("dragstart"), () => {
     list.classList.add("event-dragging");
@@ -34,20 +32,36 @@ items.forEach((item) => {
     list.classList.remove("event-dragging");
     item.classList.remove("is-dragging");
     dragging = null;
+    if (reqSave) {
+      console.log("Save order");
+      reqSave = false;
+    }
   });
 
   item.addEventListener(("dragenter"), () => {
     // Don't do anything if it's the thing being dragged.
     if (item === dragging) return;
+
+    // Don't do anything if item is currently animating.
+    if (item.getAnimations().length) return;
+
+    // Get the rects before moving items.
+    const fromRect = dragging.getBoundingClientRect();
+    const toRect = item.getBoundingClientRect();
     
     // Compare the top position of dragging to the center location of item.
     if (dragging.getBoundingClientRect().top > item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2) {
-      console.log("Shift items up...");
       item.before(dragging);
     } else {
-      console.log("Shift items down...");
       item.after(dragging);
     }
+
+    // Set our save tracker to true.
+    reqSave = true;
+
+    // Animate the items
+    animateSortable(dragging, fromRect, toRect, 150);
+    animateSortable(item, toRect, fromRect, 150);
   });
 
   item.addEventListener(("dragover"), (event) => {
@@ -61,13 +75,39 @@ items.forEach((item) => {
 
     // Do action to save order of items here.
     console.log("Save order");
+    reqSave = false;
   });
 
-  // TODO: Add support for touch events
-  // Touch events
-  // Element: touchcancel
-  // Element: touchend
-  // Element: touchmove
-  // Element: touchstart
-
+  /**
+   * Touch events
+   * 
+   * TODO: Add support for touch events
+   * Element: touchcancel
+   * Element: touchend
+   * Element: touchmove
+   * Element: touchstart
+   */
+  
 });
+
+function animateSortable(target, fromRect, toRect, duration) {
+  const maxX = target.offsetWidth + parseInt(getComputedStyle(target.parentElement).gap);
+  const maxY = target.offsetHeight + parseInt(getComputedStyle(target.parentElement).gap);
+  let translateX = limit(fromRect.left - toRect.left, maxX);
+  let translateY = limit(fromRect.top - toRect.top, maxY);
+
+  const transformAnimation = [
+    { transform: `translate3D(${translateX}px, ${translateY}px, 0)` },
+    { transform: "translate3d(0, 0, 0)" },
+  ];
+
+  target.animate(transformAnimation, { duration, easing: "ease" });
+}
+
+function limit(value, max) {
+  if (value > 0) {
+    return (value > max) ? max : value;
+  } else {
+    return (value < (max * -1)) ? max : value;
+  }
+}
