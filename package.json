@@ -6,7 +6,9 @@
   "scripts": {
     "serve": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist --cname sandbox.sebnitu.com"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "url": "https://sebnitu.com"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "vite": "^5.3.1"
   }
 }
