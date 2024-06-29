@@ -1,2 +1,2 @@
 import "./src/app.scss";
-import "./src/draggable";
+import "./src/sortable";
