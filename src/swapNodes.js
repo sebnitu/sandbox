@@ -3,7 +3,7 @@
  * @param {HTMLElement} node1 
  * @param {HTMLElement} node2 
  */
-function swapNodes(node1, node2) {
+export function swapNodes(node1, node2) {
   // Create marker element and insert it where node1 is.
   const temp = document.createElement("div");
   node1.parentNode.insertBefore(temp, node1);
@@ -17,5 +17,3 @@ function swapNodes(node1, node2) {
   // Remove temporary marker node.
   temp.parentNode.removeChild(temp);
 }
-
-export { swapNodes };
