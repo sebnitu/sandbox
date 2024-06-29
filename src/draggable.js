@@ -96,13 +96,36 @@ items.forEach((item) => {
 
   /**
    * Touch events
-   * 
-   * TODO: Add support for touch events
-   * Element: touchcancel
-   * Element: touchend
-   * Element: touchmove
-   * Element: touchstart
    */
+  
+  handle.addEventListener("touchstart", () => {
+    console.log("touchstart");
+    item.setAttribute("draggable", "true");
+    list.classList.add("event-dragging");
+    item.classList.add("is-dragging");
+    dragging = item;
+  });
+
+  handle.addEventListener("touchend", (event) => {
+    console.log("touchend", event, event.clientX, event.clientY);
+    item.setAttribute("draggable", "false");
+    list.classList.remove("event-dragging");
+    item.classList.remove("is-dragging");
+    dragging = null;
+    if (reqSave) {
+      console.log("Save order");
+      reqSave = false;
+    }
+  });
+
+  handle.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    console.log("touchmove");
+  });
+
+  handle.addEventListener("touchcancel", () => {
+    console.log("touchcancel");
+  });
 });
 
 function animateShiftUp(...args) {
