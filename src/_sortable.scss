@@ -13,11 +13,23 @@
 .sortable__item {
   position: relative;
   z-index: 2;
-  cursor: move;
 
   &.is-dragging {
     z-index: 1;
   }
+}
+
+.sortable__handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 3rem;
+  background-color: pink;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  cursor: grab;
 }
 
 .sortable__content {

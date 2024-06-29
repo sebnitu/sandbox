@@ -4,6 +4,19 @@ let dragging = null;
 let reqSave = false;
 
 items.forEach((item) => {
+  // Get the handle element and toggle draggable on item if it exists.
+  const handle = item.querySelector(".sortable__handle");
+  if (handle) {
+    item.setAttribute("draggable", "false");
+
+    handle.addEventListener("mousedown", () => {
+      item.setAttribute("draggable", "true");
+    });
+  
+    handle.addEventListener("mouseup", () => {
+      item.setAttribute("draggable", "false");
+    });
+  }
 
   /**
    * Click events
@@ -34,6 +47,7 @@ items.forEach((item) => {
     dragging = null;
     if (reqSave) {
       console.log("Save order");
+      if (handle) item.setAttribute("draggable", "false");
       reqSave = false;
     }
   });
@@ -75,6 +89,7 @@ items.forEach((item) => {
 
     // Do action to save order of items here.
     console.log("Save order");
+    if (handle) item.setAttribute("draggable", "false");
     reqSave = false;
   });
 
@@ -87,7 +102,6 @@ items.forEach((item) => {
    * Element: touchmove
    * Element: touchstart
    */
-  
 });
 
 function animateSortable(target, fromRect, toRect, duration) {
