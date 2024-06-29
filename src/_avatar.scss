@@ -4,8 +4,8 @@
   align-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  background: hsl(0 0 0 / 10%);
+  background: var(--avatar-color, rgb(0 0 0 / 10%));
   border-radius: 4rem;
-  outline: 1px solid hsl(0 0 0 / 10%);
+  outline: 1px solid rgb(0 0 0 / 10%);
   outline-offset: 3px;
 }
