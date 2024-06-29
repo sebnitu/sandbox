@@ -4,8 +4,9 @@
   align-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  background: var(--avatar-color, rgb(0 0 0 / 10%));
+  background: var(--avatar-color, var(--vb-border-color));
   border-radius: 4rem;
-  outline: 1px solid rgb(0 0 0 / 10%);
+  outline: 1px solid var(--vb-border-color-dark);
   outline-offset: 3px;
+  color: var(--vb-background);
 }
