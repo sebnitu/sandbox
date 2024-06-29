@@ -12,7 +12,12 @@
 
 .sortable__item {
   position: relative;
+  z-index: 2;
   cursor: move;
+
+  &.is-dragging {
+    z-index: 1;
+  }
 }
 
 .sortable__content {
