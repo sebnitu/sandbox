@@ -1,3 +1,4 @@
+import { sortNodes } from "./sortNodes";
 import { swapNodes } from "./swapNodes";
 
 const list = document.querySelector(".sortable");
