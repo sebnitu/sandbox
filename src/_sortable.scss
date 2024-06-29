@@ -3,4 +3,40 @@
   flex-direction: column;
   gap: 1rem;
   list-style: none;
+
+  // Disable pointer events for all children when dragging event is active.
+  &.event-dragging .sortable__item * {
+    pointer-events: none;
+  }
+}
+
+.sortable__item {
+  border: 1px solid rgb(0 0 0 / 10%);
+  background-color: white;
+  border-radius: 0.25rem;
+  transition: background-color 0.5s ease-out;
+  cursor: move;
+
+  &.is-dragover {
+    border-color: red;
+  }
+
+  &.is-dragging {
+    border-color: blue;
+
+    .sortable__content {
+      opacity: 0.25;
+    }
+  }
+
+  &.is-clicked {
+    transition: none;
+    background-color: lightyellow;
+  }
+}
+
+.sortable__content {
+  transition: opacity 0.1s linear;
+  padding: 1em;
+  opacity: 1;
 }
