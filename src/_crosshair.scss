@@ -1,0 +1,32 @@
+.crosshair {
+  position: fixed;
+  z-index: 100;
+  top: -9999px;
+  left: -9999px;
+  width: 15px;
+  height: 15px;
+  background-color: hsl(from magenta h s l / 20%);
+  border-radius: 15px;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: magenta;
+  }
+
+  &::before {
+    width: 1px;
+    height: 25px;
+    top: -5px;
+    left: 7px;
+  }
+
+  &::after {
+    width: 25px;
+    height: 1px;
+    top: 7px;
+    left: -5px;
+  }
+}

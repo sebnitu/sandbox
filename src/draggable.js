@@ -1,11 +1,28 @@
 const list = document.querySelector(".sortable");
-const items = document.querySelectorAll(".sortable__item");
+const items = list.querySelectorAll(".sortable__item");
 const duration = 150;
 let dragging = null;
 let reqSave = false;
 
 items.forEach((item) => {
-  // Get the handle element and toggle draggable on item if it exists.
+  
+  /**
+   * Click events
+   * Used to test that click are not being blocked.
+   */
+
+  item.addEventListener("click", () => {
+    if (item.classList.contains("is-clicked")) return;
+    item.classList.add("is-clicked");
+    setTimeout(() => {
+      item.classList.remove("is-clicked");
+    }, 1000);
+  });
+  
+  /**
+   * Handle and draggable toggle
+   */
+
   const handle = item.querySelector(".sortable__handle");
   if (handle) {
     item.setAttribute("draggable", "false");
@@ -26,19 +43,6 @@ items.forEach((item) => {
       item.setAttribute("draggable", "false");
     });
   }
-
-  /**
-   * Click events
-   * Used to test that click are not being blocked.
-   */
-
-  item.addEventListener("click", () => {
-    if (item.classList.contains("is-clicked")) return;
-    item.classList.add("is-clicked");
-    setTimeout(() => {
-      item.classList.remove("is-clicked");
-    }, 1000);
-  });
 
   /**
    * Drag events
@@ -106,35 +110,86 @@ items.forEach((item) => {
    * Touch events
    */
   
-  handle.addEventListener("touchstart", (event) => {
-    console.log("touchstart", event, event.clientX, event.clientY);
-    item.setAttribute("draggable", "true");
+  handle.addEventListener("touchstart", () => {
+    console.log("touchstart");
     list.classList.add("event-dragging");
     item.classList.add("is-dragging");
     dragging = item;
   });
 
+  handle.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    updateCrosshair(event.changedTouches[0]);
+
+    // Find out where the touchend stopped.
+    const listRect = list.getBoundingClientRect();
+
+    // Check if touchend stopped inside the list box.
+    if (isInside(event.changedTouches[0], listRect)) {
+      const item = [...items].find((item) => {
+        return isInside(event.changedTouches[0], item.getBoundingClientRect());
+      });
+
+      // Guard if we're not inside an item.
+      if (!item) return;
+
+      // Get the rects before moving items.
+      const fromRect = dragging.getBoundingClientRect();
+      const toRect = item.getBoundingClientRect();
+
+      // Compare the top position of dragging to the center location of item.
+      if (dragging.getBoundingClientRect().top > item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2) {
+        item.before(dragging);
+        animateShiftUp(dragging, fromRect, toRect);
+        animateShiftDown(item, toRect, fromRect);
+      } else {
+        item.after(dragging);
+        animateShiftUp(item, toRect, fromRect);
+        animateShiftDown(dragging, fromRect, toRect);
+      }
+
+      // Set our save tracker to true.
+      reqSave = true;
+    }
+  });
+
   handle.addEventListener("touchend", (event) => {
-    console.log("touchend", event, event.clientX, event.clientY);
-    item.setAttribute("draggable", "false");
+    console.log("touchend");
     list.classList.remove("event-dragging");
     item.classList.remove("is-dragging");
     dragging = null;
+
+    // Save if required.
     if (reqSave) {
       console.log("Save order");
+      item.setAttribute("draggable", "false");
       reqSave = false;
     }
   });
 
-  handle.addEventListener("touchmove", (event) => {
-    event.preventDefault();
-    console.log("touchmove", event, event.clientX, event.clientY);
-  });
-
   handle.addEventListener("touchcancel", (event) => {
     console.log("touchcancel", event);
+    list.classList.remove("event-dragging");
+    item.classList.remove("is-dragging");
+    dragging = null;
+
+    // Save if required.
+    if (reqSave) {
+      console.log("Save order");
+      item.setAttribute("draggable", "false");
+      reqSave = false;
+    }
   });
 });
+
+function isInside(point, rect) {
+  return (
+    point.clientX > rect.left && 
+    point.clientX < rect.right &&
+    point.clientY > rect.top &&
+    point.clientY < rect.bottom
+  );
+}
 
 function animateShiftUp(...args) {
   animateShift(...args);
@@ -161,4 +216,11 @@ function animateShift(target, fromRect, toRect, direction = "") {
 function limit(value, max) {
   value = Math.abs(value);
   return (value > max) ? max : value;
+}
+
+const crosshair = document.querySelector(".crosshair");
+
+function updateCrosshair(point) {
+  crosshair.style.top = point.clientY + "px";
+  crosshair.style.left = point.clientX + "px";
 }
