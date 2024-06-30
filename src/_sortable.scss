@@ -34,7 +34,7 @@
   cursor: grab;
 
   &:active {
-    background-color: var(--vb-primary-95);
+    background-color: var(--vb-background-dark);
     cursor: grabbing;
   }
 }
