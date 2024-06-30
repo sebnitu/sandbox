@@ -53,7 +53,6 @@
   }
 
   .is-dragging > & {
-    // border-color: blue;
     outline: 3px dashed blue;
     background-color: var(--vb-background-dark);
     opacity: 0.5;
@@ -65,7 +64,6 @@
   }
 
   .is-touching > & {
-    // border-color: green;
     outline: 3px dashed green;
     background-color: var(--vb-background-dark);
     opacity: 1;
@@ -76,6 +74,6 @@
   }
 
   .is-clicked > & {
-    background-color: var(--vb-primary-95);
+    background-color: var(--vb-background-dark);
   }
 }
