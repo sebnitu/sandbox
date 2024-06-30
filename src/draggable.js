@@ -5,10 +5,9 @@ let dragging = null;
 let reqSave = false;
 
 items.forEach((item) => {
-  
   /**
-   * Click events
-   * Used to test that click are not being blocked.
+   * Click event
+   * Used to test that clicks are not being blocked by drag or touch events.
    */
 
   item.addEventListener("click", () => {
