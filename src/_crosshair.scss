@@ -1,32 +1,43 @@
+:root {
+  --crosshair-size: 15px;
+  --crosshair-line-length: 25px;
+  --crosshair-line-thickness: 1px;
+  --crosshair-color: magenta;
+  --crosshair-x: -9999px;
+  --crosshair-y: -9999px;
+  --crosshair-z: 9999;
+}
+
 .crosshair {
   position: fixed;
-  z-index: 100;
-  top: -9999px;
-  left: -9999px;
-  width: 15px;
-  height: 15px;
-  background-color: hsl(from magenta h s l / 20%);
-  border-radius: 15px;
+  z-index: var(--crosshair-z);
+  top: var(--crosshair-y);
+  left: var(--crosshair-x);
+  width: var(--crosshair-size);
+  height: var(--crosshair-size);
+  background-color: hsl(from var(--crosshair-color) h s l / 20%);
+  border-radius: var(--crosshair-size);
+  transform: translate(calc(var(--crosshair-size) * -0.5), calc(var(--crosshair-size) * -0.5));
+}
 
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    background-color: magenta;
-  }
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: var(--crosshair-color);
+}
 
-  &::before {
-    width: 1px;
-    height: 25px;
-    top: -5px;
-    left: 7px;
-  }
+.crosshair::before {
+  width: var(--crosshair-line-thickness);
+  height: var(--crosshair-line-length);
+  top: calc(calc(var(--crosshair-size) - var(--crosshair-line-length)) * 0.5);
+  left: calc(calc(var(--crosshair-size) - var(--crosshair-line-thickness)) * 0.5);
+}
 
-  &::after {
-    width: 25px;
-    height: 1px;
-    top: 7px;
-    left: -5px;
-  }
+.crosshair::after {
+  width: var(--crosshair-line-length);
+  height: var(--crosshair-line-thickness);
+  top: calc(calc(var(--crosshair-size) - var(--crosshair-line-thickness)) * 0.5);
+  left: calc(calc(var(--crosshair-size) - var(--crosshair-line-length)) * 0.5);
 }
