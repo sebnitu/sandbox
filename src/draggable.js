@@ -106,34 +106,34 @@ items.forEach((item) => {
    * Touch events
    */
   
-  // handle.addEventListener("touchstart", () => {
-  //   console.log("touchstart");
-  //   item.setAttribute("draggable", "true");
-  //   list.classList.add("event-dragging");
-  //   item.classList.add("is-dragging");
-  //   dragging = item;
-  // });
+  handle.addEventListener("touchstart", (event) => {
+    console.log("touchstart", event, event.clientX, event.clientY);
+    item.setAttribute("draggable", "true");
+    list.classList.add("event-dragging");
+    item.classList.add("is-dragging");
+    dragging = item;
+  });
 
-  // handle.addEventListener("touchend", (event) => {
-  //   console.log("touchend", event, event.clientX, event.clientY);
-  //   item.setAttribute("draggable", "false");
-  //   list.classList.remove("event-dragging");
-  //   item.classList.remove("is-dragging");
-  //   dragging = null;
-  //   if (reqSave) {
-  //     console.log("Save order");
-  //     reqSave = false;
-  //   }
-  // });
+  handle.addEventListener("touchend", (event) => {
+    console.log("touchend", event, event.clientX, event.clientY);
+    item.setAttribute("draggable", "false");
+    list.classList.remove("event-dragging");
+    item.classList.remove("is-dragging");
+    dragging = null;
+    if (reqSave) {
+      console.log("Save order");
+      reqSave = false;
+    }
+  });
 
-  // handle.addEventListener("touchmove", (event) => {
-  //   event.preventDefault();
-  //   console.log("touchmove");
-  // });
+  handle.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    console.log("touchmove", event, event.clientX, event.clientY);
+  });
 
-  // handle.addEventListener("touchcancel", () => {
-  //   console.log("touchcancel");
-  // });
+  handle.addEventListener("touchcancel", (event) => {
+    console.log("touchcancel", event);
+  });
 });
 
 function animateShiftUp(...args) {
