@@ -44,6 +44,55 @@ items.forEach((item) => {
   }
 
   /**
+   * Keyboard events
+   */
+
+  handle.addEventListener("keydown", (event) => {
+    // Initialize the sibling var.
+    let sibling = null
+
+    // Go through event key cases.
+    switch (event.key) {
+      case 'ArrowUp':
+        sibling = item.previousElementSibling;
+        if (sibling) {
+
+          // Get the rects before moving items.
+          const fromRect = item.getBoundingClientRect();
+          const toRect = sibling.getBoundingClientRect();
+
+          sibling.before(item);
+          animateShiftUp(item, fromRect, toRect);
+          animateShiftDown(sibling, toRect, fromRect);
+
+          // Return focus to handle.
+          handle.focus();
+        }
+        return;
+  
+      case 'ArrowDown':
+        sibling = item.nextElementSibling;
+        if (sibling) {
+
+          // Get the rects before moving items.
+          const fromRect = item.getBoundingClientRect();
+          const toRect = sibling.getBoundingClientRect();
+
+          sibling.after(item);
+          animateShiftUp(sibling, fromRect, toRect);
+          animateShiftDown(item, toRect, fromRect);
+
+          // Return focus to handle.
+          handle.focus();
+        }
+        return;
+  
+      default:
+        return;
+    }
+  });
+
+  /**
    * Drag events
    */
 
