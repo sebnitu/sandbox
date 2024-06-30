@@ -1,8 +1,16 @@
+import { addCrosshair, updateCrosshair } from "./crosshair";
+
 const list = document.querySelector(".sortable");
 const items = list.querySelectorAll(".sortable__item");
 const duration = 150;
 let dragging = null;
 let reqSave = false;
+
+addCrosshair();
+
+document.addEventListener("click", (event) => {
+  updateCrosshair(event);
+});
 
 items.forEach((item) => {
   /**
@@ -276,16 +284,4 @@ function animateShift(target, fromRect, toRect, direction = "") {
 function limit(value, max) {
   value = Math.abs(value);
   return (value > max) ? max : value;
-}
-
-/**
- * Crosshair component
- * Helps to see where a specific point is on the screen.
- */
-
-const crosshair = document.querySelector(".crosshair");
-
-function updateCrosshair(point) {
-  crosshair.style.top = point.clientY + "px";
-  crosshair.style.left = point.clientX + "px";
 }
