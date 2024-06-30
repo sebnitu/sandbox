@@ -8,14 +8,14 @@ items.forEach((item) => {
   // Get the handle element and toggle draggable on item if it exists.
   const handle = item.querySelector(".sortable__handle");
   if (handle) {
-    item.setAttribute("draggable", "false");
+    // item.setAttribute("draggable", "false");
 
     handle.addEventListener("mousedown", () => {
       item.setAttribute("draggable", "true");
     });
   
     handle.addEventListener("mouseup", () => {
-      item.setAttribute("draggable", "false");
+      // item.setAttribute("draggable", "false");
     });
 
     handle.addEventListener("focus", () => {
@@ -23,7 +23,7 @@ items.forEach((item) => {
     });
   
     handle.addEventListener("blur", () => {
-      item.setAttribute("draggable", "false");
+      // item.setAttribute("draggable", "false");
     });
   }
 
@@ -56,7 +56,7 @@ items.forEach((item) => {
     dragging = null;
     if (reqSave) {
       console.log("Save order");
-      if (handle) item.setAttribute("draggable", "false");
+      // if (handle) item.setAttribute("draggable", "false");
       reqSave = false;
     }
   });
@@ -98,7 +98,7 @@ items.forEach((item) => {
 
     // Do action to save order of items here.
     console.log("Save order");
-    if (handle) item.setAttribute("draggable", "false");
+    // if (handle) item.setAttribute("draggable", "false");
     reqSave = false;
   });
 
@@ -108,7 +108,7 @@ items.forEach((item) => {
   
   handle.addEventListener("touchstart", (event) => {
     console.log("touchstart", event, event.clientX, event.clientY);
-    item.setAttribute("draggable", "true");
+    // item.setAttribute("draggable", "true");
     list.classList.add("event-dragging");
     item.classList.add("is-dragging");
     dragging = item;
@@ -116,7 +116,7 @@ items.forEach((item) => {
 
   handle.addEventListener("touchend", (event) => {
     console.log("touchend", event, event.clientX, event.clientY);
-    item.setAttribute("draggable", "false");
+    // item.setAttribute("draggable", "false");
     list.classList.remove("event-dragging");
     item.classList.remove("is-dragging");
     dragging = null;
