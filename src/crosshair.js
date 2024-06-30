@@ -8,7 +8,7 @@ export function addCrosshair(x, y) {
     if (x) crosshair.style.setProperty("--crosshair-x", x + "px");
     document.body.append(crosshair);
   } else {
-    console.error("Crosshair element already exists.");
+    console.error("Crosshair element already exists.", crosshair);
   }
 }
 
@@ -17,6 +17,6 @@ export function updateCrosshair(point) {
     crosshair.style.setProperty("--crosshair-y", point.clientY + "px");
     crosshair.style.setProperty("--crosshair-x", point.clientX + "px");
   } else {
-    console.error("Crosshair element does not exist.");
+    console.error("Crosshair element does not exist.", crosshair);
   }
 }
