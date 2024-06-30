@@ -13,29 +13,32 @@
 .sortable__item {
   position: relative;
   z-index: 2;
+  border-radius: 0.25rem;
+  outline-offset: 2px;
 
   &.is-dragging,
   &.is-touching {
     z-index: 1;
+    outline-width: 3px;
+    outline-style: dashed;
   }
-}
 
-.sortable__handle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  inset: 1px 1px 1px auto;
-  width: 3rem;
-  background-color: var(--vb-background);
-  border-left: 1px solid var(--vb-border-color);
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-  cursor: grab;
+  &.is-dragging {
+    outline-color: blue;
 
-  &:active {
-    background-color: var(--vb-background-dark);
-    cursor: grabbing;
+    .sortable__handle {
+      background-color: blue;
+      color: white;
+    }
+  }
+
+  &.is-touching {
+    outline-color: green;
+
+    .sortable__handle {
+      background-color: green;
+      color: white;
+    }
   }
 }
 
@@ -44,36 +47,42 @@
   border: 1px solid var(--vb-border-color);
   background-color: var(--vb-background);
   border-radius: 0.25rem;
-  outline-offset: 2px;
-  opacity: 1;
   transition: background-color 0.25s ease;
 
-  > * {
-    opacity: 1;
+  .is-dragging > &,
+  .is-touching > & {
+    background-color: var(--vb-background-darker);
+    opacity: 0.5;
   }
 
   .is-dragging > & {
-    outline: 3px dashed blue;
-    background-color: var(--vb-background-dark);
-    opacity: 0.5;
-
     > * {
+      // Transition retains the opacity on the "ghost" item (opacity: 1) while 
+      // the inline item styles are set to the final stage (opacity: 0).
       transition: opacity 0.1s linear;
       opacity: 0;
     }
   }
 
-  .is-touching > & {
-    outline: 3px dashed green;
-    background-color: var(--vb-background-dark);
-    opacity: 1;
-
-    > * {
-      opacity: 0.5;
-    }
-  }
-
   .is-clicked > & {
     background-color: var(--vb-background-dark);
+  }
+}
+
+.sortable__handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 3rem;
+  background-color: white;
+  border: 1px solid var(--vb-border-color);
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
   }
 }
