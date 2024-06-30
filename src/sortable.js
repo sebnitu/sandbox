@@ -1,16 +1,16 @@
 import { addCrosshair, updateCrosshair } from "./crosshair";
 
-const list = document.querySelector(".sortable");
-const items = list.querySelectorAll(".sortable__item");
-const duration = 150;
-let dragging = null;
-let reqSave = false;
-
 addCrosshair();
 
 document.addEventListener("click", (event) => {
   updateCrosshair(event);
 });
+
+const list = document.querySelector(".sortable");
+const items = list.querySelectorAll(".sortable__item");
+const duration = 150;
+let dragging = null;
+let reqSave = false;
 
 items.forEach((item) => {
   /**
