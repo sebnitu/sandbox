@@ -112,8 +112,8 @@ items.forEach((item) => {
   
   handle.addEventListener("touchstart", () => {
     console.log("touchstart");
-    list.classList.add("event-dragging");
-    item.classList.add("is-dragging");
+    list.classList.add("event-touching");
+    item.classList.add("is-touching");
     dragging = item;
   });
 
@@ -127,7 +127,11 @@ items.forEach((item) => {
     // Check if touchend stopped inside the list box.
     if (isInside(event.changedTouches[0], listRect)) {
       const item = [...items].find((item) => {
-        return isInside(event.changedTouches[0], item.getBoundingClientRect());
+        return (
+          item != dragging && 
+          !item.getAnimations().length &&
+          isInside(event.changedTouches[0], item.getBoundingClientRect())
+        );
       });
 
       // Guard if we're not inside an item.
@@ -155,28 +159,26 @@ items.forEach((item) => {
 
   handle.addEventListener("touchend", (event) => {
     console.log("touchend");
-    list.classList.remove("event-dragging");
-    item.classList.remove("is-dragging");
+    list.classList.remove("event-touching");
+    item.classList.remove("is-touching");
     dragging = null;
 
     // Save if required.
     if (reqSave) {
       console.log("Save order");
-      item.setAttribute("draggable", "false");
       reqSave = false;
     }
   });
 
   handle.addEventListener("touchcancel", (event) => {
     console.log("touchcancel", event);
-    list.classList.remove("event-dragging");
-    item.classList.remove("is-dragging");
+    list.classList.remove("event-touching");
+    item.classList.remove("is-touching");
     dragging = null;
 
     // Save if required.
     if (reqSave) {
       console.log("Save order");
-      item.setAttribute("draggable", "false");
       reqSave = false;
     }
   });
@@ -217,6 +219,11 @@ function limit(value, max) {
   value = Math.abs(value);
   return (value > max) ? max : value;
 }
+
+/**
+ * Crosshair component
+ * Helps to see where a specific point is on the screen.
+ */
 
 const crosshair = document.querySelector(".crosshair");
 
