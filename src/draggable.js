@@ -10,7 +10,8 @@ items.forEach((item) => {
    * Used to test that clicks are not being blocked by drag or touch events.
    */
 
-  item.addEventListener("click", () => {
+  item.addEventListener("click", (event) => {
+    if (event.target.closest(".sortable__handle")) return;
     if (item.classList.contains("is-clicked")) return;
     item.classList.add("is-clicked");
     setTimeout(() => {
@@ -103,11 +104,13 @@ items.forEach((item) => {
   });
 
   item.addEventListener(("dragend"), () => {
+    const dragHandle = dragging.querySelector(".sortable__handle");
     list.classList.remove("event-dragging");
     item.classList.remove("is-dragging");
     dragging = null;
     if (reqSave) {
       console.log("Save order");
+      if (dragHandle) dragHandle.focus();
       if (handle) item.setAttribute("draggable", "false");
       reqSave = false;
     }
@@ -148,8 +151,11 @@ items.forEach((item) => {
     // Prevent default action (open as link for some elements).
     event.preventDefault();
 
+    const dragHandle = dragging.querySelector(".sortable__handle");
+
     // Do action to save order of items here.
     console.log("Save order");
+    if (dragHandle) dragHandle.focus();
     if (handle) item.setAttribute("draggable", "false");
     reqSave = false;
   });
@@ -207,6 +213,7 @@ items.forEach((item) => {
 
   handle.addEventListener("touchend", (event) => {
     console.log("touchend");
+    const dragHandle = dragging.querySelector(".sortable__handle");
     list.classList.remove("event-touching");
     item.classList.remove("is-touching");
     dragging = null;
@@ -214,12 +221,14 @@ items.forEach((item) => {
     // Save if required.
     if (reqSave) {
       console.log("Save order");
+      if (dragHandle) dragHandle.focus();
       reqSave = false;
     }
   });
 
   handle.addEventListener("touchcancel", (event) => {
     console.log("touchcancel", event);
+    const dragHandle = dragging.querySelector(".sortable__handle");
     list.classList.remove("event-touching");
     item.classList.remove("is-touching");
     dragging = null;
@@ -227,6 +236,7 @@ items.forEach((item) => {
     // Save if required.
     if (reqSave) {
       console.log("Save order");
+      if (dragHandle) dragHandle.focus();
       reqSave = false;
     }
   });
