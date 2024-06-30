@@ -59,6 +59,10 @@
     }
   }
 
+  .is-selected > & {
+    border-color: green;
+  }
+
   .is-clicked > & {
     transition: none;
     background-color: var(--vb-background-dark);
