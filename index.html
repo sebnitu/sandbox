@@ -3,35 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sandbox &rarr; learning-input-mask</title>
+  <meta name="robots" content="noindex, nofollow">
+  <title>sandbox &rarr; %VITE_BRANCH%</title>
   <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
-  <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/vrembem@next/dist/index.css">
+  <script type="module" src="./index.js"></script>
 </head>
 <body>
 
-  <header class="section background-shade">
-    <div class="section__container max-width-xs gap-y-xs">
+  <header class="section background-darker">
+    <div class="section__container max-width-xs spacing-xs">
       <h1 class="text-size-lg">Sandbox</h1>
-      <p>A place to learn and test new things.</p>
-      <ol class="breadcrumb margin-top">
-        <li class="breadcrumb__item">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox">
-            <span>sandbox</span>
-          </a>
+      <p class="foreground-light">A place to learn and test new things.</p>
+      <ol class="foreground-lighter flex flex_gap flex_spacing_sm margin-top-lg list-style-none">
+        <li class="flex flex_gap_sm align-items-center">
+          <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <a class="link" target="_blank" href="https://github.com/sebnitu/sandbox">sandbox</a>
         </li>
-        <li class="breadcrumb__item">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-          <a class="breadcrumb__link" href="https://github.com/sebnitu/sandbox/tree/learning-input-mask">
-            <span>learning-input-mask</span>
-          </a>
+        <li class="foreground-neutral-80">/</li>
+        <li class="flex flex_gap_sm align-items-center">
+          <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+          <a class="link" target="_blank" href="https://github.com/sebnitu/sandbox/tree/%VITE_BRANCH%">%VITE_BRANCH%</a>
         </li>
       </ol>
     </div>
   </header>
 
   <div class="section">
-    <div class="section__container max-width-xs gap-y-sm">
+    <div class="section__container max-width-xs spacing-sm">
       <div class="grid flex-align-center">
         <div class="grid__item span-3">
           <p>Phone</p>
@@ -91,89 +90,5 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/vrembem"></script>
-  <script src="https://unpkg.com/imask"></script>
-  <script>
-    const masks = {
-      "phone": {
-        mask: "(000) 000-0000"
-      },
-      "phone-ext": {
-        mask: "(000) 000-0000 [x0000]"
-      },
-      "ssn": {
-        mask: "000-00-0000"
-      },
-      "mileage": {
-        mask: Number,
-        min: 0,
-        max: 9999999,
-        thousandsSeparator: ','
-      },
-      "percent": {
-        mask: Number,
-        min: 0,
-        max: 100,
-        scale: 2,
-        radix: '.'
-      },
-      "money": {
-        mask: Number,
-        min: 0,
-        max: 999999,
-        thousandsSeparator: ','
-      },
-      "money-cents": {
-        mask: Number,
-        min: 0,
-        max: 999999.99,
-        thousandsSeparator: ',',
-        scale: 2,
-        radix: '.',
-        padFractionalZeros: true
-      },
-      "date": {
-        mask: "MM-DD-YYYY",
-        blocks: {
-          MM: {
-            mask: IMask.MaskedRange,
-            from: 1,
-            to: 12
-          },
-          DD: {
-            mask: IMask.MaskedRange,
-            from: 1,
-            to: 31
-          },
-          YYYY: {
-            mask: IMask.MaskedRange,
-            from: 0,
-            to: 9999
-          }
-        }
-      },
-      "time": {
-        mask: "HH:MM",
-        blocks: {
-          HH: {
-            mask: IMask.MaskedRange,
-            from: 1,
-            to: 12
-          },
-          MM: {
-            mask: IMask.MaskedRange,
-            from: 0,
-            to: 59
-          }
-        }
-      }
-    };
-
-    const els = document.querySelectorAll("[data-inputmask]");
-    els.forEach((el) => {
-      const key = el.getAttribute("data-inputmask");
-      IMask(el, masks[key]);
-    });
-  </script>
 </body>
 </html>
