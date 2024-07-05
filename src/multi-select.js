@@ -54,7 +54,8 @@ function updateSelectedList(el, selected, defaultValue = 'Nothing selected yet..
   // Build up a list of "remove" buttons (tags) for each checked option
   if (selected.length > 0) {
     const list = document.createElement('ul');
-    list.classList.add('level');
+    list.classList.add('list-style-none');
+    list.classList.add('flex');
 
     selected.forEach((item) => {
       const li = document.createElement('li');
