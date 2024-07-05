@@ -1,0 +1,93 @@
+/**
+  * Default color scheme and dark preference.
+  */
+
+  :root, .theme-root {
+  --color-scheme: light;
+  --background: white;
+  --color: black;
+  --btn-background: darkslateblue;
+  --btn-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root, .theme-root {
+    --color-scheme: dark;
+    --background: #222;
+    --color: white;
+    --btn-background: plum;
+    --btn-color: black;
+  }
+}
+
+/**
+  * Theme class overrides.
+  */
+
+.theme-light {
+  --color-scheme: light;
+  --background: white;
+  --color: black;
+  --btn-background: darkslateblue;
+  --btn-color: white;
+}
+
+.theme-dark {
+  --color-scheme: dark;
+  --background: #222;
+  --color: white;
+  --btn-background: plum;
+  --btn-color: black;
+}
+
+/**
+  * Apply CSS variables.
+  */
+
+body {
+  color-scheme: var(--color-scheme);
+  background: var(--background);
+  color: var(--color);
+}
+
+.panel {
+  color-scheme: var(--color-scheme);
+  background: var(--background);
+  color: var(--color);
+}
+
+.btn {
+  background: var(--btn-background);
+  color: var(--btn-color);
+}
+
+/**
+  * Layout styles
+  */
+
+.topbar {
+  padding: 1em;
+  background: aquamarine;
+  color: black;
+}
+
+.page {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.group {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+}
+
+.panel {
+  flex: 1 1 100%;
+  padding: 4em;
+}
+
+.btn {
+  padding: 0.5em 1.5em;
+}

@@ -3,123 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sandbox &rarr; prototype-dark-mode</title>
+  <meta name="robots" content="noindex, nofollow">
+  <title>sandbox &rarr; %VITE_BRANCH%</title>
   <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
-  <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
-  <style>
-
-    /**
-     * Default color scheme and dark preference.
-     */
-
-    :root, .theme-root {
-      --color-scheme: light;
-      --background: white;
-      --color: black;
-      --btn-background: darkslateblue;
-      --btn-color: white;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root, .theme-root {
-        --color-scheme: dark;
-        --background: #222;
-        --color: white;
-        --btn-background: plum;
-        --btn-color: black;
-      }
-    }
-
-    /**
-     * Theme class overrides.
-     */
-
-    .theme-light {
-      --color-scheme: light;
-      --background: white;
-      --color: black;
-      --btn-background: darkslateblue;
-      --btn-color: white;
-    }
-
-    .theme-dark {
-      --color-scheme: dark;
-      --background: #222;
-      --color: white;
-      --btn-background: plum;
-      --btn-color: black;
-    }
-
-    /**
-     * Apply CSS variables.
-     */
-
-    body {
-      color-scheme: var(--color-scheme);
-      background: var(--background);
-      color: var(--color);
-    }
-
-    .panel {
-      color-scheme: var(--color-scheme);
-      background: var(--background);
-      color: var(--color);
-    }
-
-    .btn {
-      background: var(--btn-background);
-      color: var(--btn-color);
-    }
-
-    /**
-     * Layout styles
-     */
-
-    .topbar {
-      padding: 1em;
-      background: aquamarine;
-      color: black;
-    }
-
-    .page {
-      display: flex;
-      height: 100vh;
-      flex-direction: column;
-    }
-
-    .group {
-      flex-grow: 1;
-      width: 100%;
-      display: flex;
-    }
-
-    .panel {
-      flex: 1 1 100%;
-      padding: 4em;
-    }
-
-    .btn {
-      padding: 0.5em 1.5em;
-    }
-
-  </style>
-
-  <script src="https://unpkg.com/vrembem"></script>
-  <script>
-    // Setup local storage proxy.
-    const store = vrembem.core.localStore('profile');
-
-    // Set the body class.
-    if (store.get('theme') != 'default') {
-      document.documentElement.classList.add('theme-' + store.get('theme'));
-    }
-  </script>
+  <link rel="stylesheet" href="https://unpkg.com/vrembem@next/dist/index.css">
+  <script type="module" src="./index.js"></script>
 </head>
 <body>
 
+  <header class="section background-darker">
+    <div class="section__container max-width-xs spacing-xs">
+      <h1 class="text-size-lg">Sandbox</h1>
+      <p class="foreground-light">A place to learn and test new things.</p>
+      <ol class="foreground-lighter flex flex_gap flex_gap-y_sm margin-top-lg list-style-none">
+        <li class="flex flex_gap_sm align-items-center">
+          <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <a class="link" target="_blank" href="https://github.com/sebnitu/sandbox">sandbox</a>
+        </li>
+        <li class="foreground-neutral-80">/</li>
+        <li class="flex flex_gap_sm align-items-center">
+          <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+          <a class="link" target="_blank" href="https://github.com/sebnitu/sandbox/tree/%VITE_BRANCH%">%VITE_BRANCH%</a>
+        </li>
+      </ol>
+    </div>
+  </header>
+
   <div class="page">
     <div class="topbar">
-      <div class="level flex-gap-x-xl">
+      <div class="flex flex_gap-x_xl align-items-center">
         <form id="user-preference">
           <select id="theme-preference" class="input input_type_select" name="theme">
             <option value="default" selected>Default</option>
@@ -252,70 +164,5 @@
       </div>
     </div>
   </div>
-
-  <script>
-    /**
-     * Theme switching functionality.
-     */
-
-    // Get the form element.
-    const form = document.querySelector('#user-preference');
-
-    // If a local store theme preference exists...
-    if (store.get('theme')) {
-      // Update the form element to the stored value.
-      form.querySelector(`select[name="theme"]`).value = store.get('theme');
-    }
-
-    // Initial theme handler run.
-    handleThemePreference(form);
-
-    // Run theme handler whenever form inputs change.
-    form.addEventListener('change', (event) => {
-      handleThemePreference(form);
-    });
-
-    // Handle theme preference.
-    function handleThemePreference(form) {
-      // Get the theme value from the form data.
-      const value = new FormData(form).get('theme');
-
-      // If a theme value is set...
-      if (value) {
-        // Remove existing theme classes.
-        document.documentElement.classList.remove('theme-light', 'theme-dark');
-
-        // If the value isn't default, add the selected theme class.
-        if (value != 'default') {
-          document.documentElement.classList.add('theme-' + value);
-        }
-
-        // Save our preference to the local storage proxy.
-        store.set('theme', value);
-      }
-    }
-
-    /**
-     * Display OS scheme preference.
-     */
-
-    // Get the current mode element.
-    const el = document.querySelector('#current-mode');
-
-    // Setup the media query list.
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // Initial run of color scheme handler.
-    handleColorScheme(mql);
-
-    // Setup event listener.
-    mql.addEventListener('change', handleColorScheme);
-
-    // Handle color scheme match check.
-    function handleColorScheme(event) {
-      el.innerText = event.matches ? "dark" : "light";
-    }
-
-  </script>
 </body>
 </html>
