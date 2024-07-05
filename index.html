@@ -3,118 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sandbox &rarr; prototype-drawer-layout</title>
+  <meta name="robots" content="noindex, nofollow">
+  <title>sandbox &rarr; %VITE_BRANCH%</title>
   <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
-  <link rel="stylesheet" href="https://unpkg.com/vrembem/dist/styles.css">
-  <style>
-
-    /**
-     * Default color scheme and dark preference.
-     */
-
-    :root {
-      --default-color-scheme: light;
-      --default-color: black;
-      --default-background: white;
-      --default-background-depth-1: #F5F7F8;
-      --default-background-depth-2: #ECEFF1;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --default-color-scheme: dark;
-        --default-color: white;
-        --default-background: #263238;
-        --default-background-depth-1: #172227;
-        --default-background-depth-2: #141D22;
-      }
-    }
-
-    /**
-     * Theme class overrides.
-     */
-
-    .theme-default {
-      --color-scheme: initial;
-      --color: initial;
-      --background: initial;
-      --background-depth-1: initial;
-      --background-depth-2: initial;
-    }
-
-    .theme-light {
-      --color-scheme: light;
-      --color: black;
-      --background: white;
-      --background-depth-1: #F5F7F8;
-      --background-depth-2: #ECEFF1;
-    }
-
-    .theme-dark {
-      --color-scheme: dark;
-      --color: white;
-      --background: #263238;
-      --background-depth-1: #172227;
-      --background-depth-2: #141D22;
-    }
-
-    /**
-     * Apply CSS variables.
-     */
-
-    body {
-      color-scheme: var(--color-scheme, var(--default-color-scheme));
-      background: var(--background, var(--default-background));
-      color: var(--color, var(--default-color));
-    }
-
-    /**
-     * Drawer styles
-     */
-
-    .drawer.drawer_inline.is-opening:not(.drawer_modal) ~ .drawer-main,
-    .drawer.drawer_inline.is-opened:not(.drawer_modal) ~ .drawer-main {
-      margin-left: 0;
-    }
-
-    .drawer_inline.is-opened:not(.drawer_modal) {
-      position: relative;
-      flex: 1 1 0;
-      width: auto;
-    }
-
-    .drawer_inline:not(.drawer_modal) .drawer__dialog {
-      width: 100%;
-    }
-
-    .drawer-main {
-      flex: 1 1 0;
-    }
-
-    #drawer-pz-occupations .drawer__dialog,
-    #drawer-pz-occupations .dialog__header,
-    #drawer-pz-occupations .dialog__body,
-    #drawer-pz-occupations .dialog__footer {
-      background: var(--background-depth-2, var(--default-background-depth-2));
-    }
-
-    #drawer-pz-traits .drawer__dialog,
-    #drawer-pz-traits .dialog__header,
-    #drawer-pz-traits .dialog__body,
-    #drawer-pz-traits .dialog__footer {
-      background: var(--background-depth-1, var(--default-background-depth-1));
-    }
-
-  </style>
+  <link rel="stylesheet" href="https://unpkg.com/vrembem@next/dist/index.css">
+  <script type="module" src="./index.js"></script>
 </head>
 <body>
-
   <div class="drawer-frame">
 
     <aside id="drawer-pz-occupations" class="drawer drawer_inline is-opened" data-drawer-breakpoint="md">
       <div class="drawer__dialog">
         <div class="dialog__header">
-          <h2 id="dialog-title">Occupations drawer...</h2>
+          <h2>Occupations drawer...</h2>
         </div>
         <div class="dialog__body">
           <p id="dialog-description">...</p>
@@ -128,7 +29,7 @@
     <aside id="drawer-pz-traits" class="drawer drawer_inline is-opened" data-drawer-breakpoint="lg">
       <div class="drawer__dialog">
         <div class="dialog__header">
-          <h2 id="dialog-title">Traits drawer...</h2>
+          <h2>Traits drawer...</h2>
         </div>
         <div class="dialog__body">
           <p id="dialog-description">...</p>
@@ -140,73 +41,13 @@
     </aside>
 
     <div class="drawer-main">
-      <div class="padding gap-y">
-        <p>This is the main content area...</p>
+      <div class="padding spacing">
+        <h2>Main content...</h2>
         <p><button class="link" data-drawer-toggle="drawer-pz-occupations">Add occupations</button></p>
         <p><button class="link" data-drawer-toggle="drawer-pz-traits">Add traits</button></p>
       </div>
     </div>
 
   </div>
-
-
-  <script src="https://unpkg.com/vrembem"></script>
-  <script>
-    /**
-     * Drawer script setup
-     */
-
-    const drawer = new vrembem.Drawer();
-
-    drawer.init().then((result) => {
-      console.log('VB:Drawer => ', result);
-    });
-
-    /**
-     * Theme switching functionality.
-     */
-
-    // Get the form element.
-    const form = document.querySelector('#user-preference');
-    if (form) {
-      // Setup local storage proxy.
-      const store = vrembem.core.localStore('profile');
-
-      // If a local store theme preference exists...
-      if (store.theme) {
-        // Update the form element to the stored value.
-        form.querySelector(`select[name="theme"]`).value = store.theme;
-      }
-
-      // Initial theme handler run.
-      handleThemePreference(form);
-
-      // Run theme handler whenever form inputs change.
-      form.addEventListener('change', (event) => {
-        handleThemePreference(form);
-      });
-
-      // Handle theme preference.
-      function handleThemePreference(form) {
-        // Get the theme value from the form data.
-        const value = new FormData(form).get('theme');
-
-        // If a theme value is set...
-        if (value) {
-          // Remove existing theme classes.
-          document.documentElement.classList.remove('theme-light', 'theme-dark');
-
-          // If the value isnt default, add the selected theme class.
-          if (value != 'default') {
-            document.documentElement.classList.add('theme-' + value);
-          }
-
-          // Save our preference to the local storage proxy.
-          store.theme = value;
-        }
-      }
-    }
-
-  </script>
 </body>
 </html>
