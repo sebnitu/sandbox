@@ -2,7 +2,7 @@
   "name": "sandbox",
   "version": "0.1.0",
   "description": "A place to learn and test new things.",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "serve": "vite",
     "build": "vite build",
