@@ -1,23 +1,31 @@
 {
-  "name": "@sebnitu/sandbox",
+  "name": "sandbox",
   "version": "0.1.0",
   "description": "A place to learn and test new things.",
   "main": "index.html",
   "scripts": {
-    "publish:patch": "npm version patch -m 'chore(release): bump to v%s' && npm publish"
+    "serve": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm ci && npm run build",
+    "deploy": "gh-pages -d dist --cname sandbox.sebnitu.com"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebnitu/sandbox.git"
   },
+  "bugs": {
+    "url": "https://github.com/sebnitu/sandbox/issues"
+  },
+  "homepage": "https://github.com/sebnitu/sandbox#readme",
+  "license": "MIT",
   "author": {
     "name": "Sebastian Nitu",
     "email": "me@sebnitu.com",
     "url": "https://sebnitu.com"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sebnitu/sandbox/issues"
-  },
-  "homepage": "https://github.com/sebnitu/sandbox#readme"
+  "devDependencies": {
+    "gh-pages": "^6.1.1",
+    "vite": "^5.3.3"
+  }
 }
