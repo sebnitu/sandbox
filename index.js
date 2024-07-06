@@ -1,3 +1,8 @@
-import * as vrembem from "https://unpkg.com/vrembem@next/dist/index.js";
+import "./src/crosshair.css";
+import { addCrosshair, updateCrosshair } from "./src/crosshair";
 
-console.log("Vrembem", vrembem);
+addCrosshair();
+
+document.addEventListener("click", (event) => {
+  updateCrosshair(event);
+});
