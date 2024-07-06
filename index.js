@@ -1,2 +1,3 @@
-import "./src/app.scss";
+import "./src/avatar.scss";
+import "./src/sortable.scss";
 import "./src/sortable";
