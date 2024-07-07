@@ -173,7 +173,6 @@ items.forEach((item) => {
 
   handle.addEventListener("touchmove", (event) => {
     event.preventDefault();
-    updateCrosshair(event.changedTouches[0]);
 
     // Find out where the touchend stopped.
     const listRect = list.getBoundingClientRect();
