@@ -43,7 +43,7 @@ export function addHandleEvents(item) {
             handle.focus();
 
             // Run the updated function
-            this.maybeUpdate(true);
+            this.maybeUpdate(item, true);
           }
           return;
     
@@ -63,7 +63,7 @@ export function addHandleEvents(item) {
             handle.focus();
 
             // Run the updated function
-            this.maybeUpdate(true);
+            this.maybeUpdate(item, true);
           }
           return;
     

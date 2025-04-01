@@ -13,7 +13,7 @@ export function addDragEvents(item) {
     item.setAttribute("draggable", "false");
     this.dragging.querySelector(this.settings.handle).focus();
     this.dragging = null;
-    this.maybeUpdate();
+    this.maybeUpdate(item);
   });
 
   item.addEventListener(("dragenter"), () => {

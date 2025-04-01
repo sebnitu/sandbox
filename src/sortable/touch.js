@@ -74,7 +74,7 @@ export function addTouchEvents(item) {
     item.classList.remove("is-touching");
     this.dragging.querySelector(this.settings.handle).focus();
     this.dragging = null;
-    this.maybeUpdate();
+    this.maybeUpdate(item);
   });
 
   handle.addEventListener("touchcancel", () => {
@@ -82,6 +82,6 @@ export function addTouchEvents(item) {
     item.classList.remove("is-touching");
     this.dragging.querySelector(this.settings.handle).focus();
     this.dragging = null;
-    this.maybeUpdate();
+    this.maybeUpdate(item);
   });
 }

@@ -14,7 +14,7 @@ export function register(obj) {
   entry.hasUpdated = false;
 
   // Add the maybeUpdate method to the entry
-  entry.maybeUpdate = (force = false) => {
+  entry.maybeUpdate = (item, force = false) => {
     if (entry.hasUpdated || force) {
       // Set has updated to false
       entry.hasUpdated = false;
@@ -30,7 +30,7 @@ export function register(obj) {
       });
 
       // Run the `onUpdated` callback
-      entry.onUpdated.call(entry, entry);
+      entry.onUpdated.call(entry, item);
     }
   };
 
