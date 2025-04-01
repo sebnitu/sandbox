@@ -11,7 +11,7 @@ export default function sortable(id, config) {
     // Run the register function 
     return register({
       list: list,
-      onUpdated: onUpdate,
+      onUpdated: onUpdate ?? (() => {}),
       settings: settings
     });
   } else {
