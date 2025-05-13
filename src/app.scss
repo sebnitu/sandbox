@@ -1,0 +1,18 @@
+.calendar {
+  width: 100%;
+
+  td {
+    background-color: lightblue;
+    color: blue;
+  }
+
+  .calendar__today {
+    background-color: orange;
+    color: white;
+  }
+  
+  .calendar__unavailable {
+    background-color: transparent;
+    color: #999;
+  }  
+}
