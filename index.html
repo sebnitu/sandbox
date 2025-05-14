@@ -31,70 +31,75 @@
 
   <main class="section">
     <div class="section__container max-width-xs">
-      <label>Select a date</label>
-      <h2 id="calendar-caption">May 2025</h2>
-      <button>Prev</button>
-      <button>Next</button>
-      <table class="calendar table" role="grid" aria-labelledby="calendar-caption">
-        <thead>
-          <tr>
-            <th scope="col" abbr="Sunday">Sun</th>
-            <th scope="col" abbr="Monday">Mon</th>
-            <th scope="col" abbr="Tuesday">Tue</th>
-            <th scope="col" abbr="Wednesday">Wed</th>
-            <th scope="col" abbr="Thursday">Thu</th>
-            <th scope="col" abbr="Friday">Fri</th>
-            <th scope="col" abbr="Saturday">Sat</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="calendar__unavailable">27</td>
-            <td>28</td>
-            <td>29</td>
-            <td>30</td>
-            <td>1</td>
-            <td>2</td>
-            <td class="calendar__unavailable">3</td>
-          </tr>
-          <tr>
-            <td class="calendar__unavailable">4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td class="calendar__unavailable">10</td>
-          </tr>
-          <tr>
-            <td class="calendar__unavailable">11</td>
-            <td>12</td>
-            <td class="calendar__today" tabindex="0" aria-label="Today, May 14">13</td>
-            <td>14</td>
-            <td>15</td>
-            <td>16</td>
-            <td class="calendar__unavailable">17</td>
-          </tr>
-          <tr>
-            <td class="calendar__unavailable">18</td>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
-            <td>22</td>
-            <td>23</td>
-            <td class="calendar__unavailable">24</td>
-          </tr>
-          <tr>
-            <td class="calendar__unavailable">25</td>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
-            <td>29</td>
-            <td>30</td>
-            <td class="calendar__unavailable">31</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="calendar">
+        <div class="calendar__header">
+          <h2 class="calendar__label" id="calendar-month-year">May 2025</h2>
+          <div class="calendar__controls">
+            <button>&larr;</button>
+            <button>&rarr;</button>
+          </div>
+        </div>
+        <table class="calendar__table table" role="grid" aria-labelledby="calendar-month-year">
+          <thead>
+            <tr>
+              <th scope="col" abbr="Sunday">Sun</th>
+              <th scope="col" abbr="Monday">Mon</th>
+              <th scope="col" abbr="Tuesday">Tue</th>
+              <th scope="col" abbr="Wednesday">Wed</th>
+              <th scope="col" abbr="Thursday">Thu</th>
+              <th scope="col" abbr="Friday">Fri</th>
+              <th scope="col" abbr="Saturday">Sat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="calendar__unavailable">27</td>
+              <td class="calendar__unavailable">28</td>
+              <td class="calendar__unavailable">29</td>
+              <td class="calendar__unavailable">30</td>
+              <td class="calendar__unavailable">1</td>
+              <td class="calendar__unavailable">2</td>
+              <td class="calendar__unavailable">3</td>
+            </tr>
+            <tr>
+              <td class="calendar__unavailable">4</td>
+              <td class="calendar__unavailable">5</td>
+              <td class="calendar__unavailable">6</td>
+              <td class="calendar__unavailable">7</td>
+              <td class="calendar__unavailable">8</td>
+              <td class="calendar__unavailable">9</td>
+              <td class="calendar__unavailable">10</td>
+            </tr>
+            <tr>
+              <td class="calendar__unavailable">11</td>
+              <td class="calendar__unavailable">12</td>
+              <td class="calendar__today" tabindex="0" aria-label="Today, May 14">13</td>
+              <td>14</td>
+              <td>15</td>
+              <td>16</td>
+              <td class="calendar__unavailable">17</td>
+            </tr>
+            <tr>
+              <td class="calendar__unavailable">18</td>
+              <td>19</td>
+              <td>20</td>
+              <td>21</td>
+              <td>22</td>
+              <td>23</td>
+              <td class="calendar__unavailable">24</td>
+            </tr>
+            <tr>
+              <td class="calendar__unavailable">25</td>
+              <td>26</td>
+              <td>27</td>
+              <td>28</td>
+              <td>29</td>
+              <td>30</td>
+              <td class="calendar__unavailable">31</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 

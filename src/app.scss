@@ -1,8 +1,22 @@
 .calendar {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  table {
+    width: 100%;
+    border-spacing: 0.5em;
+    border-collapse: separate;
+    table-layout: fixed;
+  }
+
+  th, td {
+    text-align: center;
+  }
 
   td {
-    background-color: lightblue;
+    border-radius: 9999px;
+    background-color: #F0F6FE;
     color: blue;
   }
 
@@ -15,4 +29,31 @@
     background-color: transparent;
     color: #999;
   }  
+}
+
+.calendar__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.calendar__label {
+  flex-grow: 1;
+}
+
+.calendar__controls {
+  display: flex;
+  gap: 0.5em;
+
+  button {
+    padding: 0.5em;
+    border-radius: 9999px;
+    width: 2.5em;
+    height: 2.5em;
+    text-align: center;
+
+    &:hover {
+      background-color: rgb(0, 0, 0, 0.1);
+    }
+  }
 }
