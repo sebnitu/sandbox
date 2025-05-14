@@ -33,10 +33,10 @@
     <div class="section__container max-width-xs">
       <div class="calendar">
         <div class="calendar__header">
-          <h2 class="calendar__label" id="calendar-month-year">May 2025</h2>
+          <h2 class="calendar__label" id="calendar-month-year">...</h2>
           <div class="calendar__controls">
-            <button>&larr;</button>
-            <button>&rarr;</button>
+            <button id="prev-month">&larr;</button>
+            <button id="next-month">&rarr;</button>
           </div>
         </div>
         <table class="calendar__table table" role="grid" aria-labelledby="calendar-month-year">
@@ -51,51 +51,9 @@
               <th scope="col" abbr="Saturday">Sat</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="calendar-body">
             <tr>
-              <td class="calendar__unavailable">27</td>
-              <td class="calendar__unavailable">28</td>
-              <td class="calendar__unavailable">29</td>
-              <td class="calendar__unavailable">30</td>
-              <td class="calendar__unavailable">1</td>
-              <td class="calendar__unavailable">2</td>
-              <td class="calendar__unavailable">3</td>
-            </tr>
-            <tr>
-              <td class="calendar__unavailable">4</td>
-              <td class="calendar__unavailable">5</td>
-              <td class="calendar__unavailable">6</td>
-              <td class="calendar__unavailable">7</td>
-              <td class="calendar__unavailable">8</td>
-              <td class="calendar__unavailable">9</td>
-              <td class="calendar__unavailable">10</td>
-            </tr>
-            <tr>
-              <td class="calendar__unavailable">11</td>
-              <td class="calendar__unavailable">12</td>
-              <td class="calendar__today" tabindex="0" aria-label="Today, May 14">13</td>
-              <td>14</td>
-              <td>15</td>
-              <td>16</td>
-              <td class="calendar__unavailable">17</td>
-            </tr>
-            <tr>
-              <td class="calendar__unavailable">18</td>
-              <td>19</td>
-              <td>20</td>
-              <td>21</td>
-              <td>22</td>
-              <td>23</td>
-              <td class="calendar__unavailable">24</td>
-            </tr>
-            <tr>
-              <td class="calendar__unavailable">25</td>
-              <td>26</td>
-              <td>27</td>
-              <td>28</td>
-              <td>29</td>
-              <td>30</td>
-              <td class="calendar__unavailable">31</td>
+              <td colspan="7">Loading...</td>
             </tr>
           </tbody>
         </table>
