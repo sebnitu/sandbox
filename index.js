@@ -1,8 +1,5 @@
 import "./src/calendar.scss";
-import { buildCalendar, setMonth } from "./src/calendar";
-import * as vrembem from "https://unpkg.com/vrembem@next/dev/index.js";
-
-console.log("Vrembem", vrembem);
+import { buildCalendar, setMonth, onChange } from "./src/calendar";
 
 let today = new Date();
 buildCalendar(today.getMonth(), today.getFullYear());
@@ -16,4 +13,10 @@ prevMonthBtn.addEventListener("click", () => {
 
 nextMonthBtn.addEventListener("click", () => {
   setMonth(1);
+});
+
+const input = document.getElementById("current-value-check");
+
+onChange((result) => {
+  input.value = result;
 });

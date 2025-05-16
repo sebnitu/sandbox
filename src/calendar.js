@@ -4,6 +4,7 @@ const monthYear = document.getElementById('calendar-month-year');
 let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
+let onDateChange = null;
 
 const monthNames = [
   "January", 
@@ -125,6 +126,20 @@ export function buildCalendar(month, year) {
 
     if (date > daysInMonth) break;
   }
+
+  // Add event listener for onChange function
+  const radios = calendarBody.querySelectorAll('input[type="radio"][name="calendar-date"]');
+  radios.forEach((radio) => {
+    radio.addEventListener("change", (event) => {
+      if (onDateChange && radio.checked) {
+        onDateChange(radio.value); // value is in "YYYY-MM-DD" format
+      }
+    });
+  });
+}
+
+export function onChange(callback) {
+  onDateChange = callback;
 }
 
 export function setMonth(num) {
