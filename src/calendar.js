@@ -50,6 +50,7 @@ export function buildCalendar(month, year) {
 
   let date = 1;
   let dateNext = 1;
+
   for (let i = 0; i < 6; i++) {
     // Create table row
     let row = document.createElement("tr");
@@ -57,30 +58,62 @@ export function buildCalendar(month, year) {
     for (let j = 0; j < 7; j++) {
       // Create table cell
       let cell = document.createElement("td");
+      // Create form element
+      const formattedValue = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+      const radioId = `date-${formattedValue}`;
+
       if (i === 0 && j < firstDay) {
         // Previous months cell
-        cell.textContent = daysInPrevMonth - firstDay + 1 + j;
         cell.classList.add("calendar__unavailable");
+        cell.innerHTML = `
+          <span class="calendar__label">
+            <span>${daysInPrevMonth - firstDay + 1 + j}</span>
+          </span>
+        `;
       } else if (date > daysInMonth) {
         // Next months cell
-        cell.textContent = dateNext;
         cell.classList.add("calendar__unavailable");
+        cell.innerHTML = `
+          <span class="calendar__label">
+            <span>${dateNext}</span>
+          </span>
+        `;
         dateNext++;
       } else {
         // This months cell
+
+        cell.innerHTML = `
+          <input
+            type="radio"
+            name="calendar-date"
+            class="calendar__input"
+            id="${radioId}"
+            value="${formattedValue}"
+            aria-label="${monthNames[month]} ${date}, ${year}"
+          />
+          <label class="calendar__label" for="${radioId}">
+            <span class="sr-only">Select ${formattedValue}</span>
+            <span>${date}</span>
+          </label>
+        `;
+
+        cell.setAttribute("role", "gridcell");
+        cell.setAttribute("aria-label", `${monthNames[month]} ${date}, ${year}`);
+        
+        // Highlight today
         const isToday =
           date === today.getDate() &&
           month === today.getMonth() &&
           year === today.getFullYear();
 
-        cell.textContent = date;
-        cell.tabIndex = 0;
-        cell.setAttribute("role", "gridcell");
-        cell.setAttribute("aria-label", `${monthNames[month]} ${date}, ${year}`);
-        
         if (isToday) {
           cell.classList.add("calendar__today");
           cell.setAttribute("aria-current", "date");
+        }
+
+        // Make weekends unavailable
+        if (j === 0 || j === 6) {
+          // cell.classList.add("calendar__unavailable");
         }
 
         date++;
