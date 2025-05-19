@@ -1,5 +1,5 @@
 import "./src/calendar.scss";
-import { buildCalendar, setMonth, onChange } from "./src/calendar";
+import { buildCalendar, setMonth, onChange, value } from "./src/calendar";
 
 let today = new Date();
 buildCalendar(today.getMonth(), today.getFullYear());
@@ -15,8 +15,6 @@ nextMonthBtn.addEventListener("click", () => {
   setMonth(1);
 });
 
-const input = document.getElementById("current-value-check");
-
 onChange((result) => {
-  input.value = result;
+  console.log("Value:", value());
 });

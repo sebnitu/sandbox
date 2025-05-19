@@ -1,5 +1,6 @@
-const calendarBody = document.getElementById('calendar-body');
-const monthYear = document.getElementById('calendar-month-year');
+const calendarBody = document.getElementById("calendar-body");
+const monthYear = document.getElementById("calendar-month-year");
+const calendarValueStore = document.getElementById("calendar-value-store");
 
 let today = new Date();
 let currentMonth = today.getMonth();
@@ -60,7 +61,7 @@ export function buildCalendar(month, year) {
       // Create table cell
       let cell = document.createElement("td");
       // Create form element
-      const formattedValue = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+      const formattedValue = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
       const radioId = `date-${formattedValue}`;
 
       if (i === 0 && j < firstDay) {
@@ -127,10 +128,23 @@ export function buildCalendar(month, year) {
     if (date > daysInMonth) break;
   }
 
+  // If a calendar value has been stored, select it on the calendar
+  if (calendarValueStore.value) {
+    // Check if this value exists in the current month options
+    const selectedDateRadio = document.getElementById(`date-${calendarValueStore.value}`);
+    if (selectedDateRadio) {
+      selectedDateRadio.checked = true;
+    }
+  }
+
   // Add event listener for onChange function
   const radios = calendarBody.querySelectorAll('input[type="radio"][name="calendar-date"]');
   radios.forEach((radio) => {
-    radio.addEventListener("change", (event) => {
+    radio.addEventListener("change", () => {
+      // Update the calendar value input
+      calendarValueStore.value = radio.value;
+
+      // Maybe run the onDateChange callback
       if (onDateChange && radio.checked) {
         onDateChange(radio.value); // value is in "YYYY-MM-DD" format
       }
@@ -140,6 +154,10 @@ export function buildCalendar(month, year) {
 
 export function onChange(callback) {
   onDateChange = callback;
+}
+
+export function value() {
+  return calendarValueStore.value;
 }
 
 export function setMonth(num) {
