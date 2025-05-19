@@ -31,7 +31,11 @@
 
   <main class="section">
     <div class="section__container max-width-xs spacing">
-      <div class="calendar">
+      <div
+        id="calendar"
+        class="calendar"
+        data-unavailable-weekdays="[0,6]"
+      >
         <div class="calendar__header">
           <h2 class="calendar__heading" id="calendar-month-year">...</h2>
           <div class="calendar__controls">

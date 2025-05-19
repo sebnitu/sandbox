@@ -1,3 +1,4 @@
+const calendar = document.getElementById("calendar");
 const calendarBody = document.getElementById("calendar-body");
 const monthYear = document.getElementById("calendar-month-year");
 const calendarValueStore = document.getElementById("calendar-value-store");
@@ -6,6 +7,7 @@ let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 let onDateChange = null;
+let unavailableWeekdays;
 
 const monthNames = [
   "January", 
@@ -22,41 +24,52 @@ const monthNames = [
   "December"
 ];
 
-export function buildCalendar(month, year) {
+export function buildCalendar(
+  month = today.getMonth(), 
+  year = today.getFullYear()
+) {
   // Remove the contents of the existing rendered calendar
   calendarBody.innerHTML = "";
 
   // Update the month/year text
   monthYear.textContent = `${monthNames[month]} ${year}`;
 
+  // Initialize date vars
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-
   let prevMonth = month - 1;
   let nextMonth = month + 1;
   let prevYear = year;
   let nextYear = year;
+  let date = 1;
+  let dateNext = 1;
 
+  // Decrement the year if necessary
   if (month - 1 < 0) {
     prevMonth = 11;
     prevYear--;
   }
 
+  // Increment the year if necessary
   if (month + 1 > 11) {
     nextMonth = 0;
     nextYear++;
   }
 
+  // Get the number of days in the previous month
   const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
-  const daysInNextMonth = new Date(nextYear, nextMonth + 1, 0).getDate();
 
-  let date = 1;
-  let dateNext = 1;
+  // Get calendar unavailable weekdays array if it's set
+  if (calendar.dataset.unavailableWeekdays) {
+    unavailableWeekdays = JSON.parse(calendar.dataset.unavailableWeekdays);
+  }
 
+  // Loop through the calendar rows
   for (let i = 0; i < 6; i++) {
     // Create table row
     let row = document.createElement("tr");
 
+    // Loop through the calendar columns
     for (let j = 0; j < 7; j++) {
       // Create table cell
       let cell = document.createElement("td");
@@ -81,6 +94,18 @@ export function buildCalendar(month, year) {
           </span>
         `;
         dateNext++;
+      } else if (
+        unavailableWeekdays.includes(j) || 
+        isPastDate(year, month, date)
+      ) {
+        // Day is unavailable
+        cell.classList.add("calendar__unavailable");
+        cell.innerHTML = `
+          <span class="calendar__label">
+            <span>${date}</span>
+          </span>
+        `;
+        date++;
       } else {
         // This months cell
 
@@ -181,3 +206,10 @@ export function setMonth(num) {
   // Build the calendar
   buildCalendar(currentMonth, currentYear);
 };
+
+function isPastDate(year, month, day) {
+  const inputDate = new Date(year, month, day);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return inputDate < today;
+}

@@ -1,8 +1,7 @@
 import "./src/calendar.scss";
 import { buildCalendar, setMonth, onChange, value } from "./src/calendar";
 
-let today = new Date();
-buildCalendar(today.getMonth(), today.getFullYear());
+buildCalendar();
 
 const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
@@ -16,5 +15,5 @@ nextMonthBtn.addEventListener("click", () => {
 });
 
 onChange((result) => {
-  console.log("Value:", value());
+  console.log("Value:", value(), result);
 });
