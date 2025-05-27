@@ -1,35 +1,37 @@
-const calendar = document.getElementById("calendar");
-const calendarBody = document.getElementById("calendar-body");
-const monthYear = document.getElementById("calendar-month-year");
-const calendarValueStore = document.getElementById("calendar-value-store");
+const calendar = document.getElementById('calendar');
+const calendarBody = document.getElementById('calendar-body');
+const monthYear = document.getElementById('calendar-month-year');
+const calendarValueStore = document.getElementById('calendar-value-store');
 
-let today = new Date();
+const today = calendarValueStore?.value
+  ? new Date(calendarValueStore.value)
+  : new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 let onDateChange = null;
 let unavailableWeekdays;
 
 const monthNames = [
-  "January", 
-  "February", 
-  "March", 
-  "April", 
-  "May", 
-  "June",
-  "July", 
-  "August", 
-  "September", 
-  "October", 
-  "November", 
-  "December"
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
 ];
 
 export function buildCalendar(
-  month = today.getMonth(), 
+  month = today.getMonth(),
   year = today.getFullYear()
 ) {
   // Remove the contents of the existing rendered calendar
-  calendarBody.innerHTML = "";
+  calendarBody.innerHTML = '';
 
   // Update the month/year text
   monthYear.textContent = `${monthNames[month]} ${year}`;
@@ -67,19 +69,19 @@ export function buildCalendar(
   // Loop through the calendar rows
   for (let i = 0; i < 6; i++) {
     // Create table row
-    let row = document.createElement("tr");
+    const row = document.createElement('tr');
 
     // Loop through the calendar columns
     for (let j = 0; j < 7; j++) {
       // Create table cell
-      let cell = document.createElement("td");
+      const cell = document.createElement('td');
       // Create form element
-      const formattedValue = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
+      const formattedValue = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
       const radioId = `date-${formattedValue}`;
 
       if (i === 0 && j < firstDay) {
         // Previous months cell
-        cell.classList.add("calendar__unavailable");
+        cell.classList.add('calendar__unavailable');
         cell.innerHTML = `
           <span class="calendar__label">
             <span>${daysInPrevMonth - firstDay + 1 + j}</span>
@@ -87,7 +89,7 @@ export function buildCalendar(
         `;
       } else if (date > daysInMonth) {
         // Next months cell
-        cell.classList.add("calendar__unavailable");
+        cell.classList.add('calendar__unavailable');
         cell.innerHTML = `
           <span class="calendar__label">
             <span>${dateNext}</span>
@@ -95,11 +97,11 @@ export function buildCalendar(
         `;
         dateNext++;
       } else if (
-        unavailableWeekdays.includes(j) || 
+        unavailableWeekdays.includes(j) ||
         isPastDate(year, month, date)
       ) {
         // Day is unavailable
-        cell.classList.add("calendar__unavailable");
+        cell.classList.add('calendar__unavailable');
         cell.innerHTML = `
           <span class="calendar__label">
             <span>${date}</span>
@@ -124,9 +126,12 @@ export function buildCalendar(
           </label>
         `;
 
-        cell.setAttribute("role", "gridcell");
-        cell.setAttribute("aria-label", `${monthNames[month]} ${date}, ${year}`);
-        
+        cell.setAttribute('role', 'gridcell');
+        cell.setAttribute(
+          'aria-label',
+          `${monthNames[month]} ${date}, ${year}`
+        );
+
         // Highlight today
         const isToday =
           date === today.getDate() &&
@@ -134,8 +139,8 @@ export function buildCalendar(
           year === today.getFullYear();
 
         if (isToday) {
-          cell.classList.add("calendar__today");
-          cell.setAttribute("aria-current", "date");
+          cell.classList.add('calendar__today');
+          cell.setAttribute('aria-current', 'date');
         }
 
         // Make weekends unavailable
@@ -156,16 +161,20 @@ export function buildCalendar(
   // If a calendar value has been stored, select it on the calendar
   if (calendarValueStore.value) {
     // Check if this value exists in the current month options
-    const selectedDateRadio = document.getElementById(`date-${calendarValueStore.value}`);
+    const selectedDateRadio = document.getElementById(
+      `date-${calendarValueStore.value}`
+    );
     if (selectedDateRadio) {
       selectedDateRadio.checked = true;
     }
   }
 
   // Add event listener for onChange function
-  const radios = calendarBody.querySelectorAll('input[type="radio"][name="calendar-date"]');
+  const radios = calendarBody.querySelectorAll(
+    'input[type="radio"][name="calendar-date"]'
+  );
   radios.forEach((radio) => {
-    radio.addEventListener("change", () => {
+    radio.addEventListener('change', () => {
       // Update the calendar value input
       calendarValueStore.value = radio.value;
 
@@ -196,7 +205,7 @@ export function setMonth(num) {
     currentYear--;
   }
 
-  // Set the month to 0 if our result is greater than 11 
+  // Set the month to 0 if our result is greater than 11
   // Also update the year accordingly
   if (currentMonth > 11) {
     currentMonth = 0;
@@ -205,7 +214,7 @@ export function setMonth(num) {
 
   // Build the calendar
   buildCalendar(currentMonth, currentYear);
-};
+}
 
 function isPastDate(year, month, day) {
   const inputDate = new Date(year, month, day);
