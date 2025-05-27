@@ -1,15 +1,8 @@
-const calendar = document.getElementById('calendar');
-const calendarBody = document.getElementById('calendar-body');
-const monthYear = document.getElementById('calendar-month-year');
-const calendarValueStore = document.getElementById('calendar-value-store');
-
-const today = calendarValueStore?.value
-  ? new Date(calendarValueStore.value)
-  : new Date();
+const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
-let onDateChange = null;
-let unavailableWeekdays;
+let calendar, calendarBody, calendarHeading, calendarValueStore, unavailableWeekdays, onDateChange;
+let initialBuild = true;
 
 const monthNames = [
   'January',
@@ -26,15 +19,33 @@ const monthNames = [
   'December'
 ];
 
+function initElements() {
+  calendar = document.getElementById('calendar');
+  calendarBody = document.getElementById('calendar-body');
+  calendarHeading = document.getElementById('calendar-heading');
+  calendarValueStore = document.getElementById('calendar-value-store');
+}
+
 export function buildCalendar(
   month = today.getMonth(),
   year = today.getFullYear()
 ) {
+  // Initialize HTML elements
+  initElements();
+
+  // Check if this is the initial build
+  if (initialBuild && calendarValueStore?.value) {
+    let storedDay = new Date(calendarValueStore.value);
+    month = currentMonth = storedDay.getMonth();
+    year = currentYear = storedDay.getFullYear();
+    initialBuild = false;
+  }
+
   // Remove the contents of the existing rendered calendar
   calendarBody.innerHTML = '';
 
   // Update the month/year text
-  monthYear.textContent = `${monthNames[month]} ${year}`;
+  calendarHeading.textContent = `${monthNames[month]} ${year}`;
 
   // Initialize date vars
   const firstDay = new Date(year, month, 1).getDay();
