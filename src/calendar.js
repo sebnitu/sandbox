@@ -122,6 +122,7 @@ export function buildCalendar(
           <input
             type="radio"
             class="calendar__input"
+            name="calendar-date"
             id="${radioId}"
             value="${formattedValue}"
             aria-label="${monthNames[month]} ${date}, ${year}"
@@ -225,7 +226,7 @@ export function setMonth(num) {
     currentMonth = 0;
     currentYear++;
   }
-  
+
   // Build the calendar
   buildCalendar(currentMonth, currentYear);
 }
