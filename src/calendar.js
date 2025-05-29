@@ -1,7 +1,12 @@
 const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
-let calendar, calendarBody, calendarHeading, calendarValueStore, unavailableWeekdays, onDateChange;
+let calendar,
+  calendarBody,
+  calendarHeading,
+  calendarValueStore,
+  unavailableWeekdays,
+  onDateChange;
 let initialBuild = true;
 
 const monthNames = [
@@ -35,11 +40,13 @@ export function buildCalendar(
 
   // Check if this is the initial build
   if (initialBuild && calendarValueStore?.value) {
-    let storedDay = new Date(calendarValueStore.value);
+    const storedDay = new Date(calendarValueStore.value);
     month = currentMonth = storedDay.getMonth();
     year = currentYear = storedDay.getFullYear();
-    initialBuild = false;
   }
+
+  // Always set initial build to false after first run
+  initialBuild = false;
 
   // Remove the contents of the existing rendered calendar
   calendarBody.innerHTML = '';
@@ -51,9 +58,7 @@ export function buildCalendar(
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   let prevMonth = month - 1;
-  let nextMonth = month + 1;
   let prevYear = year;
-  let nextYear = year;
   let date = 1;
   let dateNext = 1;
 
@@ -61,12 +66,6 @@ export function buildCalendar(
   if (month - 1 < 0) {
     prevMonth = 11;
     prevYear--;
-  }
-
-  // Increment the year if necessary
-  if (month + 1 > 11) {
-    nextMonth = 0;
-    nextYear++;
   }
 
   // Get the number of days in the previous month
@@ -125,7 +124,6 @@ export function buildCalendar(
         cell.innerHTML = `
           <input
             type="radio"
-            name="calendar-date"
             class="calendar__input"
             id="${radioId}"
             value="${formattedValue}"
@@ -181,9 +179,7 @@ export function buildCalendar(
   }
 
   // Add event listener for onChange function
-  const radios = calendarBody.querySelectorAll(
-    'input[type="radio"][name="calendar-date"]'
-  );
+  const radios = calendarBody.querySelectorAll(`input[type="radio"]`);
   radios.forEach((radio) => {
     radio.addEventListener('change', () => {
       // Update the calendar value input
@@ -222,7 +218,7 @@ export function setMonth(num) {
     currentMonth = 0;
     currentYear++;
   }
-
+  
   // Build the calendar
   buildCalendar(currentMonth, currentYear);
 }
