@@ -45,9 +45,6 @@ export function buildCalendar(
     year = currentYear = storedDay.getFullYear();
   }
 
-  // Always set initial build to false after first run
-  initialBuild = false;
-
   // Remove the contents of the existing rendered calendar
   calendarBody.innerHTML = '';
 
@@ -178,8 +175,15 @@ export function buildCalendar(
     }
   }
 
-  // Add event listener for onChange function
+  // Query the calendar for all radio buttons
   const radios = calendarBody.querySelectorAll(`input[type="radio"]`);
+
+  // If no radio buttons exist, advance to the next month
+  if (!radios.length && initialBuild) {
+    setMonth(1);
+  }
+
+  // Add event listeners to radio elements
   radios.forEach((radio) => {
     radio.addEventListener('change', () => {
       // Update the calendar value input
@@ -191,6 +195,9 @@ export function buildCalendar(
       }
     });
   });
+
+  // Flip the initial run var
+  initialBuild = false;
 }
 
 export function onChange(callback) {
