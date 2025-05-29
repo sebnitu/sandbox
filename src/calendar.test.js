@@ -79,7 +79,7 @@ describe('Calendar Module', () => {
 
     setMonth(1);
     const header = document.getElementById('calendar-heading').textContent;
-    const nextMonth = new Date(currentYear, currentMonth + 2, 1).toLocaleString('default', {
+    const nextMonth = new Date(currentYear, currentMonth + 1, 1).toLocaleString('default', {
       month: 'long',
       year: 'numeric'
     });
