@@ -1,7 +1,7 @@
-import { CollectionEntry } from "./CollectionEntry";
+import { GroupEntry } from "./GroupEntry";
 import { Zoo } from "./Zoo";
 
-export class ZooEntry extends CollectionEntry {
+export class ZooEntry extends GroupEntry<Zoo, ZooEntry> {
   skill: string;
 
   constructor(parent: Zoo, data: Record<string, any>) {

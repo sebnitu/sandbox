@@ -1,12 +1,8 @@
-import { Collection } from "./Collection";
+import { Group } from "./Group";
 import { ZooEntry } from "./ZooEntry";
 
-export class Zoo extends Collection {
-  collection: ZooEntry[] = [];
-  entry: new (
-    parent: Zoo,
-    data: Record<string, any>
-  ) => ZooEntry = ZooEntry;
+export class Zoo extends Group<Zoo, ZooEntry> {
+  entry = ZooEntry;
 
   constructor(options: Record<string, any> = {}) {
     super({ ...options });

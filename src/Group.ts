@@ -1,12 +1,15 @@
-import { CollectionEntry } from "./CollectionEntry";
+import { GroupEntry } from "./GroupEntry";
 
-export class Collection {
+export class Group<
+  TParent extends Group<TParent, TEntry>,
+  TEntry extends GroupEntry<TParent, TEntry>
+> {
   config: Record<string, any>;
-  collection: CollectionEntry[] = [];
-  entry: new (
-    parent: Collection,
+  collection: TEntry[] = [];
+  entry!: new (
+    parent: TParent,
     data: Record<string, any>
-  ) => CollectionEntry = CollectionEntry;
+  ) => TEntry;
 
   constructor(options: Record<string, any> = {}) {
     this.config = { ...options };
@@ -20,7 +23,7 @@ export class Collection {
     this.config = { ...this.config, ...options };
 
     for (const item of this.config.entries) {
-      const entry = new this.entry(this, item);
+      const entry = new this.entry(this as unknown as TParent, item);
       this.collection.push(entry);
     }
   }
