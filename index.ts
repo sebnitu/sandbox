@@ -1,15 +1,23 @@
-import { Parent } from "./src/Parent";
+import { Zoo } from "./src/Zoo";
 
-const items = [
-  { id: "A", num: "1" },
-  { id: "B", num: "2" },
-  { id: "C", num: "3" },
+const animals = [
+  { id: "A", name: "Lion", skill: "bite" },
+  { id: "B", name: "Tiger", skill: "claw" },
+  { id: "C", name: "Bear", skill: "sleep" },
 ];
 
-const parent = new Parent({
-  entries: items
+const app = new Zoo({
+  entries: animals
 });
 
-parent.mount();
+app.mount();
 
-console.log(parent);
+declare global {
+  interface Window {
+    app: Zoo;
+  }
+}
+
+window.app = app;
+
+console.log(app);

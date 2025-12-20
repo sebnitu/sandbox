@@ -1,12 +1,19 @@
-import { Entry } from "./Entry";
+import { CollectionEntry } from "./CollectionEntry";
 
-export class Parent {
+export class Collection {
   config: Record<string, any>;
-  entry: new (parent: Parent, item: Record<string, any>) => Entry = Entry;
-  collection: Entry[] = [];
+  collection: CollectionEntry[] = [];
+  entry: new (
+    parent: Collection,
+    data: Record<string, any>
+  ) => CollectionEntry = CollectionEntry;
 
   constructor(options: Record<string, any> = {}) {
     this.config = { ...options };
+  }
+
+  get(key: string) {
+    return this.collection.find((entry) => entry.id === key);
   }
 
   mount(options: Record<string, any> = {}) {
