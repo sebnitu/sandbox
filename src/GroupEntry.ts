@@ -1,11 +1,13 @@
-import { Group } from "./Group";
+export interface GroupEntryConstructor<TEntry extends GroupEntry> {
+  new(parent: any, data: Record<string, any>): TEntry;
+}
 
 export class GroupEntry {
   parent: any;
   id: string;
   name: string;
 
-  constructor(parent: any, data: Record<string, any>) {
+  constructor(parent: any, data: Record<string, any> = {}) {
     this.parent = parent;
     this.id = data.id;
     this.name = data.name;

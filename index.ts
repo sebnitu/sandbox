@@ -7,7 +7,7 @@ const animals = [
 ];
 
 const app = new Zoo({
-  entries: animals
+  source: animals
 });
 
 app.mount();
