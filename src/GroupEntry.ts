@@ -1,14 +1,11 @@
 import { Group } from "./Group";
 
-export class GroupEntry<
-  TParent extends Group<TParent, TEntry>,
-  TEntry extends GroupEntry<TParent, TEntry>
-> {
-  parent: TParent;
+export class GroupEntry {
+  parent: any;
   id: string;
   name: string;
 
-  constructor(parent: TParent, data: Record<string, any>) {
+  constructor(parent: any, data: Record<string, any>) {
     this.parent = parent;
     this.id = data.id;
     this.name = data.name;

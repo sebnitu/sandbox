@@ -1,29 +1,41 @@
 import { GroupEntry } from "./GroupEntry";
 
+export interface GroupConfig {
+  entries: Record<string, any>[];
+  title: string;
+  isActive: boolean;
+}
+
+const defaults: GroupConfig = {
+  entries: [],
+  title: "",
+  isActive: false
+}
+
 export class Group<
-  TParent extends Group<TParent, TEntry>,
-  TEntry extends GroupEntry<TParent, TEntry>
+  TEntry extends GroupEntry = GroupEntry,
+  TConfig extends GroupConfig = GroupConfig
 > {
-  config: Record<string, any>;
+  config: TConfig;
   collection: TEntry[] = [];
   entry!: new (
-    parent: TParent,
+    parent: any,
     data: Record<string, any>
   ) => TEntry;
 
-  constructor(options: Record<string, any> = {}) {
-    this.config = { ...options };
+  constructor(options: Partial<TConfig> = {}) {
+    this.config = { ...defaults, ...options } as TConfig;
   }
 
   get(key: string) {
     return this.collection.find((entry) => entry.id === key);
   }
 
-  mount(options: Record<string, any> = {}) {
+  mount(options: Partial<TConfig> = {}) {
     this.config = { ...this.config, ...options };
 
     for (const item of this.config.entries) {
-      const entry = new this.entry(this as unknown as TParent, item);
+      const entry = new this.entry(this, item);
       this.collection.push(entry);
     }
   }
