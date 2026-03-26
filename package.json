@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "gh-pages": "^6.3.0",
-    "vite": "^8.0.2"
+    "sass-embedded": "^1.98.0",
+    "vite": "^8.0.2",
+    "vrembem": "^4.0.0-next.37"
   }
 }
