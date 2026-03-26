@@ -1,15 +1,26 @@
+@use "@vrembem/core/css";
+@use "@vrembem/core/palette";
+
+@include css.set("layout", (
+  "width": 1280px,
+  "sidebar-width": 280px,
+  "aside-width": 220px,
+  "content-max-width": 680px
+));
+
 .layout {
   display: grid;
   grid-template-rows: auto 1fr;
   margin: auto;
-  max-width: 960px;
+  max-width: css.get("layout", "width");
   width: 100%;
-  min-height: 100vh;
+  min-height: 200vh;
   padding: 0 1em;
 }
 
 .layout__main {
   display: grid;
+  grid-template-columns: css.get("layout", "sidebar-width") 1fr css.get("layout", "aside-width");
   grid-template-rows: 1fr auto;
   grid-template-areas:
     "sidebar content aside"
@@ -19,21 +30,38 @@
 .layout__header,
 .layout__sidebar,
 .layout__aside,
-.layout__content,
 .layout__footer {
   padding: 1em;
 }
 
+.layout__header {
+  position: sticky;
+  top: 0;
+  background-color: oklch(60% 0.25 250 / 50%);
+}
+
 .layout__sidebar {
   grid-area: sidebar;
+  background-color: palette.get("secondary", 50, 10%);
 }
 
 .layout__aside {
   grid-area: aside;
+  background-color: palette.get("secondary", 50, 10%);
 }
 
 .layout__content {
   grid-area: content;
+  background-color: palette.get("primary", 50, 10%);
+  padding: 0 1em;
+
+  .container {
+    background-color: palette.get("primary", 50, 10%);
+    max-width: css.get("layout", "content-max-width");
+    width: 100%;
+    margin: auto;
+    padding: 1em;
+  }
 }
 
 .layout__footer {
