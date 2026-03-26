@@ -5,7 +5,8 @@
   "width": 1280px,
   "sidebar-width": 280px,
   "aside-width": 220px,
-  "content-max-width": 680px
+  "content-max-width": 680px,
+  "header-height": 56px
 ));
 
 .layout {
@@ -37,26 +38,29 @@
 .layout__header {
   position: sticky;
   top: 0;
-  background-color: oklch(60% 0.25 250 / 50%);
+  margin-left: css.get("layout", "sidebar-width");
 }
 
 .layout__sidebar {
   grid-area: sidebar;
-  background-color: palette.get("secondary", 50, 10%);
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: css.get("layout", "sidebar-width");
 }
 
 .layout__aside {
   grid-area: aside;
-  background-color: palette.get("secondary", 50, 10%);
+  position: sticky;
+  top: css.get("layout", "header-height");
+  height: calc(100vh - css.get("layout", "header-height"));
 }
 
 .layout__content {
   grid-area: content;
-  background-color: palette.get("primary", 50, 10%);
   padding: 0 1em;
 
   .container {
-    background-color: palette.get("primary", 50, 10%);
     max-width: css.get("layout", "content-max-width");
     width: 100%;
     margin: auto;
@@ -66,4 +70,32 @@
 
 .layout__footer {
   grid-area: footer;
+}
+
+/**
+ * Theme setting
+ */
+
+.layout__header {
+  background-color: oklch(60% 0.25 250 / 50%);
+}
+
+.layout__sidebar {
+  background-color: palette.get("secondary", 50, 10%);
+}
+
+.layout__aside {
+  background-color: palette.get("secondary", 50, 10%);
+}
+
+.layout__content {
+  background-color: palette.get("primary", 50, 10%);
+
+  .container {
+    background-color: palette.get("primary", 50, 10%);
+  }
+}
+
+.layout__footer {
+  background-color: oklch(68% 0.2 324 / 0.5);
 }
