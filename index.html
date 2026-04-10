@@ -13,8 +13,8 @@
 
   <header class="section background-darker">
     <div class="section__container max-width-xs spacing-sm">
-      <h1 class="text-size-lg">Sandbox</h1>
-      <p class="foreground-light">A place to learn and test new things.</p>
+      <h1 class="text-size-lg">Web Components</h1>
+      <p class="foreground-light margin-bottom-lg">I'm testing out the implementation and use of web components for rendering Vrembem components. This would be handy in cases like checkboxes, radios and switches where a lot of extra markup is required.</p>
       <ol class="foreground-lighter flex flex_gap flex_gap-y_sm margin-top-lg list-style-none">
         <li class="flex flex_gap_sm align-items-center">
           <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
@@ -32,16 +32,13 @@
   <div class="section">
     <div class="section__container max-width-xs spacing-lg">
 
-      <vb-card>
-        <h2 slot="title" class="card__title">Card Title</h2>
-        <p>This is a card!</p>
-        <div slot="footer">Footer actions!</div>
-      </vb-card>
-
-      <vb-card>
-        <p>This is a card!</p>
-        <div slot="footer">Footer actions!</div>
-      </vb-card>
+      <vb-checkbox>
+        <input checked />
+      </vb-checkbox>
+      <vb-checkbox>
+        <input aria-checked="mixed" />
+      </vb-checkbox>
+      <vb-checkbox checked></vb-checkbox>
 
     </div>
   </div>
