@@ -27,6 +27,6 @@
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "vite": "^8.0.3",
-    "vrembem": "^4.0.0-next.38"
+    "vrembem": "^4.0.0-next.39"
   }
 }
