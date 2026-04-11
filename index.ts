@@ -9,26 +9,32 @@ class CheckboxComponent extends HTMLElement {
   static observedAttributes = ["name", "value", "checked", "disabled", "required", "indeterminate", "aria-checked", "size"];
 
   // Create modifier map
-  static modifiers = {
+  static modifiers: Record<string, string> = {
     size: "checkbox_size"
   };
   
-  private applyModifiers() {
-    // Loop through the modifiers map
-    for (const [attr, prefix] of Object.entries(CheckboxComponent.modifiers)) {
-      // Guard in case the attribute doesn't exists on the host
-      if (!this.hasAttribute(attr)) return;
-
-      // Remove the existing modifier if it exists
-      this.root.classList.forEach((item) => {
-        if (item.startsWith(`${prefix}_`)) this.root.classList.remove(item);
-      });
-
-      // Add the modifier provided by the host attribute
-      const value = this.getAttribute(attr);
-      if (value) {
-        this.root.classList.add(`${prefix}_${value}`);
+  private applyModifiers(modifier?: string) {
+    if (!modifier) {
+      // Loop through the modifiers map and run recursively
+      for (const modifier of Object.keys(CheckboxComponent.modifiers)) {
+        this.applyModifiers(modifier);
       }
+      return;
+    }
+
+    // Get the prefix and return if it doesn't exist.
+    const prefix = CheckboxComponent.modifiers[modifier];
+    if (!prefix) return;
+
+    // Remove the existing modifier if it exists
+    this.root.classList.forEach((item) => {
+      if (item.startsWith(`${prefix}_`)) this.root.classList.remove(item);
+    });
+
+    // Add the modifier provided by the host attribute
+    const value = this.getAttribute(modifier);
+    if (value) {
+      this.root.classList.add(`${prefix}_${value}`);
     }
   }
 
@@ -65,11 +71,15 @@ class CheckboxComponent extends HTMLElement {
     // Sync host attributes to the input on init
     for (const attr of CheckboxComponent.observedAttributes) {
       if (this.hasAttribute(attr)) {
+        // Skip modifier attributes
+        if (attr in CheckboxComponent.modifiers) continue;
+        // We need to set indeterminate differently than other attributes
         if (attr === "indeterminate") {
           this.input.indeterminate = true;
-        } else {
-          this.input.setAttribute(attr, this.getAttribute(attr) || "");
+          continue;
         }
+        // Apply the rest of the attributes directly to input
+        this.input.setAttribute(attr, this.getAttribute(attr) || "");
       }
     }
 
@@ -93,17 +103,26 @@ class CheckboxComponent extends HTMLElement {
     // Guard in case input hasn't been set yet
     if (!this.input) return;
 
+    // Check if the checkbox is rendered
+    if (!this.root) return;
+
+    // Apply the modifiers if the attribute was passed
+    if (name in CheckboxComponent.modifiers) {
+      this.applyModifiers(name);
+      return;
+    }
+
+    // We need to set indeterminate differently than other attributes
+    if (name === "indeterminate") {
+      this.input.indeterminate = newValue !== null;
+      return;
+    }
+
     // Update or remove the attribute value
     if (newValue === null) {
       this.input.removeAttribute(name);
     } else {
       this.input.setAttribute(name, newValue);
-    }
-
-    // Check if the checkbox is rendered
-    if (!this.root) return;
-    if (name in CheckboxComponent.modifiers) {
-      this.applyModifiers();
     }
   }
 }
