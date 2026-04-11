@@ -8,24 +8,6 @@
   <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem@next/dist/index.css">
   <script type="module" src="./index.ts"></script>
-  <style>
-    vb-checkbox {
-      display: inline-block;
-      overflow: hidden;
-      transition: opacity var(--vb-transition-timing-function) var(--vb-transition-duration);
-    }
-    vb-checkbox[size="sm"] {
-      font-size: var(--vb-form-control-size-sm);
-    }
-    vb-checkbox[size="lg"] {
-      font-size: var(--vb-form-control-size-lg);
-    }
-    vb-checkbox:not(:defined) {
-      width: var(--vb-form-control-size-calc);
-      height: var(--vb-form-control-size-calc);
-      opacity: 0;
-    }
-  </style>
 </head>
 <body>
 
@@ -65,8 +47,12 @@
         <vb-checkbox required></vb-checkbox>
         <vb-checkbox disabled></vb-checkbox>
 
-        <vb-checkbox size="sm"></vb-checkbox>
-        <vb-checkbox size="lg"></vb-checkbox>
+        <vb-checkbox size="sm" checked>
+          <input type="checkbox" />
+        </vb-checkbox>
+        <vb-checkbox size="lg" indeterminate>
+          <input type="checkbox" />
+        </vb-checkbox>
 
         <input type="checkbox" disabled />
 

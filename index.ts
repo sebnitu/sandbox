@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 class CheckboxComponent extends HTMLElement {
+  #initialized: boolean = false;
   input!: HTMLInputElement;
   root!: HTMLElement;
 
@@ -33,8 +34,8 @@ class CheckboxComponent extends HTMLElement {
 
   connectedCallback() {
     // Check if this element has been initialized
-    // TODO: test if this is necessary
-    if (this.querySelector(".checkbox")) return;
+    if (this.#initialized) return;
+    this.#initialized = true;
 
     // Get the input element
     this.input = this.querySelector("input") || document.createElement("input");   
