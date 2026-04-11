@@ -8,6 +8,24 @@
   <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem@next/dist/index.css">
   <script type="module" src="./index.ts"></script>
+  <style>
+    vb-checkbox {
+      display: inline-block;
+      overflow: hidden;
+      transition: opacity var(--vb-transition-timing-function) var(--vb-transition-duration);
+    }
+    vb-checkbox[size="sm"] {
+      font-size: var(--vb-form-control-size-sm);
+    }
+    vb-checkbox[size="lg"] {
+      font-size: var(--vb-form-control-size-lg);
+    }
+    vb-checkbox:not(:defined) {
+      width: var(--vb-form-control-size-calc);
+      height: var(--vb-form-control-size-calc);
+      opacity: 0;
+    }
+  </style>
 </head>
 <body>
 
@@ -32,13 +50,30 @@
   <div class="section">
     <div class="section__container max-width-xs spacing-lg">
 
-      <vb-checkbox>
-        <input checked />
-      </vb-checkbox>
-      <vb-checkbox>
-        <input aria-checked="mixed" />
-      </vb-checkbox>
-      <vb-checkbox checked></vb-checkbox>
+      <p>Content shift check...</p>
+      
+      <form class="flex align-items-center">
+        <vb-checkbox>
+          <input type="checkbox" checked />
+        </vb-checkbox>
+        <vb-checkbox>
+          <input type="checkbox" aria-checked="mixed" />
+        </vb-checkbox>
+
+        <vb-checkbox checked></vb-checkbox>
+        <vb-checkbox indeterminate></vb-checkbox>
+        <vb-checkbox required></vb-checkbox>
+        <vb-checkbox disabled></vb-checkbox>
+
+        <vb-checkbox size="sm"></vb-checkbox>
+        <vb-checkbox size="lg"></vb-checkbox>
+
+        <input type="checkbox" disabled />
+
+        <button class="button button_size_sm">Submit</button>
+      </form>
+
+      <p>Content shift check...</p>
 
     </div>
   </div>
