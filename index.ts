@@ -1,143 +1,83 @@
 /// <reference types="vite/client" />
 
-// Lines
-// ---
-// Individual: 132
-// Shared Class: 
-
-class VrembemChoice extends HTMLElement {
-
-}
-
-class CheckboxComponent extends HTMLElement {
+class VrembemChoiceInput extends HTMLElement {
   #initialized = false;
   input!: HTMLInputElement;
 
-  static modifiers = {
-    size: "checkbox_size_"
-  }
+  static block = "";
+  static type = "checkbox";
+  static template = "";
+  static modifiers: string[] = ["size"];
+  
+  protected onInit() {};
 
   connectedCallback() {
     // Only run this if it hasn't been initialized
     if (this.#initialized) return;
     this.#initialized = true;
 
+    // Get the constructor
+    const self = this.constructor as typeof VrembemChoiceInput;
+
     // Add component class to the host element
-    this.classList.add("checkbox");
+    this.classList.add(self.block);
 
     // Get or create the input element
     this.input = this.querySelector("input") || document.createElement("input");
-    this.input.type = "checkbox";
-    this.input.classList.add("checkbox__native");
+    this.input.type = self.type;
+    this.input.classList.add(`${self.block}__native`);
 
     // Build wrapper markup and add the input
-    this.innerHTML = `
-      <span class="checkbox__background">
-        <span class="checkbox__box">
-          <span class="checkbox__icon"></span>
-        </span>
-      </span>
-    `;
+    this.innerHTML = self.template;
 
     // Prepend the input
     this.prepend(this.input);
 
-    // Maybe set the indeterminate state
+    // Set modifiers
+    self.modifiers.forEach((modifier) => {
+      if (this.hasAttribute(modifier)) {
+        this.classList.add(`${self.block}_${modifier}_${this.getAttribute(modifier)}`);
+      }
+    });
+
+    // Run init function for any custom setup
+    this.onInit();
+  }
+}
+
+customElements.define("vb-checkbox", class extends VrembemChoiceInput {
+  static block = "checkbox";
+  static template = `
+    <span class="checkbox__background">
+      <span class="checkbox__box">
+        <span class="checkbox__icon"></span>
+      </span>
+    </span>
+  `;
+  protected onInit() {
     this.input.indeterminate = this.input.matches('[aria-checked="mixed"]');
-
-    // Set modifiers
-    for (const [modifier, prefix] of Object.entries(CheckboxComponent.modifiers)) {
-      if (this.hasAttribute(modifier)) {
-        this.classList.add(`${prefix}${this.getAttribute(modifier)}`);
-      }
-    }
   }
-}
+});
 
-class RadioComponent extends HTMLElement {
-  #initialized = false;
-  input!: HTMLInputElement;
-
-  static modifiers = {
-    size: "radio_size_"
-  }
-
-  connectedCallback() {
-    // Only run this if it hasn't been initialized
-    if (this.#initialized) return;
-    this.#initialized = true;
-
-    // Add component class to the host element
-    this.classList.add("radio");
-
-    // Get or create the input element
-    this.input = this.querySelector("input") || document.createElement("input");
-    this.input.type = "radio";
-    this.input.classList.add("radio__native");
-
-    // Build wrapper markup and add the input
-    this.innerHTML = `
-      <span class="radio__background">
-        <span class="radio__circle">
-          <span class="radio__dot"></span>
-        </span>
+customElements.define("vb-radio", class extends VrembemChoiceInput {
+  static block = "radio";
+  static type = "radio";
+  static template = `
+    <span class="radio__background">
+      <span class="radio__circle">
+        <span class="radio__dot"></span>
       </span>
-    `;
+    </span>
+  `;
+});
 
-    // Prepend the input
-    this.prepend(this.input);
-
-    // Set modifiers
-    for (const [modifier, prefix] of Object.entries(CheckboxComponent.modifiers)) {
-      if (this.hasAttribute(modifier)) {
-        this.classList.add(`${prefix}${this.getAttribute(modifier)}`);
-      }
-    }
-  }
-}
-
-class SwitchComponent extends HTMLElement {
-  #initialized = false;
-  input!: HTMLInputElement;
-
-  static modifiers = {
-    size: "switch_size_"
-  }
-
-  connectedCallback() {
-    // Only run this if it hasn't been initialized
-    if (this.#initialized) return;
-    this.#initialized = true;
-
-    // Add component class to the host element
-    this.classList.add("switch");
-
-    // Get or create the input element
-    this.input = this.querySelector("input") || document.createElement("input");
-    this.input.type = "checkbox";
-    this.input.classList.add("switch__native");
-
-    // Build wrapper markup and add the input
-    this.innerHTML = `
-      <span class="switch__background">
-        <span class="switch__track">
-          <span class="switch__thumb"></span>
-        </span>
+customElements.define("vb-switch", class extends VrembemChoiceInput {
+  static block = "switch";
+  static template = `
+    <span class="switch__background">
+      <span class="switch__track">
+        <span class="switch__thumb"></span>
       </span>
-    `;
-
-    // Prepend the input
-    this.prepend(this.input);
-
-    // Set modifiers
-    for (const [modifier, prefix] of Object.entries(CheckboxComponent.modifiers)) {
-      if (this.hasAttribute(modifier)) {
-        this.classList.add(`${prefix}${this.getAttribute(modifier)}`);
-      }
-    }
-  }
-}
-
-customElements.define("vb-checkbox", CheckboxComponent);
-customElements.define("vb-radio", RadioComponent);
-customElements.define("vb-switch", SwitchComponent);
+    </span>
+  `;
+});
