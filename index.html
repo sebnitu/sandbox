@@ -35,26 +35,22 @@
       <p>Content shift check...</p>
       
       <form class="flex align-items-center">
+
         <vb-checkbox>
           <input type="checkbox" checked />
         </vb-checkbox>
+
         <vb-checkbox>
           <input type="checkbox" aria-checked="mixed" />
         </vb-checkbox>
 
-        <vb-checkbox checked></vb-checkbox>
-        <vb-checkbox indeterminate></vb-checkbox>
-        <vb-checkbox required></vb-checkbox>
-        <vb-checkbox disabled></vb-checkbox>
-
-        <vb-checkbox size="sm" checked>
-          <input type="checkbox" />
-        </vb-checkbox>
-        <vb-checkbox size="lg" indeterminate>
-          <input type="checkbox" />
+        <vb-checkbox size="sm">
+          <input type="checkbox" checked />
         </vb-checkbox>
 
-        <input type="checkbox" disabled />
+        <vb-checkbox size="lg">
+          <input type="checkbox" aria-checked="mixed" />
+        </vb-checkbox>
 
         <button class="button button_size_sm">Submit</button>
       </form>
