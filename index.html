@@ -36,7 +36,8 @@
       
       <form class="flex align-items-center">
 
-        <div>
+        <!--
+        <div class="flex align-items-center gap-0">
           <vb-checkbox size="sm">
             <input type="checkbox" checked />
           </vb-checkbox>
@@ -47,8 +48,9 @@
             <input type="checkbox" checked />
           </vb-checkbox>
         </div>
+        -->
 
-        <div>
+        <div class="flex gap-0">
           <vb-checkbox>
             <input type="checkbox" aria-checked="mixed" />
           </vb-checkbox>
@@ -58,6 +60,21 @@
           <vb-checkbox>
             <input type="checkbox" required />
           </vb-checkbox>
+        </div>
+
+        <div class="flex gap-0">
+          <vb-radio>
+            <input type="radio" name="radio-1" value="a" />
+          </vb-radio>
+          <vb-radio>
+            <input type="radio" name="radio-1" value="b" />
+          </vb-radio>
+        </div>
+
+        <div class="flex gap-0">
+          <vb-switch>
+            <input type="checkbox" />
+          </vb-switch>
         </div>
 
         <button class="button button_size_sm">Submit</button>
