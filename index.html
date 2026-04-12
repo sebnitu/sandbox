@@ -8,6 +8,11 @@
   <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
   <link rel="stylesheet" href="https://unpkg.com/vrembem@next/dist/index.css">
   <script type="module" src="./index.ts"></script>
+  <style>
+    vb-checkbox {
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
 
@@ -36,21 +41,29 @@
       
       <form class="flex align-items-center">
 
-        <vb-checkbox>
-          <input type="checkbox" checked />
-        </vb-checkbox>
+        <div>
+          <vb-checkbox size="sm">
+            <input type="checkbox" checked />
+          </vb-checkbox>
+          <vb-checkbox>
+            <input type="checkbox" checked />
+          </vb-checkbox>
+          <vb-checkbox size="lg">
+            <input type="checkbox" checked />
+          </vb-checkbox>
+        </div>
 
-        <vb-checkbox>
-          <input type="checkbox" aria-checked="mixed" />
-        </vb-checkbox>
-
-        <vb-checkbox size="sm">
-          <input type="checkbox" checked />
-        </vb-checkbox>
-
-        <vb-checkbox size="lg">
-          <input type="checkbox" aria-checked="mixed" />
-        </vb-checkbox>
+        <div>
+          <vb-checkbox>
+            <input type="checkbox" aria-checked="mixed" />
+          </vb-checkbox>
+          <vb-checkbox>
+            <input type="checkbox" disabled />
+          </vb-checkbox>
+          <vb-checkbox>
+            <input type="checkbox" required />
+          </vb-checkbox>
+        </div>
 
         <button class="button button_size_sm">Submit</button>
       </form>
