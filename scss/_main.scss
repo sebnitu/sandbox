@@ -4,13 +4,34 @@
 
 @include tokens.set("asdf", (
   "width": 1200px,
+  "header-height": 3.5em,
   "drawer-width": 18em,
 ));
+
+.header {
+  z-index: 3;
+  position: fixed;
+  inset: 0 0 auto 0; 
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  max-width: tokens.get("asdf", "width");
+  margin: auto;
+  padding: 1rem;
+}
 
 // These styles center the drawer frame and give it a max width
 .drawer-frame {
   max-width: tokens.get("asdf", "width");
   margin: auto;
+  padding-top: tokens.get("asdf", "header-height");
+}
+
+.drawer-main {
+  position: relative;
+  z-index: 2;
 }
 
 @include core.media-min("lg") {
@@ -21,11 +42,12 @@
   }
 
   .drawer {
+    z-index: 1;
     width: tokens.get("asdf", "drawer-width");
   }
 
   .drawer__container {
-    padding: 1rem;
+    padding: calc(tokens.get("asdf", "header-height") + 1rem) 1rem 1rem;
   }
 
   // Styles for infinite background
@@ -58,12 +80,17 @@
  * Background colors for visibility
  */
 
+.header {
+  background-color: oklch(60% 0.25 250 / 20%);
+}
+
 .drawer {
   &::before {
-    background-color: oklch(68% 0.2 324 / 0.2);
+    background-color: oklch(68% 0.2 324 / 20%);
   }
 }
 
 .drawer-main {
-  background-color: palette.get("primary", $a: 10%);
+  // background-color: palette.get("primary", $a: 10%);
+  background-color: white;
 }
