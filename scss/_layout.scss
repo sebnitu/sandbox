@@ -1,141 +1,111 @@
+@use "@vrembem/core";
 @use "@vrembem/core/tokens";
 @use "@vrembem/core/palette";
 
 @include tokens.set("layout", (
-  "width": 1000px,
-  "sidebar-width": 280px,
-  "aside-width": 180px,
-  "content-max-width": 680px,
-  "header-height": 56px
+  "width": 1200px,
+  "header-height": 3.5em,
+  "sidebar-width": 18em,
 ));
 
-@include tokens.set("layout", (
-  "padding-left": max(1rem, calc(((100% + 2rem) - tokens.get("layout", "width")) / 2)),
-));
+.header {
+  z-index: 3;
+  position: fixed;
+  inset: 0 0 auto 0; 
+}
 
-@include tokens.set("layout", (
-  "shadow-left": calc(tokens.get("layout", "padding-left") + (tokens.get("layout", "sidebar-width") - 2rem)),
-));
-
-.layout {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  margin: auto;
+.header__container {
+  display: flex;
+  justify-content: space-between;
   max-width: tokens.get("layout", "width");
-  width: 100%;
-  padding: 0 1rem;
-}
-
-.layout__main {
-  display: grid;
-  grid-template-columns: tokens.get("layout", "sidebar-width") 1fr auto;
-  grid-template-rows: 1fr auto;
-  grid-template-areas:
-    "sidebar content aside"
-    "sidebar footer footer";
-}
-
-.layout__header,
-.layout__aside,
-.layout__footer {
+  margin: auto;
   padding: 1rem;
 }
 
-.layout__header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+.footer {
+  padding: 1rem;
 }
 
-.layout__sidebar {
-  grid-area: sidebar;
-  box-sizing: content-box;
-  position: fixed;
-  top: tokens.get("layout", "header-height");
-  width: tokens.get("layout", "sidebar-width");
-  height: calc(100vh - tokens.get("layout", "header-height"));
+.drawer__dialog {
+  background: white;
 
-  .container {
-    padding: 1rem;
-    overflow: auto;
+  @include core.media-min("lg") {
+    background: transparent;
+  }
+}
+
+.drawer__container {
+  padding: 1rem;
+}
+
+.layout {
+  max-width: tokens.get("layout", "width");
+  margin: auto;
+  padding-top: tokens.get("layout", "header-height");
+  display: flex;
+  align-items: flex-start;
+}
+
+.layout__main {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: calc(100vh - tokens.get("layout", "header-height"));
+}
+
+// We style the breakpoint specifically to handle the indeterminate state
+@include core.media-min("lg") {
+  .layout__sidebar {
+    position: sticky;
+    inset: unset;
+    top: tokens.get("layout", "header-height");
+    z-index: 1;
+    width: tokens.get("layout", "sidebar-width");
     height: calc(100vh - tokens.get("layout", "header-height"));
+    overflow: auto;
+    flex: 0 0 auto;
   }
 
-  &::after {
+  // Styles for infinite background
+  .layout__sidebar::before {
     box-sizing: content-box;
-    background-color: pink;
     content: "";
     z-index: -2;
     position: fixed;
     inset: 0 auto 0 0;
     width: tokens.get("layout", "sidebar-width");
-    padding-left: tokens.get("layout", "padding-left");
-    padding-top: tokens.get("layout", "header-height");
+    padding-left: max(0px, calc((100% - tokens.get("layout", "width")) / 2));
   }
 
-  &::before {
+  // Styles for fold shadow
+  .layout__sidebar::after {
     box-sizing: content-box;
     pointer-events: none;
     content: "";
     z-index: -1;
     position: fixed;
-    z-index: 2;
-    inset: 0 auto 0 tokens.get("layout", "shadow-left");
+    inset: 0 auto 0 calc(max(0px, calc((100% - tokens.get("layout", "width")) / 2)) + (tokens.get("layout", "sidebar-width") - 2rem));
     width: 2rem;
     height: 100%;
     background: linear-gradient(268deg, rgb(0 0 0 / 10%) 0, rgb(0 0 0 / 0%) 2rem);
   }
 }
 
-.layout__aside {
-  grid-area: aside;
-  position: sticky;
-  top: tokens.get("layout", "header-height");
-  width: tokens.get("layout", "aside-width");
-  height: calc(100vh - tokens.get("layout", "header-height"));
-  overflow: auto;
-}
-
-.layout__content {
-  grid-area: content;
-  padding: 0 1em;
-
-  .container {
-    max-width: tokens.get("layout", "content-max-width");
-    width: 100%;
-    margin: auto;
-    padding: 1em;
-  }
-}
-
-.layout__footer {
-  grid-area: footer;
-}
 
 /**
- * Theme setting
+ * Background colors for visibility
  */
 
-.layout__header {
-  background-color: oklch(60% 0.25 250 / 50%);
+.header,
+.footer {
+  background-color: oklch(60% 0.25 250 / 20%);
 }
 
-.layout__sidebar {
-  background-color: palette.get("secondary", $a: 10%);
-}
-
-.layout__aside {
-  background-color: palette.get("secondary", $a: 10%);
-}
-
-.layout__content {
-  background-color: palette.get("primary", $a: 10%);
-
-  .container {
-    background-color: palette.get("primary", $a: 10%);
+@include core.media-min("lg") {
+  .layout__sidebar {
+    &::before {
+      background-color: oklch(68% 0.2 324 / 20%);
+    }
   }
-}
-
-.layout__footer {
-  background-color: oklch(68% 0.2 324 / 0.5);
 }
