@@ -56,7 +56,7 @@
 
 // We style the breakpoint specifically to handle the indeterminate state
 @include core.media-min("lg") {
-  .layout__sidebar {
+  .layout__aside {
     position: sticky;
     inset: unset;
     top: tokens.get("layout", "header-height");
@@ -68,7 +68,7 @@
   }
 
   // Styles for infinite background
-  .layout__sidebar::before {
+  .layout__aside::before {
     box-sizing: content-box;
     content: "";
     z-index: -2;
@@ -79,7 +79,7 @@
   }
 
   // Styles for fold shadow
-  .layout__sidebar::after {
+  .layout__aside::after {
     box-sizing: content-box;
     pointer-events: none;
     content: "";
@@ -103,7 +103,7 @@
 }
 
 @include core.media-min("lg") {
-  .layout__sidebar {
+  .layout__aside {
     &::before {
       background-color: oklch(68% 0.2 324 / 20%);
     }

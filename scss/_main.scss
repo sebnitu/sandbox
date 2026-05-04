@@ -2,18 +2,48 @@
 @use "@vrembem/core/tokens";
 @use "@vrembem/core/palette";
 
+@include tokens.set("main", (
+  "content-width": 600px,
+  "aside-width": 14em
+));
+
 .main {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 1rem;
+  align-items: start;
 }
 
 .main__content {
-  padding: 1rem;
-  flex: 1 1 auto;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.main__aside {
+  display: none;
 }
 
 .main__footer {
-  flex: 0 0 auto;
+  order: 99;
+  grid-column: 1 / -1;
+}
+
+@include core.media-min("md") {
+  .main {
+    grid-template-columns: 1fr auto;
+  }
+
+  .main__aside {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: tokens.get("layout", "header-height");
+    width: tokens.get("main", "aside-width");
+    height: calc(100vh - tokens.get("layout", "header-height"));
+    overflow: auto;
+  }
 }
 
 /**
