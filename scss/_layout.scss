@@ -10,6 +10,7 @@
 
 .header {
   position: fixed;
+  z-index: 2;
   inset: 0 0 auto 0; 
 }
 
@@ -18,14 +19,6 @@
   justify-content: space-between;
   max-width: tokens.get("layout", "width");
   margin: auto;
-  padding: 1rem;
-}
-
-.footer {
-  padding: 1rem;
-}
-
-.drawer__container {
   padding: 1rem;
 }
 
@@ -39,7 +32,6 @@
 
 .layout__main {
   position: relative;
-  z-index: 2;
   flex: 1 1 auto;
   min-width: 0;
   min-height: calc(100vh - tokens.get("layout", "header-height"));
@@ -47,19 +39,16 @@
 
 .layout__aside .drawer__dialog {
   background: white;
+  padding: 1em;
 }
 
 // We style the breakpoint specifically to handle the indeterminate state
 @include core.media-min("lg") {
-  .header {
-    z-index: 2;
-  }
-
   .layout__aside {
+    z-index: 1;
     position: sticky;
     inset: unset;
     top: tokens.get("layout", "header-height");
-    z-index: 1;
     width: tokens.get("layout", "sidebar-width");
     height: calc(100vh - tokens.get("layout", "header-height"));
     overflow: auto;
@@ -108,7 +97,7 @@
 @include core.media-min("lg") {
   .layout__aside {
     &::before {
-      background-color: oklch(0% 0 0 / 2%);
+      background-color: palette.get("neutral", "50");
     }
   }
 }

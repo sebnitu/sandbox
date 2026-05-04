@@ -1,0 +1,27 @@
+@use "@vrembem/core";
+@use "@vrembem/core/tokens";
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  justify-items: center;
+}
+
+.footer__copy {
+  padding: 1em tokens.get("main", "content-padding-x");
+  width: 100%;
+  max-width: calc(tokens.get("main", "content-width") + tokens.get("main", "content-padding-x"));
+}
+
+.footer__logo {
+  background-color: pink;
+  width: tokens.get("main", "aside-width");
+  padding: tokens.get("main", "aside-padding");
+}
+
+@include core.media-min("md") {
+  .footer {
+    grid-template-columns: 1fr auto;
+  }
+}
