@@ -1,31 +1,34 @@
-@use "@vrembem/core/css";
+@use "@vrembem/core/tokens";
 @use "@vrembem/core/palette";
 
-@include css.set("layout", (
-  "width": 1280px,
-  "sidebar-width": 280px,
-  "aside-width": 220px,
+@include tokens.set("layout", (
+  "width": 960px,
+  "sidebar-width": 220px,
+  "aside-width": 180px,
   "content-max-width": 680px,
   "header-height": 56px
 ));
 
-@include css.set("layout", (
-  "calc-padding": max(1rem, calc(((100% + 2rem) - css.get("layout", "width")) / 2)),
+@include tokens.set("layout", (
+  "padding-left": max(1rem, calc(((100% + 2rem) - tokens.get("layout", "width")) / 2)),
+));
+
+@include tokens.set("layout", (
+  "shadow-left": calc(tokens.get("layout", "padding-left") + (tokens.get("layout", "sidebar-width") - 2rem)),
 ));
 
 .layout {
   display: grid;
   grid-template-rows: auto 1fr;
   margin: auto;
-  max-width: css.get("layout", "width");
+  max-width: tokens.get("layout", "width");
   width: 100%;
-  min-height: 200vh;
   padding: 0 1rem;
 }
 
 .layout__main {
   display: grid;
-  grid-template-columns: css.get("layout", "sidebar-width") 1fr auto;
+  grid-template-columns: tokens.get("layout", "sidebar-width") 1fr auto;
   grid-template-rows: 1fr auto;
   grid-template-areas:
     "sidebar content aside"
@@ -48,32 +51,36 @@
   grid-area: sidebar;
   box-sizing: content-box;
   position: sticky;
-  top: css.get("layout", "header-height");
-  width: css.get("layout", "sidebar-width");
-  height: calc(100vh - css.get("layout", "header-height"));
+  top: tokens.get("layout", "header-height");
+  width: tokens.get("layout", "sidebar-width");
+  height: calc(100vh - tokens.get("layout", "header-height"));
 
   .container {
     padding: 1rem;
+    overflow: auto;
+    height: calc(100vh - tokens.get("layout", "header-height"));
   }
 
   &::after {
+    box-sizing: content-box;
     background-color: pink;
     content: "";
     z-index: -2;
     position: fixed;
     inset: 0 auto 0 0;
-    width: css.get("layout", "sidebar-width");
-    padding-left: css.get("layout", "calc-padding");
-    padding-top: css.get("layout", "header-height");
+    width: tokens.get("layout", "sidebar-width");
+    padding-left: tokens.get("layout", "padding-left");
+    padding-top: tokens.get("layout", "header-height");
   }
 
   &::before {
+    box-sizing: content-box;
     pointer-events: none;
     content: "";
     z-index: -1;
     position: fixed;
     z-index: 2;
-    inset: 0 auto 0 calc(css.get("layout", "calc-padding") + (css.get("layout", "sidebar-width") - 2rem));
+    inset: 0 auto 0 tokens.get("layout", "shadow-left");
     width: 2rem;
     height: 100%;
     background: linear-gradient(268deg, rgb(0 0 0 / 10%) 0, rgb(0 0 0 / 0%) 2rem);
@@ -83,9 +90,10 @@
 .layout__aside {
   grid-area: aside;
   position: sticky;
-  top: css.get("layout", "header-height");
-  width: css.get("layout", "aside-width");
-  height: calc(100vh - css.get("layout", "header-height"));
+  top: tokens.get("layout", "header-height");
+  width: tokens.get("layout", "aside-width");
+  height: calc(100vh - tokens.get("layout", "header-height"));
+  overflow: auto;
 }
 
 .layout__content {
@@ -93,7 +101,7 @@
   padding: 0 1em;
 
   .container {
-    max-width: css.get("layout", "content-max-width");
+    max-width: tokens.get("layout", "content-max-width");
     width: 100%;
     margin: auto;
     padding: 1em;
@@ -113,18 +121,18 @@
 }
 
 .layout__sidebar {
-  background-color: palette.get("secondary", 50, 10%);
+  background-color: palette.get("secondary", $a: 10%);
 }
 
 .layout__aside {
-  background-color: palette.get("secondary", 50, 10%);
+  background-color: palette.get("secondary", $a: 10%);
 }
 
 .layout__content {
-  background-color: palette.get("primary", 50, 10%);
+  background-color: palette.get("primary", $a: 10%);
 
   .container {
-    background-color: palette.get("primary", 50, 10%);
+    background-color: palette.get("primary", $a: 10%);
   }
 }
 

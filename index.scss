@@ -1,3 +1,6 @@
-@use "vrembem/styles";
+@use "vrembem/layers";
+@use "vrembem/base";
+@use "vrembem/components";
+@use "vrembem/utilities";
 @use "./scss/layout";
 @use "vrembem/tokens";
