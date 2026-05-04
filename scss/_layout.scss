@@ -16,7 +16,7 @@
   max-width: css.get("layout", "width");
   width: 100%;
   min-height: 200vh;
-  padding: 0 1em;
+  padding: 0 1rem;
 }
 
 .layout__main {
@@ -29,24 +29,25 @@
 }
 
 .layout__header,
-.layout__sidebar,
 .layout__aside,
 .layout__footer {
-  padding: 1em;
+  padding: 1rem;
 }
 
 .layout__header {
   position: sticky;
   top: 0;
-  margin-left: css.get("layout", "sidebar-width");
+  z-index: 1;
 }
 
 .layout__sidebar {
   grid-area: sidebar;
+  box-sizing: content-box;
   position: fixed;
-  top: 0;
-  height: 100vh;
+  inset: 0 auto 0 0;
   width: css.get("layout", "sidebar-width");
+  padding-left: max(1rem, calc(((100% + 2rem) - css.get("layout", "width")) / 2));
+  padding-top: css.get("layout", "header-height");
 }
 
 .layout__aside {
