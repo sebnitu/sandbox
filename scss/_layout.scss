@@ -50,7 +50,7 @@
 .layout__sidebar {
   grid-area: sidebar;
   box-sizing: content-box;
-  position: sticky;
+  position: fixed;
   top: tokens.get("layout", "header-height");
   width: tokens.get("layout", "sidebar-width");
   height: calc(100vh - tokens.get("layout", "header-height"));
