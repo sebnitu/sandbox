@@ -1,0 +1,69 @@
+@use "@vrembem/core";
+@use "@vrembem/core/tokens";
+@use "@vrembem/core/palette";
+
+@include tokens.set("asdf", (
+  "width": 1200px,
+  "drawer-width": 18em,
+));
+
+// These styles center the drawer frame and give it a max width
+.drawer-frame {
+  max-width: tokens.get("asdf", "width");
+  margin: auto;
+}
+
+@include core.media-min("lg") {
+  // This is just to test the transition. This is not needed if the drawer can't 
+  // be closed when in inline mode
+  .drawer:not(.is-opening, .is-opened, .is-closed, .is-closing) ~ .drawer-main {
+    margin-left: tokens.get("asdf", "drawer-width");
+  }
+
+  .drawer {
+    width: tokens.get("asdf", "drawer-width");
+  }
+
+  .drawer__container {
+    padding: 1rem;
+  }
+
+  // Styles for infinite background
+  .drawer::before {
+    box-sizing: content-box;
+    content: "";
+    z-index: -2;
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: tokens.get("asdf", "drawer-width");
+    padding-left: max(0px, calc((100% - tokens.get("asdf", "width")) / 2));
+  }
+
+  // Styles for fold shadow
+  .drawer::after {
+    box-sizing: content-box;
+    pointer-events: none;
+    content: "";
+    z-index: -1;
+    position: fixed;
+    inset: 0 auto 0 calc(max(0px, calc((100% - tokens.get("asdf", "width")) / 2)) + (tokens.get("asdf", "drawer-width") - 2rem));
+    width: 2rem;
+    height: 100%;
+    background: linear-gradient(268deg, rgb(0 0 0 / 10%) 0, rgb(0 0 0 / 0%) 2rem);
+  }
+}
+
+
+/**
+ * Background colors for visibility
+ */
+
+.drawer {
+  &::before {
+    background-color: oklch(68% 0.2 324 / 0.2);
+  }
+}
+
+.drawer-main {
+  background-color: palette.get("primary", $a: 10%);
+}

@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>sandbox &rarr; %VITE_BRANCH%</title>
-  <link rel="icon" type="image/png" href="https://sebnitu.com/icons/favicon.png">
-  <script type="module" src="./index.ts"></script>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vrembem - Drawer starter template</title>
+    <link href="./index.scss" rel="stylesheet" />
+    <script type="module">
+      import { DrawerCollection, focusTrap, mediaQuery } from "https://unpkg.com/vrembem@next/dist/index.js";
+      
+      const drawers = new DrawerCollection({
+        plugins: [focusTrap(), mediaQuery()]
+      });
 
-  <div class="layout">
-    <header class="layout__header">
-      <p>Header</p>
-    </header>
-    <aside class="layout__sidebar">
-      <div class="container">
-        <p>Sidebar</p>
-      </div>
-    </aside>
-    <div class="layout__main">
-      <aside class="layout__aside">
-        <p>Aside</p>
+      await drawers.mount();
+    </script>
+  </head>
+  <body>
+
+    <div class="drawer-frame">
+
+      <!-- Drawer -->
+      <aside id="drawer-sidebar" data-breakpoint="lg" class="drawer">
+        <div class="drawer__dialog" role="dialog">
+          <div class="drawer__container">
+            <p>This is an example implementation of a drawer component.</p>
+          </div>
+        </div>
       </aside>
-      <main class="layout__content">
-        <div class="container">
-          <p>Content</p>
+
+      <!-- Main content -->
+      <main id="main" class="drawer-main">
+        <div class="section">
+          <div class="section__container content spacing">
+            <h1>Hello World</h1>
+            <p>A drawer based starter template powered by Vrembem via CDN.</p>
+            <div class="flex foreground-subtle margin-bottom-lg">
+              <a class="link" href="https://vrembem.com/">Docs</a>
+              <span>/</span>
+              <a class="link" href="https://github.com/sebnitu/vrembem">GitHub</a>
+            </div>
+            <button class="button" data-drawer-toggle="drawer-sidebar" type="button">Toggle drawer</button>
+          </div>
         </div>
       </main>
-      <footer class="layout__footer">
-        <p>Footer</p>
-      </footer>
     </div>
-  </div>
 
-</body>
+  </body>
 </html>
