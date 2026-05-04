@@ -48,6 +48,10 @@
   width: css.get("layout", "sidebar-width");
   padding-left: max(1rem, calc(((100% + 2rem) - css.get("layout", "width")) / 2));
   padding-top: css.get("layout", "header-height");
+
+  .container {
+    padding: 1rem;
+  }
 }
 
 .layout__aside {
