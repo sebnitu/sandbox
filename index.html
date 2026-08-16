@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -11,18 +11,18 @@
 </head>
 <body>
 
-  <header class="section background-darker">
+  <header class="section background-alt">
     <div class="section__container max-width-xs spacing-xs">
       <h1 class="text-size-lg">Sandbox</h1>
-      <p class="foreground-light">A place to learn and test new things.</p>
-      <ol class="foreground-lighter flex flex_gap flex_gap-y_sm margin-top-lg list-style-none">
-        <li class="flex flex_gap_sm align-items-center">
-          <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      <p>A place to learn and test new things.</p>
+      <ol class="foreground-subtle flex flex--gap flex--gap-y-sm margin-top list-style-none">
+        <li class="flex flex--gap-sm align-items-center">
+          <svg class="icon icon--size-sm" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256"><path d="M212.62,75.17A63.7,63.7,0,0,0,206.39,26,12,12,0,0,0,196,20a63.71,63.71,0,0,0-50,24H126A63.71,63.71,0,0,0,76,20a12,12,0,0,0-10.39,6,63.7,63.7,0,0,0-6.23,49.17A61.5,61.5,0,0,0,52,104v8a60.1,60.1,0,0,0,45.76,58.28A43.66,43.66,0,0,0,92,192v4H76a20,20,0,0,1-20-20,44.05,44.05,0,0,0-44-44,12,12,0,0,0,0,24,20,20,0,0,1,20,20,44.05,44.05,0,0,0,44,44H92v12a12,12,0,0,0,24,0V192a20,20,0,0,1,40,0v40a12,12,0,0,0,24,0V192a43.66,43.66,0,0,0-5.76-21.72A60.1,60.1,0,0,0,220,112v-8A61.5,61.5,0,0,0,212.62,75.17ZM196,112a36,36,0,0,1-36,36H112a36,36,0,0,1-36-36v-8a37.87,37.87,0,0,1,6.13-20.12,11.65,11.65,0,0,0,1.58-11.49,39.9,39.9,0,0,1-.4-27.72,39.87,39.87,0,0,1,26.41,17.8A12,12,0,0,0,119.82,68h32.35a12,12,0,0,0,10.11-5.53,39.84,39.84,0,0,1,26.41-17.8,39.9,39.9,0,0,1-.4,27.72,12,12,0,0,0,1.61,11.53A37.85,37.85,0,0,1,196,104Z"></path></svg>
           <a class="link" target="_blank" href="https://github.com/sebnitu/sandbox">sandbox</a>
         </li>
-        <li class="foreground-neutral-80">/</li>
-        <li class="flex flex_gap_sm align-items-center">
-          <svg class="icon icon_size_sm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+        <li>/</li>
+        <li class="flex flex--gap-sm align-items-center">
+          <svg class="icon icon--size-sm" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256"><path d="M228,64a36,36,0,1,0-48,33.94V112a4,4,0,0,1-4,4H80a4,4,0,0,1-4-4V97.94a36,36,0,1,0-24,0V112a28,28,0,0,0,28,28h36v18.06a36,36,0,1,0,24,0V140h36a28,28,0,0,0,28-28V97.94A36.07,36.07,0,0,0,228,64ZM64,52A12,12,0,1,1,52,64,12,12,0,0,1,64,52Zm64,152a12,12,0,1,1,12-12A12,12,0,0,1,128,204ZM192,76a12,12,0,1,1,12-12A12,12,0,0,1,192,76Z"></path></svg>
           <a class="link" target="_blank" href="https://github.com/sebnitu/sandbox/tree/%VITE_BRANCH%">%VITE_BRANCH%</a>
         </li>
       </ol>
@@ -33,7 +33,7 @@
     <div class="section__container max-width-xs">
       <ul id="sortable-list" class="sortable">
         <li id="sortable-list-item-1" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: royalblue;">1</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">One</h2>
@@ -44,7 +44,7 @@
           </button>
         </li>
         <li id="sortable-list-item-2" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: salmon;">2</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">Two</h2>
@@ -55,7 +55,7 @@
           </button>
         </li>
         <li id="sortable-list-item-3" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: seagreen;">3</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">Three</h2>
@@ -66,7 +66,7 @@
           </button>
         </li>
         <li id="sortable-list-item-4" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: slategray;">4</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">Four</h2>
@@ -77,7 +77,7 @@
           </button>
         </li>
         <li id="sortable-list-item-5" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: turquoise;">5</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">Five</h2>
@@ -88,7 +88,7 @@
           </button>
         </li>
         <li id="sortable-list-item-6" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: yellowgreen;">6</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">Six</h2>
@@ -99,7 +99,7 @@
           </button>
         </li>
         <li id="sortable-list-item-7" class="sortable__item">
-          <div class="sortable__content flex flex_gap_lg align-items-center">
+          <div class="sortable__content flex flex--gap-lg align-items-center">
             <div class="avatar" style="--avatar-color: violet;">7</div>
             <div class="flex-grow">
               <h2 class="font-size-lg font-weight-regular">Seven</h2>
