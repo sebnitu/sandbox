@@ -43,7 +43,7 @@ export function register(obj) {
   });
 
   // Add the refresh method to the entry
-  entry.refresh = () => refresh(entry);
+  entry.refresh = (delay) => refresh(entry, delay);
 
   // Return the entry object
   return entry;
