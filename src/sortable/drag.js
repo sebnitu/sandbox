@@ -17,6 +17,9 @@ export function addDragEvents(item) {
   });
 
   item.addEventListener(("dragenter"), () => {
+    // Ignore hover events from a different sortable instance
+    if (!this.dragging) return;
+    
     // Don't do anything if it's the thing being dragged
     if (item === this.dragging) return;
 
