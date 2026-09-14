@@ -1,6 +1,6 @@
 export default {
-  items: ".sortable__item",
-  handle: ".sortable__handle",
+  items: "[data-sortable-item]",
+  handle: "[data-sortable-handle]",
   duration: 150,
   cacheDuration: 750,
 }
