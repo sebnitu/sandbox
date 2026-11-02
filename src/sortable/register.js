@@ -30,7 +30,18 @@ export function register(obj) {
       });
 
       // Run the `onUpdated` callback
+      const focusEl = document.activeElement;
       entry.onUpdated.call(entry, item);
+
+      // Frameworks may move the item in the DOM when re-rendering the new order
+      // which causes it to lose focus, so restore it after the re-render
+      if (item && focusEl && item.contains(focusEl)) {
+        requestAnimationFrame(() => {
+          if (focusEl.isConnected && document.activeElement !== focusEl) {
+            focusEl.focus({ preventScroll: true });
+          }
+        });
+      }
     }
   };
 
